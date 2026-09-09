@@ -11,4 +11,5 @@ interests = ["Quantum-Safe Cryptography", "Key Distribution"]
 author_names = []
 portrait = "/images/people/jacob-johannsson.jpg"
 research = ["quantum-computing-systems"]
+dblp = "https://dblp.org/pid/383/6549"
 +++
