@@ -4,7 +4,7 @@ slug = "krit-grover"
 # MSc confirmed by his announcement: https://www.linkedin.com/posts/kritgrover_universityoftoronto-quantumcomputing-activity-7499508023548182528-V_91
 role = "MSc Student"
 status = "current"
-start_date = "2022-09"
+start_date = "2026-09"
 location = "Toronto, Canada"
 research = ["quantum-computing-systems"]
 email = ""
