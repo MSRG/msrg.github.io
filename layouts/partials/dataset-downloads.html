@@ -1,0 +1,9 @@
+{{ with .Params.downloads }}
+  <div class="stack-tight dataset-downloads">
+    {{ range . }}
+      <a class="card-readmore" href="{{ .url }}">{{ .label }} →</a>
+    {{ end }}
+  </div>
+{{ else }}
+  <p class="muted">The original archive is currently unavailable.{{ with partial "public-email.html" site.Params.contact_email }} <a href="mailto:{{ . }}" target="_blank" rel="noopener noreferrer">Contact MSRG about access</a>.{{ end }}</p>
+{{ end }}

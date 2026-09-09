@@ -1,0 +1,27 @@
+{{- $schema := .schema -}}
+{{- $context := .context -}}
+{{- $name := replace $context.File.ContentBaseName "-" " " | title -}}
+{{- $result := "+++\n" -}}
+{{- range $schema.fields -}}
+  {{- if ne .archetype false -}}
+    {{- with .section -}}{{- $result = printf "%s\n# %s\n" $result . -}}{{- end -}}
+    {{- with .help -}}{{- $result = printf "%s# %s\n" $result . -}}{{- end -}}
+    {{- $options := .options | default slice -}}
+    {{- if eq .options_source "roles" -}}
+      {{- range $schema.groups -}}{{- $options = $options | append .roles -}}{{- end -}}
+    {{- else if eq .options_source "research" -}}
+      {{- range ($context.Site.GetPage "/research").Pages.ByWeight -}}{{- $options = $options | append .File.ContentBaseName -}}{{- end -}}
+    {{- end -}}
+    {{- with $options -}}{{- $result = printf "%s# Choices: %s\n" $result (delimit . " | ") -}}{{- end -}}
+    {{- $value := .default -}}
+    {{- if eq .seed "name" -}}{{- $value = $name -}}
+    {{- else if eq .seed "slug" -}}{{- $value = $context.File.ContentBaseName -}}
+    {{- else if eq .seed "personal-url" -}}{{- $value = printf "/~%s/" $context.File.ContentBaseName -}}
+    {{- else if eq .seed "date" -}}{{- $value = $context.Date -}}
+    {{- else if eq .seed "year" -}}{{- $value = now.Year -}}
+    {{- end -}}
+    {{- $line := dict .key $value | transform.Remarshal "toml" -}}
+    {{- $result = printf "%s%s" $result $line -}}
+  {{- end -}}
+{{- end -}}
+{{- return (printf "%s+++\n" $result) -}}

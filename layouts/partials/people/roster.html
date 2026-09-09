@@ -1,0 +1,19 @@
+{{/* One build-time classification shared by the people and research pages. */}}
+{{ $current := slice }}
+{{ $alumni := slice }}
+{{ $now := now }}
+{{ range (site.GetPage "/people").RegularPages }}
+  {{ partial "content/validate.html" (dict "page" . "schema" hugo.Data.content_schema.types.people) }}
+  {{ $status := .Params.status }}
+  {{ with .Params.end_date }}
+    {{ if not ($now.Before (partial "people/end-cutoff.html" .)) }}
+      {{ $status = "alumni" }}
+    {{ end }}
+  {{ end }}
+  {{ if eq $status "alumni" }}
+    {{ $alumni = $alumni | append . }}
+  {{ else if in (slice "current" "visiting") $status }}
+    {{ $current = $current | append . }}
+  {{ end }}
+{{ end }}
+{{ return (dict "current" (partial "people/sort-by-start.html" $current) "alumni" (partial "people/sort-alumni.html" $alumni)) }}

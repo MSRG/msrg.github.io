@@ -1,0 +1,17 @@
+<!doctype html>
+{{ $sectionSnapping := or .IsHome (in (slice "roster" "area" "overview") .Params.layout) (and .IsSection (eq .Section "data-sets")) }}
+<html lang="{{ or site.Language.Locale site.Locale "en-CA" }}"{{ if $sectionSnapping }} class="snap-page"{{ end }}>
+  <head>
+    {{ partial "head.html" . }}
+  </head>
+  <body class="kind-{{ .Kind }} section-{{ .Section }}">
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    {{ partial "header.html" . }}
+    <main id="main-content">
+      {{ block "main" . }}{{ end }}
+    </main>
+    {{ partial "cookie-notice.html" . }}
+    {{ partial "footer.html" . }}
+    {{ partial "scripts.html" . }}
+  </body>
+</html>

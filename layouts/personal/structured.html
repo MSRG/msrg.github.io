@@ -1,0 +1,78 @@
+{{ define "main" }}
+  <article class="personal-page tone-{{ .Params.tone | default "navy" }}">
+    <section class="page-hero personal-hero">
+      <div class="site-shell personal-hero-grid">
+        <div class="personal-title">
+          <p class="eyebrow">Personal site</p>
+          <h1>{{ partial "page-title.html" . }}</h1>
+          {{ with .Params.subtitle }}<p class="page-intro">{{ . }}</p>{{ end }}
+          <div class="chip-row">
+            <a class="chip" href="{{ "/people/" | relURL }}">MSRG people</a>
+            {{ with .Params.primary_link }}
+              <a class="chip" href="{{ .url }}">{{ .label }}</a>
+            {{ end }}
+          </div>
+        </div>
+        <aside class="content-panel stack">
+          {{ with .Params.focus }}
+            <div>
+              <h2>Current focus</h2>
+              <ul class="question-list">
+                {{ range . }}
+                  <li>{{ . }}</li>
+                {{ end }}
+              </ul>
+            </div>
+          {{ end }}
+          {{ with .Params.quick_links }}
+            <div>
+              <h2>Quick links</h2>
+              <div class="stack">
+                {{ range . }}
+                  <a class="list-link-card" href="{{ .url }}">{{ .label }}</a>
+                {{ end }}
+              </div>
+            </div>
+          {{ end }}
+        </aside>
+      </div>
+    </section>
+
+    <section class="page-section">
+      <div class="site-shell personal-grid">
+        <article class="content-panel prose personal-prose">
+          {{ .Content }}
+        </article>
+        <aside class="stack">
+          {{ with .Params.highlights }}
+            <div class="content-panel">
+              <h2>Highlights</h2>
+              <div class="stack">
+                {{ range . }}
+                  <article class="spotlight-card">
+                    <h3>{{ .title }}</h3>
+                    <p>{{ .description }}</p>
+                  </article>
+                {{ end }}
+              </div>
+            </div>
+          {{ end }}
+          {{ with .Params.timeline }}
+            <div class="content-panel">
+              <h2>Right now</h2>
+              <div class="timeline">
+                {{ range . }}
+                  <div class="timeline-item">
+                    <span>{{ .period }}</span>
+                    <strong>{{ .title }}</strong>
+                    <p>{{ .description }}</p>
+                  </div>
+                {{ end }}
+              </div>
+            </div>
+          {{ end }}
+        </aside>
+      </div>
+    </section>
+  </article>
+{{ end }}

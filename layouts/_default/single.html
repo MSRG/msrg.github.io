@@ -1,0 +1,67 @@
+{{ define "main" }}
+  <article>
+    <section class="page-hero">
+      <div class="site-shell page-hero-grid">
+        <div>
+          <p class="eyebrow">{{ replace .Section "-" " " | title }}</p>
+          <h1>{{ .Title }}</h1>
+          {{ with .Params.summary }}<p class="page-intro">{{ . }}</p>{{ end }}
+        </div>
+        <div class="meta-card">
+          {{ with .Params.year }}<div><span>Year</span><strong>{{ . }}</strong></div>{{ end }}
+          {{ with .Params.source }}<div><span>Source</span><strong>{{ . }}</strong></div>{{ end }}
+          {{ with .Params.legacy_package }}<div><span>Legacy file</span><strong>{{ . }}</strong></div>{{ end }}
+          {{ with .Params.publication_type }}<div><span>Type</span><strong>{{ . }}</strong></div>{{ end }}
+          {{ with .Params.venue }}<div><span>Venue</span><strong>{{ . }}</strong></div>{{ end }}
+        </div>
+      </div>
+    </section>
+
+    <section class="page-section">
+      <div class="site-shell content-grid">
+        <article class="content-panel prose">
+          {{ .Content }}
+        </article>
+        <aside class="content-panel stack resource-panel">
+          {{ if eq .Section "data-sets" }}
+            <div><h2>Data access</h2>{{ partial "dataset-downloads.html" . }}</div>
+          {{ end }}
+          {{ with .Params.research }}
+            <div>
+              <h2>Research areas</h2>
+              <div class="chip-row">
+                {{ range . }}
+                  {{ with site.GetPage (printf "/research/%s" .) }}
+                    <a class="chip" href="{{ .RelPermalink }}">{{ .Title }}</a>
+                  {{ end }}
+                {{ end }}
+              </div>
+            </div>
+          {{ end }}
+          {{ with .Params.related_publication }}
+            {{ $pub := site.GetPage (printf "/publications/%s" .) }}
+            {{ with $pub }}
+              <div>
+                <h2>Related publication</h2>
+                <a class="list-link-card" href="{{ .RelPermalink }}">
+                  <strong>{{ .Title }}</strong>
+                  <span>{{ .Params.venue }}, {{ .Params.year }}</span>
+                </a>
+              </div>
+            {{ end }}
+          {{ end }}
+          {{ with .Params.resource_url }}
+            <a class="button button-secondary" href="{{ . }}" target="_blank" rel="noreferrer">
+              {{ $.Params.resource_label | default "Resource" }}
+            </a>
+          {{ end }}
+          {{ with .Params.external_url }}
+            <a class="button button-secondary" href="{{ . }}" target="_blank" rel="noreferrer">
+              {{ $.Params.external_label | default "External link" }}
+            </a>
+          {{ end }}
+        </aside>
+      </div>
+    </section>
+  </article>
+{{ end }}

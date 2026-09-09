@@ -1,0 +1,36 @@
+{{ define "main" }}
+  <section class="page-hero">
+    <div class="site-shell page-hero-grid">
+      <div>
+        <p class="eyebrow">{{ replace .Section "-" " " | title }}</p>
+        <h1>{{ replace (partial "page-title.html" .) "_" " " }}</h1>
+        {{ with .Params.summary }}<p class="page-intro">{{ . }}</p>{{ end }}
+      </div>
+    </div>
+  </section>
+
+  <section class="page-section">
+    <div class="site-shell {{ if .Content }}content-grid{{ else }}stack{{ end }}">
+      {{ if .Content }}
+        <article class="content-panel prose">{{ .Content }}</article>
+      {{ end }}
+      {{ if .Pages }}
+        <aside class="content-panel stack">
+          <h2>Pages in this section</h2>
+          <div class="stack">
+            {{ range .Pages.ByTitle }}
+              {{ if eq .Section "people" }}
+                {{ partial "person-card.html" . }}
+              {{ else }}
+              <a class="list-link-card" href="{{ .RelPermalink }}">
+                <strong>{{ replace (partial "page-title.html" .) "_" " " }}</strong>
+                {{ with .Params.summary }}<span>{{ . }}</span>{{ end }}
+              </a>
+              {{ end }}
+            {{ end }}
+          </div>
+        </aside>
+      {{ end }}
+    </div>
+  </section>
+{{ end }}

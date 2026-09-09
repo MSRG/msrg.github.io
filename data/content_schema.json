@@ -1,0 +1,682 @@
+{
+  "forbidden_fields": [
+    "draft",
+    "publishdate",
+    "expirydate"
+  ],
+  "types": {
+    "default": {
+      "fields": [
+        {
+          "key": "title",
+          "label": "Title",
+          "type": "string",
+          "default": "",
+          "seed": "name"
+        },
+        {
+          "key": "date",
+          "label": "Created",
+          "type": "string",
+          "default": "",
+          "seed": "date"
+        }
+      ]
+    },
+    "people": {
+      "groups": [
+        {
+          "id": "professor",
+          "heading": "Professor",
+          "subtitle": "",
+          "alumni": "Professors",
+          "roles": [
+            "Professor"
+          ]
+        },
+        {
+          "id": "postdoc",
+          "heading": "Post-Docs",
+          "subtitle": "",
+          "alumni": "Post-Docs",
+          "roles": [
+            "Post-Doc"
+          ]
+        },
+        {
+          "id": "graduate-phd",
+          "heading": "Graduate Students",
+          "subtitle": "PhD",
+          "alumni": "PhD",
+          "roles": [
+            "PhD Student"
+          ]
+        },
+        {
+          "id": "graduate-master",
+          "heading": "Graduate Students",
+          "subtitle": "Master's",
+          "alumni": "Master's",
+          "roles": [
+            "MSc Student",
+            "MASc Student",
+            "MEng Student"
+          ]
+        },
+        {
+          "id": "undergraduate",
+          "heading": "Research Trainees",
+          "subtitle": "Undergraduate",
+          "alumni": "Undergraduate students",
+          "roles": [
+            "Undergraduate Student"
+          ]
+        }
+      ],
+      "forbidden_fields": {
+        "title": "Use name for member profiles.",
+        "summary": "Put biography text on an optional personal page."
+      },
+      "fields": [
+        {
+          "key": "name",
+          "label": "Display name",
+          "type": "string",
+          "default": "",
+          "required": true,
+          "seed": "name",
+          "section": "Identity",
+          "help": "Your name as it should appear on the website."
+        },
+        {
+          "key": "slug",
+          "label": "Member identifier",
+          "type": "string",
+          "default": "",
+          "required": true,
+          "seed": "slug",
+          "format": "slug",
+          "help": "Lowercase words separated by hyphens. Changing an existing identifier renames the member file and matching personal-site folder, and updates local references. Old shared URLs will change; you must confirm before saving."
+        },
+        {
+          "key": "role",
+          "label": "Role / degree",
+          "type": "string",
+          "default": "PhD Student",
+          "required": true,
+          "options_source": "roles",
+          "help": "Choose the exact degree: MSc = Master of Science; MASc = Master of Applied Science; MEng = Master of Engineering. Alumni keep their role in MSRG."
+        },
+        {
+          "key": "status",
+          "label": "Membership",
+          "type": "string",
+          "default": "current",
+          "required": true,
+          "options": [
+            "current",
+            "visiting",
+            "alumni"
+          ],
+          "help": "Current team, visiting researcher, or former member."
+        },
+        {
+          "key": "visiting",
+          "label": "Former visiting researcher",
+          "type": "boolean",
+          "default": false,
+          "help": "Enable for someone manually marked alumni who was a visitor. Scheduled transitions preserve this automatically."
+        },
+        {
+          "key": "location",
+          "label": "Location",
+          "type": "string",
+          "default": "Toronto, Canada"
+        },
+        {
+          "key": "start_date",
+          "label": "Start date",
+          "type": "string",
+          "default": "",
+          "format": "partial-date",
+          "section": "Dates",
+          "help": "Optional: YYYY, YYYY-MM, or YYYY-MM-DD. Used for sorting, not displayed on the people page. Saved dates are still visible in the public repository; leave empty if unknown or private."
+        },
+        {
+          "key": "end_date",
+          "label": "Last day / month / year in MSRG",
+          "type": "string",
+          "default": "",
+          "format": "partial-date",
+          "help": "Optional. Only the year is displayed for alumni. A build after this period moves the person to alumni (Toronto time). Leave empty if uncertain; expected graduation alone need not end membership."
+        },
+        {
+          "key": "research",
+          "label": "Research areas",
+          "type": "strings",
+          "default": [],
+          "options_source": "research",
+          "section": "Research",
+          "help": "Select all relevant research areas. The choices come from the research pages."
+        },
+        {
+          "key": "interests",
+          "label": "Specialities",
+          "type": "strings",
+          "default": [],
+          "help": "One speciality per line, for example Distributed Systems or Quantum Computing."
+        },
+        {
+          "key": "portrait",
+          "label": "Portrait",
+          "type": "string",
+          "default": "",
+          "format": "portrait",
+          "section": "Portrait and links",
+          "help": "Upload a profile photo below or choose an existing photo. Use a portrait, not a banner."
+        },
+        {
+          "key": "portrait_position",
+          "label": "Photo crop alignment",
+          "type": "string",
+          "default": "center",
+          "options": [
+            "top",
+            "center",
+            "bottom"
+          ],
+          "archetype": false,
+          "help": "Choose top if a square crop cuts off the top of your head."
+        },
+        {
+          "key": "email",
+          "label": "University of Toronto email",
+          "type": "string",
+          "default": "",
+          "format": "email",
+          "host": "utoronto.ca",
+          "help": "Public contact address. Only utoronto.ca addresses or its subdomains (such as mail.utoronto.ca) are allowed. Leave empty if unavailable; do not enter a personal email."
+        },
+        {
+          "key": "homepage",
+          "label": "Personal website",
+          "type": "string",
+          "default": "",
+          "format": "url"
+        },
+        {
+          "key": "scholar",
+          "label": "Google Scholar",
+          "type": "string",
+          "default": "",
+          "format": "url"
+        },
+        {
+          "key": "orcid",
+          "label": "ORCID",
+          "type": "string",
+          "default": "",
+          "format": "url"
+        },
+        {
+          "key": "linkedin",
+          "label": "LinkedIn",
+          "type": "string",
+          "default": "",
+          "format": "url",
+          "host": "linkedin.com",
+          "https_only": true
+        },
+        {
+          "key": "github",
+          "label": "GitHub",
+          "type": "string",
+          "default": "",
+          "format": "url"
+        },
+        {
+          "key": "dblp",
+          "label": "DBLP",
+          "type": "string",
+          "default": "",
+          "format": "url"
+        },
+        {
+          "key": "researchgate",
+          "label": "ResearchGate",
+          "type": "string",
+          "default": "",
+          "format": "url"
+        },
+        {
+          "key": "ieee",
+          "label": "IEEE",
+          "type": "string",
+          "default": "",
+          "format": "url"
+        },
+        {
+          "key": "author_names",
+          "label": "Publication name variants",
+          "type": "strings",
+          "default": [],
+          "section": "Publications and awards",
+          "help": "One name per line, exactly as it appears in publication author lists."
+        },
+        {
+          "key": "awards",
+          "label": "Awards and funding",
+          "type": "objects",
+          "default": [],
+          "help": "Optional award and application links. Leave the funding link empty if unavailable.",
+          "fields": [
+            {
+              "key": "name",
+              "label": "Award name",
+              "type": "string",
+              "default": "",
+              "required": true
+            },
+            {
+              "key": "url",
+              "label": "Award page",
+              "type": "string",
+              "default": "",
+              "format": "url",
+              "required": true
+            },
+            {
+              "key": "funding_url",
+              "label": "Funding / application page",
+              "type": "string",
+              "default": "",
+              "format": "url"
+            }
+          ]
+        }
+      ],
+      "editor": {
+        "label": "Member profiles",
+        "body": false
+      }
+    },
+    "personal": {
+      "fields": [
+        {
+          "key": "layout",
+          "label": "Page template",
+          "type": "string",
+          "default": "single",
+          "options": [
+            "single",
+            "academic",
+            "structured"
+          ],
+          "help": "single: simple reading page; academic: profile sidebar; structured: sections and highlights.",
+          "allow_empty": false
+        },
+        {
+          "key": "title",
+          "label": "Title override",
+          "type": "string",
+          "default": "",
+          "archetype": false,
+          "help": "Defaults to the name in your member record."
+        },
+        {
+          "key": "url",
+          "label": "URL (legacy override)",
+          "type": "string",
+          "default": "",
+          "archetype": false,
+          "editor": false
+        },
+        {
+          "key": "custom_css",
+          "label": "Extra stylesheets",
+          "type": "strings",
+          "default": [],
+          "archetype": false,
+          "editor": false
+        },
+        {
+          "key": "description",
+          "label": "Short description",
+          "type": "string",
+          "default": "",
+          "multiline": true,
+          "archetype": false
+        },
+        {
+          "key": "subtitle",
+          "label": "Subtitle",
+          "type": "string",
+          "default": "",
+          "archetype": false
+        },
+        {
+          "key": "tone",
+          "label": "Colour theme",
+          "type": "string",
+          "default": "navy",
+          "options": [
+            "navy",
+            "copper",
+            "sage"
+          ],
+          "archetype": false
+        },
+        {
+          "key": "focus",
+          "label": "Current focus",
+          "type": "strings",
+          "default": [],
+          "archetype": false
+        },
+        {
+          "key": "primary_link",
+          "label": "Primary link",
+          "type": "object",
+          "default": {},
+          "fields": [
+            {
+              "key": "label",
+              "label": "Label",
+              "type": "string",
+              "default": "",
+              "required": true
+            },
+            {
+              "key": "url",
+              "label": "Link",
+              "type": "string",
+              "default": "",
+              "format": "link",
+              "required": true
+            }
+          ],
+          "archetype": false
+        },
+        {
+          "key": "quick_links",
+          "label": "Quick links",
+          "type": "objects",
+          "default": [],
+          "fields": [
+            {
+              "key": "label",
+              "label": "Label",
+              "type": "string",
+              "default": "",
+              "required": true
+            },
+            {
+              "key": "url",
+              "label": "Link",
+              "type": "string",
+              "default": "",
+              "format": "link",
+              "required": true
+            }
+          ],
+          "archetype": false
+        },
+        {
+          "key": "highlights",
+          "label": "Highlights",
+          "type": "objects",
+          "default": [],
+          "fields": [
+            {
+              "key": "title",
+              "label": "Title",
+              "type": "string",
+              "default": "",
+              "required": true
+            },
+            {
+              "key": "description",
+              "label": "Description",
+              "type": "string",
+              "default": "",
+              "multiline": true
+            }
+          ],
+          "archetype": false
+        },
+        {
+          "key": "timeline",
+          "label": "Timeline",
+          "type": "objects",
+          "default": [],
+          "fields": [
+            {
+              "key": "period",
+              "label": "Period",
+              "type": "string",
+              "default": ""
+            },
+            {
+              "key": "title",
+              "label": "Title",
+              "type": "string",
+              "default": "",
+              "required": true
+            },
+            {
+              "key": "description",
+              "label": "Description",
+              "type": "string",
+              "default": "",
+              "multiline": true
+            }
+          ],
+          "archetype": false
+        }
+      ],
+      "editor": {
+        "label": "Personal Pages",
+        "body": true
+      }
+    },
+    "publications": {
+      "fields": [
+        {
+          "key": "title",
+          "label": "Title",
+          "type": "string",
+          "default": "",
+          "required": true,
+          "seed": "name"
+        },
+        {
+          "key": "date",
+          "label": "Created",
+          "type": "string",
+          "default": "",
+          "seed": "date"
+        },
+        {
+          "key": "year",
+          "label": "Year",
+          "type": "integer",
+          "default": 2026,
+          "required": true,
+          "seed": "year"
+        },
+        {
+          "key": "authors",
+          "label": "Authors",
+          "type": "strings",
+          "default": [],
+          "required": true
+        },
+        {
+          "key": "venue",
+          "label": "Venue",
+          "type": "string",
+          "default": "",
+          "required": true
+        },
+        {
+          "key": "external_url",
+          "label": "Paper URL",
+          "type": "string",
+          "default": "",
+          "required": true,
+          "format": "url"
+        },
+        {
+          "key": "source_url",
+          "label": "Metadata source",
+          "type": "string",
+          "default": "",
+          "format": "url"
+        },
+        {
+          "key": "publication_type",
+          "label": "Publication type",
+          "type": "string",
+          "default": "Conference Paper",
+          "required": true
+        },
+        {
+          "key": "research",
+          "label": "Research areas",
+          "type": "strings",
+          "default": [],
+          "options_source": "research"
+        },
+        {
+          "key": "summary",
+          "label": "Short listing summary",
+          "type": "string",
+          "default": "",
+          "help": "Optional short description for the publication list; put the full abstract below."
+        },
+        {
+          "key": "abstract",
+          "label": "Abstract",
+          "type": "string",
+          "default": "",
+          "multiline": true,
+          "format": "markdown",
+          "help": "Paste the paper's abstract. Use Markdown for emphasis and LaTeX for formulas: $x^2$ or \\(x^2\\) inline; $$...$$ or \\[...\\] for a separate equation. The formatting buttons help; save and open the local preview to check the result. Use code formatting for literal dollar amounts. Full LaTeX documents and custom packages are not supported."
+        },
+        {
+          "key": "tags",
+          "label": "Tags",
+          "type": "strings",
+          "default": []
+        },
+        {
+          "key": "related_datasets",
+          "label": "Related datasets",
+          "type": "strings",
+          "default": [],
+          "options_source": "data-sets"
+        }
+      ],
+      "editor": {
+        "label": "Publications",
+        "body": true,
+        "body_label": "Additional notes",
+        "body_help": "Optional commentary, companion material, or other details. Put the paper's abstract in the Abstract field above."
+      }
+    },
+    "data-sets": {
+      "editor": {
+        "label": "Datasets and downloads",
+        "body": true
+      },
+      "fields": [
+        {
+          "key": "title",
+          "label": "Title",
+          "type": "string",
+          "default": "",
+          "required": true,
+          "seed": "name"
+        },
+        {
+          "key": "summary",
+          "label": "Summary",
+          "type": "string",
+          "default": "",
+          "multiline": true
+        },
+        {
+          "key": "source",
+          "label": "Source / creator",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "key": "research",
+          "label": "Research areas",
+          "type": "strings",
+          "default": [],
+          "options_source": "research"
+        },
+        {
+          "key": "downloads",
+          "label": "Downloads",
+          "type": "objects",
+          "default": [],
+          "fields": [
+            {
+              "key": "label",
+              "label": "Label",
+              "type": "string",
+              "default": "",
+              "required": true
+            },
+            {
+              "key": "url",
+              "label": "Link",
+              "type": "string",
+              "default": "",
+              "format": "link",
+              "required": true
+            }
+          ],
+          "help": "Add a verified web link, or upload a file using the Upload button beside its link."
+        },
+        {
+          "key": "resource_url",
+          "label": "Related resource",
+          "type": "string",
+          "default": "",
+          "format": "url"
+        },
+        {
+          "key": "resource_label",
+          "label": "Resource label",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "key": "related_publication",
+          "label": "Related publication",
+          "type": "string",
+          "default": "",
+          "options_source": "publications"
+        },
+        {
+          "key": "legacy_package",
+          "label": "Original archive name",
+          "type": "string",
+          "default": "",
+          "help": "Optional: retain the name of a missing historical archive."
+        },
+        {
+          "key": "aliases",
+          "label": "Previous website paths",
+          "type": "strings",
+          "default": [],
+          "help": "Optional redirects, one /path/ per line."
+        }
+      ]
+    }
+  }
+}

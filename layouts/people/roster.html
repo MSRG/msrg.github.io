@@ -1,0 +1,45 @@
+{{ define "main" }}
+  {{ $roster := partialCached "people/roster.html" site }}
+  {{ $current := $roster.current }}
+  {{ $alumni := $roster.alumni }}
+
+  <section class="page-hero scroll-section">
+    <div class="site-shell">
+      <h1>{{ .Title }}</h1>
+      <p class="page-summary">
+        {{ len $current }} on the current team
+        · {{ len $alumni }} alumni
+      </p>
+    </div>
+  </section>
+
+  <section class="page-section page-section-alt roster-active">
+    <div class="site-shell">
+
+      {{ partial "people/group-cards.html" $current }}
+
+    </div>
+  </section>
+
+  <section id="alumni" class="page-section page-section-alt scroll-section">
+    <div class="site-shell">
+      <div class="section-heading">
+        <p class="eyebrow">Alumni archive</p>
+        <h2>Former members</h2>
+      </div>
+
+      {{ range hugo.Data.content_schema.types.people.groups }}
+        {{ $group := . }}
+        {{ with where $alumni "Params.role" "in" .roles }}
+          <section class="roster-group scroll-section">
+            <div class="section-heading"><h3>{{ $group.alumni }}</h3></div>
+            {{ partial "people/alumni-list.html" . }}
+          </section>
+        {{ end }}
+      {{ end }}
+
+      <p class="roster-contact">Are you missing from this list? <a href="mailto:thomas.trenty@mail.utoronto.ca" target="_blank" rel="noopener noreferrer">Contact the site owner</a> to add yourself or update your details.</p>
+
+    </div>
+  </section>
+{{ end }}

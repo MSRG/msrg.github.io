@@ -1,0 +1,45 @@
+[workspace]
+name = "msrg-website"
+channels = ["conda-forge"]
+platforms = ["linux-64", "linux-aarch64", "osx-64", "osx-arm64", "win-64"]
+
+[dependencies]
+hugo = "==0.165.0"
+python = "3.12.*"
+
+[activation.env]
+PYTHONUTF8 = "1"
+
+[tasks]
+serve = "hugo server --disableFastRender"
+editor = "python scripts/edit_profiles.py"
+clean-cache = { cmd = "python scripts/task_context.py --clear", description = "Forget successful task runs so the next check runs everything again." }
+
+# This cheap task always runs; its files change only when their values change.
+_task-context = "python scripts/task_context.py"
+
+[tasks.test]
+cmd = "python -m unittest discover -s tests -p 'test_*.py' -v"
+depends-on = ["_task-context"]
+inputs = [
+  "tests/**/*.py", "scripts/**/*.py", "scripts/profile_editor/**",
+  "content/**", "layouts/**", "assets/**", "static/**", "data/**", "archetypes/**",
+  "hugo.yaml", "pixi.toml", "pixi.lock", ".pixi/task-context/environment.json",
+]
+
+[tasks.build]
+cmd = "hugo --gc --minify --panicOnWarning"
+depends-on = ["_task-context"]
+inputs = [
+  "content/**", "layouts/**", "assets/**", "static/**", "data/**", "archetypes/**",
+  "hugo.yaml", "pixi.toml", "pixi.lock", ".pixi/task-context/*.json",
+]
+outputs = ["public/**"]
+
+[tasks.check]
+cmd = "python scripts/check_site.py public"
+depends-on = ["test", "build"]
+inputs = [
+  "public/**", "content/**", "static/**", "data/**", "scripts/**/*.py",
+  "hugo.yaml", "pixi.toml", "pixi.lock", ".pixi/task-context/environment.json",
+]

@@ -1,0 +1,78 @@
+{{ define "main" }}
+  {{ $slug := .File.ContentBaseName }}
+  {{ $roster := partialCached "people/roster.html" site }}
+  {{ $people := where $roster.current "Params.research" "intersect" (slice $slug) }}
+  {{ $publications := where (site.GetPage "/publications").RegularPages "Params.research" "intersect" (slice $slug) }}
+  {{ $datasets := where (site.GetPage "/data-sets").RegularPages "Params.research" "intersect" (slice $slug) }}
+
+  <article class="research-area">
+    <section class="page-hero scroll-section">
+      <div class="site-shell">
+        <p class="eyebrow">Research area</p>
+        <h1>{{ .Title }}</h1>
+        {{ with .Params.question }}<p class="page-question">{{ . }}</p>{{ end }}
+        <div class="page-intro">{{ .Params.blurb | markdownify }}</div>
+        <p class="page-summary">
+          {{ len $people }} {{ if eq (len $people) 1 }}researcher{{ else }}researchers{{ end }}
+          · {{ len $publications }} {{ if eq (len $publications) 1 }}publication{{ else }}publications{{ end }}
+          · {{ len $datasets }} {{ if eq (len $datasets) 1 }}data set{{ else }}data sets{{ end }}
+        </p>
+      </div>
+    </section>
+
+    <section class="page-section scroll-section">
+      <div class="site-shell">
+        <article class="content-panel prose">
+          {{ .Content }}
+        </article>
+      </div>
+    </section>
+
+    <section class="page-section page-section-alt research-team">
+      <div class="site-shell">
+
+        {{ partial "people/group-cards.html" $people }}
+
+      </div>
+    </section>
+
+    <section class="page-section scroll-section">
+      <div class="site-shell">
+        <div class="section-heading">
+          <h2>Publications</h2>
+        </div>
+        <div class="stack">
+          {{ if $publications }}
+            {{ range first 6 (sort $publications "Params.year" "desc") }}
+              <a class="list-link-card" href="{{ .RelPermalink }}">
+                <strong>{{ .Title }}</strong>
+                <span>{{ .Params.venue }}, {{ .Params.year }}</span>
+              </a>
+            {{ end }}
+          {{ else }}
+            <p class="muted">No publications are listed for this research area yet.</p>
+          {{ end }}
+        </div>
+        <p class="content-actions"><a class="button" href="{{ printf "%s?%s" ("/publications/" | relURL) (querify "research" $slug) }}">Browse all publications in this area</a></p>
+      </div>
+    </section>
+
+    {{ if $datasets }}
+    <section class="page-section page-section-alt scroll-section">
+      <div class="site-shell">
+        <div class="section-heading">
+          <h2>Data sets</h2>
+        </div>
+        <div class="card-grid">
+          {{ range sort $datasets "Title" }}
+            <article class="card">
+              <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+              <p>{{ .Params.summary }}</p>
+            </article>
+          {{ end }}
+        </div>
+      </div>
+    </section>
+    {{ end }}
+  </article>
+{{ end }}

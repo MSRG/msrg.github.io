@@ -1,0 +1,9 @@
+{{- $title := .Title -}}
+{{- if eq .Section "people" -}}
+  {{- $title = .Params.name | default $title -}}
+{{- else if and (eq .Section "personal") .IsPage -}}
+  {{- with site.GetPage (printf "/people/%s" .File.ContentBaseName) -}}
+    {{- $title = $.Params.title | default .Params.name -}}
+  {{- end -}}
+{{- end -}}
+{{- return $title -}}

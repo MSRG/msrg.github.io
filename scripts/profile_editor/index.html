@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MSRG website editor</title>
+  <link rel="stylesheet" href="/editor.css">
+  <script src="/editor.js" defer></script>
+</head>
+<body>
+  <header><div class="shell"><p class="eyebrow">MSRG · Member tools</p><h1>Edit the website</h1>
+    <p>Update your profile, personal page, publications, and datasets.</p></div></header>
+  <main class="shell">
+    <section class="picker" aria-label="Choose content">
+      <div><label for="kind">What would you like to edit?</label><select id="kind"></select></div>
+      <div><label for="profile">Entry</label><select id="profile"></select></div>
+      <button type="button" id="new-profile">Create an entry</button>
+    </section>
+    <p class="note">Changes save locally. They appear online after your pull request is reviewed and merged. Fields marked * are required.</p>
+    <p id="message" role="status" aria-live="polite"></p>
+    <section id="personal-options" class="personal-options" hidden>
+      <h2>Your personal page</h2>
+      <p id="personal-mode-note">Choose a template below for a simple page with ready-made styling.</p>
+      <details id="custom-site-guide">
+        <summary>Want full control? Build your own website</summary>
+        <p>You can use your own HTML, CSS, JavaScript, or a static framework build. Put the finished site in <code id="custom-site-folder"></code>, starting with <code>index.html</code>. No Hugo metadata or template is required.</p>
+        <p>Use relative links or set your framework's base URL to <code id="custom-site-url"></code>. Propose the files through a pull request in the <a href="https://github.com/MSRG/msrg.github.io" target="_blank" rel="noreferrer">MSRG repository</a>. Your member card gets a Personal website link automatically.</p>
+        <p>Choose one approach per member: a template page or a custom website. Existing custom websites can be previewed here; edit their source files in the repository.</p>
+      </details>
+    </section>
+    <form id="editor">
+      <div id="record-identifier" class="field" hidden><label for="record-slug">Page identifier</label>
+        <p class="help">Generated from the title. Keep it stable so existing links keep working.</p>
+        <input id="record-slug" pattern="[a-z0-9]+(?:-[a-z0-9]+)*"></div>
+      <div id="fields"></div>
+      <div class="actions"><button type="submit" id="save" disabled>Save changes</button>
+        <a id="preview" role="link" aria-disabled="true" tabindex="-1" target="_blank" rel="noreferrer">Preview on local website ↗</a></div>
+      <p id="preview-status" class="help" role="status">Checking local preview…</p>
+      <p id="preview-hint" class="help" hidden></p>
+      <button id="preview-start" type="button" class="secondary" hidden>Retry preview</button>
+      <details id="preview-error" hidden><summary>Preview error details</summary><pre id="preview-error-text"></pre></details>
+    </form>
+    <section id="personal-preview-panel" class="personal-preview-panel" aria-labelledby="personal-preview-heading" hidden>
+      <h2 id="personal-preview-heading">Page preview</h2>
+      <p id="personal-preview-note" class="help" role="status"></p>
+      <div class="toolbar" aria-label="Preview controls">
+        <button id="preview-wide" type="button" class="secondary" aria-pressed="true">Full width</button>
+        <button id="preview-phone" type="button" class="secondary" aria-pressed="false">Phone</button>
+        <button id="preview-refresh" type="button" class="secondary" disabled>Refresh preview</button>
+      </div>
+      <div id="personal-preview-viewport" class="personal-preview-viewport">
+        <iframe id="personal-preview-frame" title="Personal page preview" sandbox="allow-scripts allow-same-origin allow-popups" hidden></iframe>
+      </div>
+    </section>
+    <section class="next-steps"><h2>Ready to request a change?</h2>
+      <ol><li>Save your changes. Upload photos and download files using the file pickers above.</li>
+        <li>Open the preview once it is ready. The editor starts the local website automatically.</li>
+        <li>Commit the changed files on your branch and <a href="https://github.com/MSRG/msrg.github.io/compare" target="_blank" rel="noreferrer">open a pull request to main</a>. The README explains setup and submission.</li></ol>
+      <button type="button" id="reload">Reload saved entry</button>
+    </section>
+  </main>
+</body>
+</html>

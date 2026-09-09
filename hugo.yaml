@@ -1,0 +1,112 @@
+baseURL: https://msrg.github.io/
+# Remove obsolete generated files, including retired member pages, on rebuild.
+cleanDestinationDir: true
+# Publication is controlled by Git branches, never by front matter or dates.
+buildDrafts: true
+buildFuture: true
+buildExpired: true
+
+markup:
+  goldmark:
+    extensions:
+      passthrough:
+        enable: true
+        delimiters:
+          inline: [['\(', '\)'], ['$', '$']]
+          block: [['\[', '\]'], ['$$', '$$']]
+    renderer:
+      unsafe: true
+locale: en-CA
+title: Middleware Systems Research Group
+defaultContentLanguage: en
+enableRobotsTXT: true
+
+pagination:
+  pagerSize: 12
+
+caches:
+  images:
+    dir: :cacheDir/images
+
+taxonomies:
+  research: research
+  status: statuses
+  publication_type: publication-types
+  tag: tags
+
+permalinks:
+  personal: /~:contentbasename/
+  people: /people/:slug/
+  publications: /publications/:slug/
+  research: /research/:slug/
+  data-sets: /data-sets/:slug/
+
+params:
+  description: Systems research at the University of Toronto spanning data management, distributed machine learning, and quantum computing systems.
+  # Public contact: https://www.qscc.ca/open-positions/
+  contact_email: jacobsen@eecg.utoronto.ca
+  contact_phone: "+1 416 946 7586"
+  contact_location: Bahen Centre, University of Toronto
+  theme:
+    primary: "#1e3765"
+    success: "#003300"
+  news:
+    elfsight_app_id: "fcaa2115-34c7-4dbb-b62f-daf5be6f9039"
+  publication_filters:
+    - label: "Quantum Systems"
+      slug: "quantum-systems"
+    - label: "Federated Learning"
+      slug: "federated-learning"
+    - label: "Graph Systems"
+      slug: "graph-systems"
+    - label: "Blockchain"
+      slug: "blockchain"
+    - label: "Cloud Systems"
+      slug: "cloud-systems"
+    - label: "Benchmarks"
+      slug: "benchmarking"
+  social:
+    - name: LinkedIn
+      url: https://www.linkedin.com/company/middleware-systems-research-group/
+    - name: X
+      url: https://twitter.com/msrg_org
+
+menu:
+  main:
+    - name: Home
+      pageRef: /
+      weight: 10
+    - identifier: research
+      name: Research
+      pageRef: /research
+      weight: 20
+    - name: Quantum Computing Systems
+      parent: research
+      pageRef: /research/quantum-computing-systems
+      weight: 21
+    - name: Distributed Machine Learning
+      parent: research
+      pageRef: /research/distributed-machine-learning
+      weight: 22
+    - name: Data Management
+      parent: research
+      pageRef: /research/data-management
+      weight: 23
+    - identifier: people
+      name: People
+      pageRef: /people
+      weight: 30
+    - name: Current Team
+      parent: people
+      pageRef: /people
+      weight: 32
+    - name: Alumni
+      parent: people
+      url: /people/#alumni
+      weight: 33
+    - name: Publications
+      pageRef: /publications
+      weight: 40
+    - name: Data Sets
+      pageRef: /data-sets
+      weight: 50

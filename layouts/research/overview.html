@@ -1,0 +1,21 @@
+{{ define "main" }}
+  <section class="page-hero scroll-section">
+    <div class="site-shell">
+      <h1>{{ .Title }}</h1>
+    </div>
+  </section>
+
+  <section class="page-section page-section-alt">
+    <div class="site-shell card-grid card-grid-wide">
+      {{ range .Pages.ByWeight }}
+        <article class="card accent-{{ .Params.accent }} scroll-section">
+          <p class="card-kicker">Research area</p>
+          <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+          {{ with .Params.question }}<p class="card-question">{{ . }}</p>{{ end }}
+          <div class="card-blurb">{{ .Params.blurb | markdownify }}</div>
+          <p class="content-actions"><a class="card-readmore" href="{{ .RelPermalink }}">Read more →</a></p>
+        </article>
+      {{ end }}
+    </div>
+  </section>
+{{ end }}

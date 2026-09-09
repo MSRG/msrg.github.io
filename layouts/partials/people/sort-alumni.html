@@ -1,0 +1,13 @@
+{{/* Most recent end date first, then most recent start date. Unknown dates last.
+     Pad ISO dates so an omitted or year-only value sorts before more precise
+     values with the same prefix, independently of the secondary date. */}}
+{{ $entries := slice }}
+{{ range . }}
+  {{ $key := printf "%-10s|%-10s" (.Params.end_date | default "") (.Params.start_date | default "") }}
+  {{ $entries = $entries | append (dict "key" $key "page" .) }}
+{{ end }}
+{{ $ordered := slice }}
+{{ range sort $entries "key" "desc" }}
+  {{ $ordered = $ordered | append .page }}
+{{ end }}
+{{ return $ordered }}

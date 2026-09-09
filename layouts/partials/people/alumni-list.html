@@ -1,0 +1,12 @@
+<div class="content-panel">
+  <ul class="alumni-list">
+    {{ range . }}
+      {{ $endYear := "" }}
+      {{ with .Params.end_date }}{{ $endYear = substr . 0 4 }}{{ end }}
+      <li id="member-{{ .Params.slug }}">
+        <span>{{ partial "page-title.html" . }}{{ with $endYear }} <span class="muted">({{ . }})</span>{{ end }}{{ if or (eq .Params.status "visiting") (.Params.visiting | default false) }} <span class="muted">· Visiting researcher</span>{{ end }}</span>
+        {{ partial "profile-links.html" (dict "page" . "class" "profile-links profile-links-inline" "awardsFirst" true) }}
+      </li>
+    {{ end }}
+  </ul>
+</div>

@@ -1,0 +1,64 @@
+{{ define "main" }}
+  <article>
+    <section class="page-hero">
+      <div class="site-shell">
+        <p class="eyebrow">Publication</p>
+        <h1>{{ .Title }}</h1>
+        <p class="page-intro">{{ partial "publication-authors.html" (dict "authors" .Params.authors) }}</p>
+        <p class="page-summary">
+          {{ .Params.venue }}, {{ .Params.year }} · {{ .Params.publication_type }}
+        </p>
+        {{ with .Params.external_url }}
+          <p class="content-actions"><a class="button" href="{{ . }}" target="_blank" rel="noreferrer">Read paper</a></p>
+        {{ end }}
+      </div>
+    </section>
+
+    <section class="page-section">
+      <div class="site-shell content-grid">
+        <article class="content-panel prose">
+          <p class="content-label">Abstract</p>
+          {{ with .Params.abstract }}
+            {{ $.RenderString (dict "display" "block") . }}
+          {{ else with .Params.external_url }}
+            <p><a href="{{ . }}">Read the abstract and full publication at the source.</a></p>
+          {{ else }}
+            <p>The abstract has not been added yet.</p>
+          {{ end }}
+          {{ with .Content }}
+            <h2>Additional notes</h2>
+            {{ . }}
+          {{ end }}
+        </article>
+        <aside class="content-panel stack">
+          <div>
+            <h2>Research areas</h2>
+            <div class="chip-row">
+              {{ range .Params.research }}
+                {{ with site.GetPage (printf "/research/%s" .) }}
+                  <a class="chip" href="{{ .RelPermalink }}">{{ .Title }}</a>
+                {{ end }}
+              {{ end }}
+            </div>
+          </div>
+          {{ with .Params.related_datasets }}
+            <div>
+              <h2>Related data sets</h2>
+              <div class="stack">
+                {{ range . }}
+                  {{ $ds := site.GetPage (printf "/data-sets/%s" .) }}
+                  {{ with $ds }}
+                    <a class="list-link-card" href="{{ .RelPermalink }}">
+                      <strong>{{ .Title }}</strong>
+                      <span>{{ .Params.source }}</span>
+                    </a>
+                  {{ end }}
+                {{ end }}
+              </div>
+            </div>
+          {{ end }}
+        </aside>
+      </div>
+    </section>
+  </article>
+{{ end }}

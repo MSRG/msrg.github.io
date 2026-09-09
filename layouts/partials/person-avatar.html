@@ -1,0 +1,16 @@
+{{ $page := .page }}
+{{ $class := .class | default "" }}
+{{ with $page.Params.portrait }}
+  {{ $src := . | relURL }}
+  {{ with $page.Resources.GetMatch . }}
+    {{ $src = (. | fingerprint).RelPermalink }}
+  {{ else }}
+    {{ $file := printf "static/%s" (strings.TrimPrefix "/" .) }}
+    {{ if fileExists $file }}
+      {{ $src = printf "%s?v=%s" $src (readFile $file | crypto.SHA256) }}
+    {{ end }}
+  {{ end }}
+  <img class="avatar-image {{ $class }}" src="{{ $src }}" alt="{{ (partial "page-title.html" $page) }}" loading="lazy"{{ with $page.Params.portrait_position }} style="object-position: {{ . }}"{{ end }}>
+{{ else }}
+  {{ partial "person-avatar-fallback.html" (dict "page" $page "class" $class) }}
+{{ end }}

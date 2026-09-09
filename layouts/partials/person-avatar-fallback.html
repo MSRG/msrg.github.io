@@ -1,0 +1,8 @@
+{{ $page := .page }}
+{{ $class := .class | default "" }}
+{{ $words := split (partial "page-title.html" $page) " " }}
+{{ $initials := upper (substr (index $words 0) 0 1) }}
+{{ if gt (len $words) 1 }}
+  {{ $initials = printf "%s%s" $initials (upper (substr (index $words 1) 0 1)) }}
+{{ end }}
+<span class="avatar-fallback {{ $class }}">{{ $initials }}</span>

@@ -1,0 +1,31 @@
+<header class="site-header">
+  <div class="site-shell">
+    <div class="brand-row">
+      <a class="uoft-mark" href="https://www.ece.utoronto.ca/" aria-label="University of Toronto ECE">
+        <img src="{{ "images/university-of-toronto.svg" | relURL }}" alt="">
+      </a>
+      <span class="brand-divider" aria-hidden="true"></span>
+      <a class="brand" href="{{ "/" | relURL }}">
+        <img class="brand-wordmark" src="{{ "images/msrg-logo-white.png" | relURL }}" alt="Middleware Systems Research Group">
+      </a>
+      <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="site-nav">Menu</button>
+    </div>
+
+    <nav id="site-nav" class="site-nav" aria-label="Main navigation" data-nav-panel>
+      {{ $current := .RelPermalink }}
+      {{ range where site.Menus.main "Parent" "" }}
+        {{ $isActive := or (eq $current .URL) (and (ne .URL "/") (hasPrefix $current .URL)) }}
+        <div class="nav-item {{ if .HasChildren }}has-children{{ end }}">
+          <a class="{{ if $isActive }}is-active{{ end }}" href="{{ .URL }}"{{ if eq $current .URL }} aria-current="page"{{ end }}>{{ .Name }}</a>
+          {{ if .HasChildren }}
+            <ul class="nav-submenu">
+              {{ range .Children }}
+                <li><a href="{{ .URL }}">{{ .Name }}</a></li>
+              {{ end }}
+            </ul>
+          {{ end }}
+        </div>
+      {{ end }}
+    </nav>
+  </div>
+</header>

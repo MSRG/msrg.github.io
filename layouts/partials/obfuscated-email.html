@@ -1,0 +1,7 @@
+{{- $email := . -}}
+{{- $parts := split $email "@" -}}
+{{- if eq (len $parts) 2 -}}
+  {{- printf "%s [at] %s" (index $parts 0) (replace (index $parts 1) "." " [dot] ") -}}
+{{- else -}}
+  {{- $email -}}
+{{- end -}}

@@ -1,0 +1,66 @@
+{{ define "main" }}
+  {{ $pages := sort .RegularPages "Params.year" "desc" }}
+  <section class="page-hero">
+    <div class="site-shell">
+      <h1>{{ .Title }}</h1>
+    </div>
+  </section>
+
+  <section class="page-section">
+    <div class="site-shell stack">
+      <div class="stack" data-publication-controls hidden>
+      <label class="search-label" for="publication-search">Search titles, authors, venues, years, and summaries</label>
+      <input id="publication-search" class="search-input" type="search" placeholder="Try graph, federated, quantum, or Jacobsen" data-publication-search>
+      <label for="publication-research">Research area</label>
+      <select id="publication-research" class="search-input" data-publication-research>
+        <option value="all">All research areas</option>
+        {{ range (site.GetPage "/research").Pages.ByWeight }}
+          <option value="{{ .File.ContentBaseName }}">{{ .Title }}</option>
+        {{ end }}
+      </select>
+      <div class="filter-toolbar" role="group" aria-label="Publication topics" data-publication-filters>
+        <button class="filter-chip is-active" type="button" aria-pressed="true" data-publication-tag="all">All topics</button>
+        {{ range site.Params.publication_filters }}
+          <button class="filter-chip" type="button" aria-pressed="false" data-publication-tag="{{ .slug }}">{{ .label }}</button>
+        {{ end }}
+      </div>
+      <div class="section-header-row">
+        <p class="muted" role="status" data-publication-count></p>
+        <button class="button button-secondary" type="button" data-publication-clear>Clear filters</button>
+      </div>
+      </div>
+      <p class="muted" data-publication-empty hidden>No publications match this search.</p>
+      <div class="stack">
+        {{ range $pages }}
+          {{ $searchText := printf "%s %s %s %v %v %v %s %s" .Title (.Params.summary | default "") .Params.venue .Params.year .Params.authors .Params.tags (.Content | plainify) (.Params.abstract | default "") | lower }}
+          {{ range .Params.authors }}
+            {{ $authorName := lower . }}
+            {{ range (site.GetPage "/people").RegularPages }}
+              {{ $names := .Params.author_names | default (slice (partial "page-title.html" .)) }}
+              {{ range $names }}
+                {{ if eq (lower .) $authorName }}
+                  {{ range $names }}
+                    {{ $searchText = printf "%s %s" $searchText (lower .) }}
+                  {{ end }}
+                {{ end }}
+              {{ end }}
+            {{ end }}
+          {{ end }}
+          <article class="list-card publication-card" data-publication-card data-search="{{ $searchText }}" data-research="{{ delimit (.Params.research | default (slice)) "|" }}" data-tags="{{ delimit (.Params.tags | default (slice)) "|" }}">
+            <p class="muted">{{ partial "publication-authors.html" (dict "authors" .Params.authors) }}</p>
+            <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+            <p>{{ .Params.venue }}, {{ .Params.year }} · {{ .Params.publication_type }}</p>
+            {{ with .Params.tags }}
+              <div class="chip-row">
+                {{ range . }}
+                  <span class="chip chip-muted">{{ . }}</span>
+                {{ end }}
+              </div>
+            {{ end }}
+            {{ with .Params.summary }}<p>{{ . }}</p>{{ end }}
+          </article>
+        {{ end }}
+      </div>
+    </div>
+  </section>
+{{ end }}

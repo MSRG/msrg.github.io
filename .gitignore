@@ -1,0 +1,16 @@
+/public
+/.hugo_build.lock
+/resources/_gen
+/.pixi/
+__pycache__
+/local-notes/
+
+# Local planning, review notes, and incoming photo staging.
+/docs/
+/hugo.txt
+/New_Images/
+
+# Local agent configuration and operating-system metadata.
+/.agents/
+/.codex/
+.DS_Store

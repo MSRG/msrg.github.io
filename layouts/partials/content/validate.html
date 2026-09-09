@@ -1,0 +1,19 @@
+{{/* Validate required values and choices from the same schema used by the editor. */}}
+{{ $page := .page }}
+{{ $schema := .schema }}
+{{ range $schema.fields }}
+  {{ $field := . }}
+  {{ $value := index $page.Params .key }}
+  {{ if and .required (not $value) }}
+    {{ errorf "%s: %s is required (see data/content_schema.json)" $page.File.Path .key }}
+  {{ end }}
+  {{ $choices := .options | default slice }}
+  {{ if eq .options_source "roles" }}
+    {{ range $schema.groups }}{{ $choices = $choices | append .roles }}{{ end }}
+  {{ end }}
+  {{ if and $value $choices (eq .type "string") }}
+    {{ if not (in $choices $value) }}
+      {{ errorf "%s: unsupported %s %q; choose from %s" $page.File.Path $field.key $value (delimit $choices ", ") }}
+    {{ end }}
+  {{ end }}
+{{ end }}

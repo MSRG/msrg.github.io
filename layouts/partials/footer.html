@@ -1,0 +1,45 @@
+{{ $researchSection := site.GetPage "/research" }}
+{{ $publicationSection := site.GetPage "/publications" }}
+{{ $recentPubs := first 4 (sort $publicationSection.RegularPages "Params.year" "desc") }}
+<footer class="site-footer">
+  <div class="site-shell footer-grid">
+    <div>
+      <img class="footer-logo" src="{{ "images/msrg-logo-white.png" | relURL }}" alt="Middleware Systems Research Group">
+      <p>
+        Research on data systems, distributed learning infrastructure, and
+        quantum computing systems at the University of Toronto.
+      </p>
+    </div>
+    <div>
+      <h2>Research</h2>
+      <ul class="footer-list">
+        {{ range $researchSection.Pages.ByWeight }}
+          <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+        {{ end }}
+      </ul>
+    </div>
+    <div>
+      <h2>Recent publications</h2>
+      <ul class="footer-list">
+        {{ range $recentPubs }}
+          <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+        {{ end }}
+      </ul>
+    </div>
+    <div>
+      <h2>Contact</h2>
+      <p>{{ site.Params.contact_location }}</p>
+      {{ with partial "public-email.html" site.Params.contact_email }}<p><a href="mailto:{{ . }}" target="_blank" rel="noopener noreferrer">{{ partial "obfuscated-email.html" . }}</a></p>{{ end }}
+      <p><a href="tel:{{ replaceRE "[^+0-9]" "" site.Params.contact_phone }}">{{ site.Params.contact_phone }}</a></p>
+      <p class="footer-socials">
+        {{ range site.Params.social }}
+          <a href="{{ .url }}">{{ .name }}</a>
+        {{ end }}
+      </p>
+    </div>
+  </div>
+  <div class="site-shell footer-bottom">
+    <p>&copy; {{ now.Year }} Middleware Systems Research Group.</p>
+    <p><a href="https://www.utoronto.ca/privacy">Privacy notice</a></p>
+  </div>
+</footer>

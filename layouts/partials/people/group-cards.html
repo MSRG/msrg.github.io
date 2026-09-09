@@ -1,0 +1,18 @@
+{{ $people := . }}
+{{ range hugo.Data.content_schema.types.people.groups }}
+  {{ $group := . }}
+  {{ with where $people "Params.role" "in" .roles }}
+    <section class="roster-group scroll-section">
+      <h2 class="section-context-bar">
+        <span class="section-context-group">{{ $group.heading }}</span>
+        {{ with $group.subtitle }}
+          <span class="section-context-sep" aria-hidden="true">·</span>
+          <span class="section-context-sub">{{ . }}</span>
+        {{ end }}
+      </h2>
+      <div class="card-grid">
+        {{ range . }}{{ partial "person-card.html" . }}{{ end }}
+      </div>
+    </section>
+  {{ end }}
+{{ end }}

@@ -1,0 +1,12 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ .Title }} | {{ site.Title }}</title>
+    <meta name="robots" content="noindex">
+    <link rel="canonical" href="{{ .Params.redirect | absURL }}">
+    <meta http-equiv="refresh" content="0; url={{ .Params.redirect | relURL }}">
+  </head>
+  <body><p><a href="{{ .Params.redirect | relURL }}">Continue to {{ .Title }}</a></p></body>
+</html>

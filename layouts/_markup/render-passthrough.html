@@ -1,0 +1,13 @@
+{{- /* Hugo's embedded KaTeX produces native MathML; no scripts, CDN, or fonts needed. */ -}}
+{{- $options := dict "output" "mathml" "displayMode" (eq .Type "block") -}}
+{{- with try (transform.ToMath .Inner $options) -}}
+  {{- with .Err -}}
+    {{- errorf "Invalid LaTeX at %s: %s" $.Position . -}}
+  {{- else -}}
+    {{- if eq $.Type "block" -}}
+      <div class="math-block" tabindex="0" role="region" aria-label="Equation">{{ .Value }}</div>
+    {{- else -}}
+      {{ .Value }}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}

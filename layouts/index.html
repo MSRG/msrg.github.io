@@ -1,0 +1,113 @@
+{{ define "main" }}
+  {{ $researchSection := site.GetPage "/research" }}
+  {{ $publicationSection := site.GetPage "/publications" }}
+  {{ $recentPubs := first 6 (sort $publicationSection.RegularPages "Params.year" "desc") }}
+  {{ $newsApp := site.Params.news.elfsight_app_id }}
+
+  <section class="hero hero-home">
+    <div class="hero-home-stage">
+      <img class="hero-home-image" src="{{ "images/group-photo-2023-straight.jpg" | relURL }}" alt="MSRG group photo">
+      <div class="hero-home-overlay">
+        <div class="hero-home-badge">
+          <div class="hero-home-game" data-msrg-game>
+            <h1 class="hero-home-title">
+              <span>Welcome to</span>
+              <span class="sr-only">MSRG</span>
+              <span class="hero-home-title-shell" data-msrg-shell>
+                <span class="hero-home-typed hero-home-typed-prompt" aria-hidden="true"><span class="hero-home-typed-text">MSRG</span></span>
+                <span class="hero-home-typed hero-home-typed-live" aria-hidden="true">
+                  <span class="hero-home-typed-live-text" data-msrg-live></span>
+                </span>
+              </span>
+            </h1>
+            <p class="hero-home-subtitle">{{ .Params.hero_subtitle }}</p>
+            <p class="hero-home-tagline">{{ .Params.hero_tagline }}</p>
+            <label class="hero-touch-typing">Try typing MSRG
+              <input data-msrg-input type="text" maxlength="4" autocomplete="off" autocapitalize="characters" spellcheck="false" aria-label="Type MSRG to play the typing challenge">
+            </label>
+            <p id="hero-msrg-status" class="hero-home-game-status" aria-live="polite" data-msrg-status hidden>Type M, then S, then R, then G.</p>
+            <div class="hero-home-game-stats" aria-live="polite" data-msrg-stats hidden>
+              <span class="hero-home-game-stat"><strong data-msrg-latest>0 WPM</strong>Latest</span>
+              <span class="hero-home-game-stat"><strong data-msrg-best>0 WPM</strong>Best</span>
+              <span class="hero-home-game-stat"><strong data-msrg-rounds>0</strong>Rounds</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="page-section">
+    <div class="site-shell content-grid">
+      <article class="content-panel prose">
+        <h2>What is MSRG Anyways?</h2>
+        {{ .Content }}
+      </article>
+      <aside class="content-panel callout-panel">
+        <h2>Does our research sound interesting to you? — We are always looking for bright and highly motivated students and post-docs!</h2>
+        <p>
+          If you are interested in work on one of our research areas, collaborate
+          with an interdisciplinary team, and leave your mark in research — do
+          not hesitate to reach out to Prof. Jacobsen.
+        </p>
+        {{ with partial "public-email.html" site.Params.contact_email }}<p class="content-actions"><a class="callout-email" href="mailto:{{ . }}" target="_blank" rel="noopener noreferrer">Email Prof. Jacobsen</a></p>{{ end }}
+      </aside>
+    </div>
+  </section>
+
+  <section class="page-section page-section-alt">
+    <div class="site-shell">
+      <div class="section-heading">
+        <h2>News</h2>
+      </div>
+      <div class="content-panel news-panel">
+        {{ if $newsApp }}
+          <script src="https://static.elfsight.com/platform/platform.js" async></script>
+          <div class="elfsight-app-{{ $newsApp }}" data-elfsight-app-lazy></div>
+        {{ end }}
+        <p><a href="https://www.linkedin.com/company/middleware-systems-research-group/">Read MSRG news on LinkedIn →</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="page-section">
+    <div class="site-shell">
+      <div class="section-heading">
+        <p class="eyebrow">Research Themes</p>
+        <h2>Three active tracks with room for overlap</h2>
+      </div>
+      <div class="card-grid card-grid-wide">
+        {{ range $researchSection.Pages.ByWeight }}
+          <article class="card accent-{{ .Params.accent }}">
+            <p class="card-kicker">Research area</p>
+            <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+            {{ with .Params.question }}<p class="card-question">{{ . }}</p>{{ end }}
+            <div class="card-blurb">{{ .Params.blurb | markdownify }}</div>
+            <p class="content-actions"><a class="card-readmore" href="{{ .RelPermalink }}">Read more →</a></p>
+          </article>
+        {{ end }}
+      </div>
+    </div>
+  </section>
+
+  <section class="page-section page-section-alt">
+    <div class="site-shell">
+      <div class="section-header-row">
+        <div class="section-heading">
+          <p class="eyebrow">Publications</p>
+          <h2>Recent work at a glance</h2>
+        </div>
+        <a class="button" href="{{ "/publications/" | relURL }}">Browse publications</a>
+      </div>
+      <div class="stack">
+        {{ range $recentPubs }}
+          <article class="list-card">
+            <p class="muted">{{ partial "publication-authors.html" (dict "authors" .Params.authors) }}</p>
+            <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+            <p>{{ .Params.venue }}, {{ .Params.year }}</p>
+          </article>
+        {{ end }}
+      </div>
+    </div>
+  </section>
+{{ end }}

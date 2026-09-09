@@ -1,0 +1,17 @@
+{{ define "main" }}
+  {{ $member := site.GetPage (printf "/people/%s" .File.ContentBaseName) }}
+  <article class="personal-academic">
+    <header class="personal-academic__profile">
+      {{ with $member }}
+        {{ partial "person-avatar.html" (dict "page" .) }}
+      {{ end }}
+      <h1>{{ partial "page-title.html" . }}</h1>
+      {{ with $member }}
+        {{ with .Params.role }}<p>{{ . }}</p>{{ end }}
+        {{ with .Params.location }}<p>{{ . }}</p>{{ end }}
+        {{ partial "profile-links.html" (dict "page" . "skip" (slice "website")) }}
+      {{ end }}
+    </header>
+    <div class="personal-academic__content prose">{{ .Content }}</div>
+  </article>
+{{ end }}

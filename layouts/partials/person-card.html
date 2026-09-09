@@ -1,0 +1,21 @@
+<article id="member-{{ .Params.slug }}" class="card person-card">
+  <div class="person-card-portrait">
+    {{ partial "person-avatar.html" (dict "page" . "class" "") }}
+  </div>
+  <div class="person-card-body stack-tight">
+    <h3>{{ partial "page-title.html" . }}</h3>
+    <p class="muted person-card-role">{{ .Params.role }}{{ if eq .Params.status "visiting" }} · Visiting researcher{{ end }}</p>
+    {{ with .Params.location }}<p class="muted">{{ . }}</p>{{ end }}
+    {{ with .Params.interests }}
+      <div class="chip-row chip-row-xs">
+        {{ range . }}<span class="chip chip-interest">{{ . }}</span>{{ end }}
+      </div>
+    {{ end }}
+    {{ with .Params.awards }}
+      <div class="chip-row chip-row-xs">
+        {{ range . }}<a class="chip chip-award" href="{{ .url }}" target="_blank" rel="noreferrer">{{ partial "award-icon.html" . }}<span>{{ .name }}</span></a>{{ end }}
+      </div>
+    {{ end }}
+    {{ partial "profile-links.html" (dict "page" . "class" "profile-links" "skip" (slice "awards")) }}
+  </div>
+</article>

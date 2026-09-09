@@ -1,0 +1,6 @@
+{{- /* Author names are text; member websites are listed with the roster links. */ -}}
+{{- $names := slice -}}
+{{- range .authors | default (slice) -}}
+  {{- $names = $names | append (. | strings.TrimSpace) -}}
+{{- end -}}
+{{- delimit $names " / " -}}

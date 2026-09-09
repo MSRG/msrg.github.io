@@ -1,0 +1,27 @@
+{{ $title := site.Title }}
+{{ if not .IsHome }}
+  {{ $title = printf "%s | %s" (replace (partial "page-title.html" .) "_" " ") site.Title }}
+{{ end }}
+{{ $description := .Params.description | default .Params.summary | default .Params.blurb | default site.Params.description }}
+{{ $styles := resources.Get "css/main.css" | minify | fingerprint }}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>document.documentElement.classList.add("js");</script>
+<title>{{ $title }}</title>
+<meta name="description" content="{{ $description | markdownify | plainify }}">
+<link rel="icon" href="{{ "favicon.png" | relURL }}" sizes="32x32">
+<link rel="canonical" href="{{ .Permalink }}">
+<meta property="og:title" content="{{ $title }}">
+<meta property="og:description" content="{{ $description | markdownify | plainify }}">
+<meta property="og:type" content="{{ if .IsHome }}website{{ else }}article{{ end }}">
+<meta property="og:url" content="{{ .Permalink }}">
+<link rel="stylesheet" href="{{ $styles.RelPermalink }}" integrity="{{ $styles.Data.Integrity }}">
+{{ if eq .Section "personal" }}
+  {{ with .Params.custom_css }}
+    {{ range . }}
+      {{ with $.Resources.GetMatch . }}
+        <link rel="stylesheet" href="{{ .RelPermalink }}">
+      {{ end }}
+    {{ end }}
+  {{ end }}
+{{ end }}

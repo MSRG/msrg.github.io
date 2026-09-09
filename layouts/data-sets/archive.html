@@ -1,0 +1,29 @@
+{{ define "main" }}
+  <section class="page-hero scroll-section">
+    <div class="site-shell page-hero-grid">
+      <div>
+        <h1>{{ .Title }}</h1>
+      </div>
+    </div>
+  </section>
+
+  <section class="page-section">
+    <div class="site-shell card-grid">
+      {{ range .RegularPages.ByTitle }}
+        {{ $dataset := . }}
+        <article class="card scroll-section">
+          <p class="card-kicker">{{ .Params.source }}</p>
+          <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+          <p>{{ .Params.summary }}</p>
+          {{ with .Params.legacy_package }}<p class="muted">Legacy package: {{ . }}</p>{{ end }}
+          {{ partial "dataset-downloads.html" . }}
+          {{ with .Params.resource_url }}
+            <p class="content-actions"><a class="card-readmore" href="{{ . }}" target="_blank" rel="noreferrer">
+              {{ $dataset.Params.resource_label | default "Related paper" }} →
+            </a></p>
+          {{ end }}
+        </article>
+      {{ end }}
+    </div>
+  </section>
+{{ end }}

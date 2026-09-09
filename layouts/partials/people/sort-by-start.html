@@ -1,0 +1,15 @@
+{{/* Keep unknown start dates after dated members, including omitted fields. */}}
+{{ $dated := slice }}
+{{ $undated := slice }}
+{{ range . }}
+  {{ if .Params.start_date }}
+    {{ $dated = $dated | append . }}
+  {{ else }}
+    {{ $undated = $undated | append . }}
+  {{ end }}
+{{ end }}
+{{ $ordered := sort $dated "Params.start_date" }}
+{{ range sort $undated "Params.name" }}
+  {{ $ordered = $ordered | append . }}
+{{ end }}
+{{ return $ordered }}
