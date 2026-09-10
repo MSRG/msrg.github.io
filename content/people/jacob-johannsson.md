@@ -1,7 +1,7 @@
 +++
 name = "Jacob Johannsson"
 slug = "jacob-johannsson"
-role = "MSc Student"
+role = "PhD Student"
 status = "current"
 start_date = "2026-09"
 location = "Toronto, Canada"
