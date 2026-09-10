@@ -11,4 +11,5 @@ portrait = "/images/people/michalis-bachras.jpg"
 linkedin = "https://www.linkedin.com/in/michalis-bachras/"
 email = "michalis.bachras@mail.utoronto.ca"
 # Contact address supplied in the maintainer's group-member list, 2026-09-09.
+author_names = ["Michalis Bachras", "Michail Bachras"]
 +++

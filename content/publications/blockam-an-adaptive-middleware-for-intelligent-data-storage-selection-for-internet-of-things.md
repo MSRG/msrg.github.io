@@ -1,0 +1,10 @@
++++
+title = "BlockAM: An Adaptive Middleware for Intelligent Data Storage Selection for Internet of Things"
+year = 2020
+authors = ["Syed Muhammad Danish", "Kaiwen Zhang", "Hans-Arno Jacobsen"]
+venue = "2020 IEEE International Conference on Decentralized Applications and Infrastructures (DAPPS)"
+publication_type = "Conference Paper"
+research = ["data-management"]
+external_url = "https://doi.org/10.1109/dapps49028.2020.00007"
+abstract = "Current Internet of Things (IoT) infrastructures, with its massive data requirements, rely on cloud storage: however, usage of a single cloud storage can place limitations on the IoT applications in terms of service requirements (performance, availability, security etc.). Multi-cloud storage architecture has been emerged as a promising infrastructure to solve this problem, but this approach has limited impact due to the lack of differentiation between competing cloud solutions. Multiple decentralized storage solutions (e.g., based on blockchains) are entering the market with distinct characteristics in terms of architecture, performance, security and availability and at a lower price compared to cloud storage. In this work, we introduce BlockAM: an adaptive middleware for the intelligent selection of storage technology for IoT applications, which jointly considers the cloud, multi-cloud and decentralized storage technologies to store large-scale IoT data. We model the cost-minimization storage selection problem and propose two heuristic algorithms: Dynamic Programming (DP) based algorithm and Greedy Style (GS) algorithm, for optimizing the choice of data storage based on IoT application's service requirements. We also employ blockchain to store IoT data on-chain in order to provide data integrity, auditability and accountability to the middleware architecture. Comparisons among the heuristic algorithms are conducted through extensive experiments, which demonstrates that DP heuristic and GS heuristic achieve up to 92% and 80% accuracy respectively. Moreover, the price associated with a specific IoT application data storage decrease by up to 31.2% by employing our middleware solution."
++++

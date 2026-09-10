@@ -9,7 +9,7 @@
           {{ .Params.venue }}, {{ .Params.year }} · {{ .Params.publication_type }}
         </p>
         {{ with .Params.external_url }}
-          <p class="content-actions"><a class="button" href="{{ . }}" target="_blank" rel="noreferrer">Read paper</a></p>
+          <p class="content-actions"><a class="button" href="{{ . }}" target="_blank" rel="noopener noreferrer">Read paper</a></p>
         {{ end }}
       </div>
     </section>
@@ -20,8 +20,11 @@
           <p class="content-label">Abstract</p>
           {{ with .Params.abstract }}
             {{ $.RenderString (dict "display" "block") . }}
+            {{ with $.Params.abstract_license_url }}
+              <p class="muted"><a href="{{ . }}" target="_blank" rel="noopener noreferrer">License</a></p>
+            {{ end }}
           {{ else with .Params.external_url }}
-            <p><a href="{{ . }}">Read the abstract and full publication at the source.</a></p>
+            <p><a href="{{ . }}" target="_blank" rel="noopener noreferrer">Read the abstract and full publication at the source.</a></p>
           {{ else }}
             <p>The abstract has not been added yet.</p>
           {{ end }}

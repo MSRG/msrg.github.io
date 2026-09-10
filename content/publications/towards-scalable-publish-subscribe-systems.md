@@ -1,0 +1,10 @@
++++
+title = "Towards Scalable Publish/Subscribe Systems"
+year = 2015
+authors = ["Shuping Ji", "Chunyang Ye", "Jun Wei", "Hans-Arno Jacobsen"]
+venue = "2015 IEEE 35th International Conference on Distributed Computing Systems"
+publication_type = "Conference Paper"
+research = ["data-management"]
+external_url = "https://doi.org/10.1109/icdcs.2015.108"
+abstract = "Despite suffering from inefficiency and flexibility limitations, the filter-based routing (FBR) algorithm is widely used in content-based publish/subscribe (pub/sub) systems. To address its limitations, we propose a dynamic destination-based routing algorithm called D-DBR, which decomposes pub/sub into two independent parts: Content-based matching and destination based multicasting. D-DBR exhibits low event matching cost and high efficiency, flexibility, and robustness for event routing in small-scale overlays. To improve its scalability to large-scale overlays, we further extend D-DBR to a new routing algorithm called MERC. MERC divides the overlay into interconnected clusters and applies content-based and destination-based mechanisms to route events inter- and intra-cluster, respectively. We implemented all algorithms in the PADRES pub/sub system. Experimental results show that our algorithms outperform the FBR algorithm."
++++

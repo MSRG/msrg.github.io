@@ -90,10 +90,11 @@ identicons, or other people's photos.
   (legacy spelling), `p2ptopss_workload_2009.tgz`, and
   `DatasetOfResourceDiscovery.zip`. Keep the site's unavailable-archive notices
   and contact links until the files are recovered.
-- Obtain an authoritative group BibTeX/database export to check bibliography
-  completeness. The current archive contains the public legacy list and a
-  selection of newer papers. Preserve existing URLs when replacing preprints
-  with published versions.
+- Obtain an authoritative group BibTeX/database export to check unindexed
+  bibliography gaps. The 2026-09-10 backfill added 336 papers and preferred
+  verified published versions; see `docs/publication-import.md` for sources,
+  version decisions, and the unresolved RSS filtering paper. Existing page
+  URLs were preserved.
 
 ## Website verification and administration
 

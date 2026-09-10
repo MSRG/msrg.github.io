@@ -1,0 +1,192 @@
+[
+  {
+    "paper": "a-bigbench-implementation-in-the-hadoop-ecosystem",
+    "title": "A BigBench Implementation in the Hadoop Ecosystem",
+    "source_url": "https://doi.org/10.1007/978-3-319-10596-3_1"
+  },
+  {
+    "paper": "a-comprehensive-study-on-benchmarking-permissioned-blockchains",
+    "title": "A Comprehensive Study on Benchmarking Permissioned Blockchains",
+    "source_url": "https://doi.org/10.1007/978-3-031-68031-1_2"
+  },
+  {
+    "paper": "a-generalized-algorithm-for-publish-subscribe-overlay-design-and-its-fast-implementation",
+    "title": "A Generalized Algorithm for Publish/Subscribe Overlay Design and Its Fast Implementation",
+    "source_url": "https://doi.org/10.1007/978-3-642-33651-5_6"
+  },
+  {
+    "paper": "a-topss-a-publish-subscribe-system-supporting-approximate-matching",
+    "title": "A-TOPSS - A Publish/Subscribe System Supporting Approximate Matching",
+    "source_url": "https://doi.org/10.1016/b978-155860869-6/50120-7"
+  },
+  {
+    "paper": "a-topss-a-publish-subscribe-system-supporting-imperfect-information-processing",
+    "title": "A-ToPSS: A Publish/Subscribe System Supporting Imperfect Information Processing",
+    "source_url": "https://doi.org/10.1016/b978-012088469-8.50127-3"
+  },
+  {
+    "paper": "adversarial-robustness-in-distributed-quantum-machine-learning",
+    "title": "Adversarial Robustness in Distributed Quantum Machine Learning",
+    "source_url": "https://doi.org/10.1007/978-3-032-11153-1_11"
+  },
+  {
+    "paper": "adversarial-robustness-of-partitioned-quantum-classifiers",
+    "title": "Adversarial Robustness of Partitioned Quantum Classifiers",
+    "source_url": "https://arxiv.org/abs/2502.20403"
+  },
+  {
+    "paper": "big-data-generation",
+    "title": "Big Data Generation",
+    "source_url": "https://doi.org/10.1007/978-3-642-53974-9_3"
+  },
+  {
+    "paper": "bigbench-specification-v0-1-bigbench-an-industry-standard-benchmark-for-big-data-analytics",
+    "title": "BigBench Specification V0.1 - BigBench: An Industry Standard Benchmark for Big Data Analytics",
+    "source_url": "https://doi.org/10.1007/978-3-642-53974-9_14"
+  },
+  {
+    "paper": "bpm-in-cloud-architectures-business-process-management-with-slas-and-events",
+    "title": "BPM in Cloud Architectures: Business Process Management with SLAs and Events",
+    "source_url": "https://doi.org/10.1007/978-3-642-15618-2_2"
+  },
+  {
+    "paper": "composite-subscriptions-in-content-based-publish-subscribe-systems",
+    "title": "Composite Subscriptions in Content-Based Publish/Subscribe Systems",
+    "source_url": "https://doi.org/10.1007/11587552_13"
+  },
+  {
+    "paper": "discussion-of-bigbench-a-proposed-industry-standard-performance-benchmark-for-big-data",
+    "title": "Discussion of BigBench: A Proposed Industry Standard Performance Benchmark for Big Data",
+    "source_url": "https://doi.org/10.1007/978-3-319-15350-6_4"
+  },
+  {
+    "paper": "efficient-and-scalable-filtering-of-graph-based-metadata",
+    "title": "Efficient and scalable filtering of graph-based metadata",
+    "source_url": "https://doi.org/10.1016/j.websem.2005.09.006"
+  },
+  {
+    "paper": "efficient-constraint-processing-for-highly-personalized-location-based-services",
+    "title": "Efficient Constraint Processing for Highly Personalized Location Based Services",
+    "source_url": "https://doi.org/10.1016/b978-012088469-8.50128-5"
+  },
+  {
+    "paper": "efficient-data-transfer-in-shared-storage-cloud-data-processing-systems-with-optics",
+    "title": "Efficient Data Transfer in Shared-storage Cloud Data Processing Systems with OPTICS",
+    "source_url": "https://dl.acm.org/doi/10.5555/3615924.3623630"
+  },
+  {
+    "paper": "energieinformatik-aktuelle-und-zukunftige-forschungsschwerpunkte",
+    "title": "Energieinformatik - Aktuelle und zukünftige Forschungsschwerpunkte",
+    "source_url": "https://doi.org/10.1007/s11576-013-0396-9"
+  },
+  {
+    "paper": "energy-informatics-current-and-future-research-directions",
+    "title": "Energy Informatics - Current and Future Research Directions",
+    "source_url": "https://doi.org/10.1007/s12599-013-0304-2"
+  },
+  {
+    "paper": "eqosystem-supporting-fluid-distributed-service-oriented-workflows",
+    "title": "eQoSystem: supporting fluid distributed service-oriented workflows",
+    "source_url": "https://doi.org/10.1145/2002259.2002320"
+  },
+  {
+    "paper": "event-exposure-for-web-services-a-grey-box-approach-to-compose-and-evolve-web-services",
+    "title": "Event Exposure for Web Services: A Grey-Box Approach to Compose and Evolve Web Services",
+    "source_url": "https://doi.org/10.1007/978-3-642-16599-3_14"
+  },
+  {
+    "paper": "externalizing-java-server-concurrency-with-cal",
+    "title": "Externalizing Java Server Concurrency with CAL",
+    "source_url": "https://doi.org/10.1007/978-3-540-70592-5_16"
+  },
+  {
+    "paper": "generic-middleware-substrate-through-modelware",
+    "title": "Generic Middleware Substrate Through Modelware",
+    "source_url": "https://doi.org/10.1007/11587552_16"
+  },
+  {
+    "paper": "green-middleware",
+    "title": "Green Middleware",
+    "source_url": "https://doi.org/10.1007/978-3-642-22179-8_18"
+  },
+  {
+    "paper": "nofare-a-non-intrusive-facility-resource-monitoring-system",
+    "title": "NoFaRe: A Non-Intrusive Facility Resource Monitoring System",
+    "source_url": "https://doi.org/10.1007/978-3-319-25876-8_6"
+  },
+  {
+    "paper": "on-the-effects-of-signal-design-in-electric-vehicle-charging-using-vehicle-originating-signals",
+    "title": "On the effects of signal design in electric vehicle charging using vehicle-originating-signals",
+    "source_url": "https://doi.org/10.1007/s00450-014-0286-4"
+  },
+  {
+    "paper": "opengridmap-an-open-platform-for-inferring-power-grids-with-crowdsourced-data",
+    "title": "OpenGridMap: An Open Platform for Inferring Power Grids with Crowdsourced Data",
+    "source_url": "https://doi.org/10.1007/978-3-319-25876-8_15"
+  },
+  {
+    "paper": "opengridmap-towards-automatic-power-grid-simulation-model-generation-from-crowdsourced-data",
+    "title": "OpenGridMap: towards automatic power grid simulation model generation from crowdsourced data",
+    "source_url": "https://doi.org/10.1007/s00450-016-0317-4"
+  },
+  {
+    "paper": "optimized-cluster-based-filtering-algorithm-for-graph-metadata",
+    "title": "Optimized cluster-based filtering algorithm for graph metadata",
+    "source_url": "https://doi.org/10.1016/j.ins.2011.08.002"
+  },
+  {
+    "paper": "orchestrating-soa-using-requirement-specifications-and-domain-ontologies",
+    "title": "Orchestrating SOA Using Requirement Specifications and Domain Ontologies",
+    "source_url": "https://doi.org/10.1007/978-3-662-45391-9_30"
+  },
+  {
+    "paper": "prism-is-research-in-aspect-mining",
+    "title": "PRISM is research in aSpect mining",
+    "source_url": "https://doi.org/10.1145/1028664.1028676"
+  },
+  {
+    "paper": "processing-big-events-with-showers-and-streams",
+    "title": "Processing Big Events with Showers and Streams",
+    "source_url": "https://doi.org/10.1007/978-3-642-53974-9_6"
+  },
+  {
+    "paper": "re-factoring-middleware-systems-a-case-study",
+    "title": "Re-factoring Middleware Systems: A Case Study",
+    "source_url": "https://doi.org/10.1007/978-3-540-39964-3_79"
+  },
+  {
+    "paper": "remon-remote-external-memory-over-the-network",
+    "title": "REMON: Remote External Memory Over the Network",
+    "source_url": "https://doi.org/10.1109/icde65706.2026.00175"
+  },
+  {
+    "paper": "service-subscription-and-consumption-for-personal-web-applications",
+    "title": "Service Subscription and Consumption for Personal Web Applications",
+    "source_url": "https://doi.org/10.1007/978-3-642-39995-4_3"
+  },
+  {
+    "paper": "the-debs-2025-grand-challenge-real-time-monitoring-of-defects-in-laser-powder-bed-fusion-l-pbf-manufacturing",
+    "title": "The DEBS 2025 Grand Challenge: Real-Time Monitoring of Defects in Laser Powder Bed Fusion (L-PBF) Manufacturing",
+    "source_url": "https://doi.org/10.1145/3701717.3735578"
+  },
+  {
+    "paper": "the-padres-distributed-publish-subscribe-system",
+    "title": "The PADRES Distributed Publish/Subscribe System",
+    "source_url": "https://dblp.org/rec/conf/fiw/FidlerJLM05"
+  },
+  {
+    "paper": "toward-intelligent-sustainable-and-reliable-cloud-database-systems-a-unified-research-vision",
+    "title": "Toward Intelligent, Sustainable, and Reliable Cloud Database Systems: A Unified Research Vision",
+    "source_url": "https://doi.org/10.1109/cascon66301.2025.00122"
+  },
+  {
+    "paper": "towards-a-complete-bigbench-implementation",
+    "title": "Towards a Complete BigBench Implementation",
+    "source_url": "https://doi.org/10.1007/978-3-319-20233-4_1"
+  },
+  {
+    "paper": "using-publish-subscribe-middleware-for-distributed-ev-charging-optimization",
+    "title": "Using publish/subscribe middleware for distributed EV charging optimization",
+    "source_url": "https://doi.org/10.1007/s00450-014-0278-4"
+  }
+]

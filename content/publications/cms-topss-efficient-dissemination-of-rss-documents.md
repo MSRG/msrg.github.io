@@ -1,0 +1,10 @@
++++
+title = "CMS-ToPSS: Efficient Dissemination of RSS Documents"
+year = 2005
+authors = ["Milenko Petrovic", "Haifeng Liu", "Hans-Arno Jacobsen"]
+venue = "VLDB"
+publication_type = "Conference Paper"
+research = []
+external_url = "https://www.vldb.org/conf/2005/papers/p1279-petrovic.pdf"
+abstract = "Recent years have seen a rise in the number of unconventional publishing tools on the Internet. Tools such as wikis, blogs, discussion forums, and web-based content management systems have experienced tremendous rise in popularity and use; primarily because they provide something traditional tools do not: easy of use for non computer-oriented users and they are based on the idea of collaboration. It is estimated, by pewinternet.org, that 32 million people in the US read blogs (which represents 27% of the estimated 120 million US Internet users) while 8 million people have said that they have created blogs."
++++

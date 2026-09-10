@@ -348,13 +348,6 @@
           "format": "url"
         },
         {
-          "key": "source_url",
-          "label": "Metadata source",
-          "type": "string",
-          "default": "",
-          "format": "url"
-        },
-        {
           "key": "publication_type",
           "label": "Publication type",
           "type": "string",
@@ -369,13 +362,6 @@
           "options_source": "research"
         },
         {
-          "key": "summary",
-          "label": "Short listing summary",
-          "type": "string",
-          "default": "",
-          "help": "Optional short description for the publication list; put the full abstract below."
-        },
-        {
           "key": "abstract",
           "label": "Abstract",
           "type": "string",
@@ -383,6 +369,14 @@
           "multiline": true,
           "format": "markdown",
           "help": "Paste the paper's abstract. Use Markdown for emphasis and LaTeX for formulas: $x^2$ or \\(x^2\\) inline; $$...$$ or \\[...\\] for a separate equation. The formatting buttons help; save and open the local preview to check the result. Use code formatting for literal dollar amounts. Full LaTeX documents and custom packages are not supported."
+        },
+        {
+          "key": "abstract_license_url",
+          "label": "Abstract license",
+          "type": "string",
+          "default": "",
+          "format": "url",
+          "editor": false
         },
         {
           "key": "tags",

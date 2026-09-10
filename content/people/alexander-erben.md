@@ -10,4 +10,5 @@ research = ["distributed-machine-learning"]
 orcid = "https://orcid.org/0000-0002-0153-7251"
 linkedin = "https://www.linkedin.com/in/alexandererben/"
 end_date = "2024"
+author_names = ["Alexander Erben", "Alexander Isenko"]
 +++

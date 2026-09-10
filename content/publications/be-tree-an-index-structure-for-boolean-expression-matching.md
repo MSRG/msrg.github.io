@@ -1,19 +1,13 @@
 +++
-title = "Be-tree: An Index Structure to Efficiently Match Boolean Expressions over High-Dimensional Discrete Space"
+title = "BE-tree: an index structure to efficiently match boolean expressions over high-dimensional discrete space"
 slug = "be-tree-an-index-structure-for-boolean-expression-matching"
 year = 2011
 authors = ["Mohammad Sadoghi", "Hans-Arno Jacobsen"]
-venue = "Proceedings of the 2011 ACM SIGMOD International Conference on Management of Data"
+venue = "Proceedings of the 2011 ACM SIGMOD International Conference on Management of data"
 publication_type = "Conference Paper"
 research = ["data-management"]
 tags = ["boolean-expression-matching", "publish-subscribe", "indexing"]
-summary = "Introduces the BE-Tree, a tree-based index for efficiently matching large sets of Boolean expressions over high-dimensional discrete attribute spaces, with the companion BEGen workload generator used to evaluate it."
-external_url = "https://dl.acm.org/doi/abs/10.1145/1989323.1989390"
+external_url = "https://doi.org/10.1145/1989323.1989390"
 related_datasets = ["begen"]
+abstract = "BE-Tree is a novel dynamic tree data structure designed to efficiently index Boolean expressions over a high-dimensional discrete space. BE-Tree copes with both high-dimensionality and expressiveness of Boolean expressions by introducing a novel two-phase space-cutting technique that specifically utilizes the discrete and finite domain properties of the space. Furthermore, BE-Tree employs self-adjustment policies to dynamically adapt the tree as the workload changes. We conduct a comprehensive evaluation to demonstrate the superiority of BE-Tree in comparison with state-of-the-art index structures designed for matching Boolean expressions."
 +++
-
-Boolean expression matching is a core operation in content-based publish/subscribe
-systems. The BE-Tree is a tree-based index structure that efficiently matches large
-sets of Boolean expressions over high-dimensional discrete attribute spaces. The
-companion BEGen workload generator produces the Boolean-expression workloads used
-to evaluate the index under controllable characteristics.

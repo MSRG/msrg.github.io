@@ -1,0 +1,1340 @@
+{
+  "2ps-high-quality-edge-partitioning-with-two-phase-streaming": {
+    "source_url": "https://dblp.org/rec/journals/corr/abs-2001-07086",
+    "abstract_source_url": "https://openalex.org/W3001462578"
+  },
+  "a-bigbench-implementation-in-the-hadoop-ecosystem": {
+    "source_url": "https://dblp.org/rec/conf/wbdb/ChowdhuryRSDJ13"
+  },
+  "a-blockchain-based-privacy-preserving-charging-station-reservation-and-payment-scheme-for-electric-vehicles": {
+    "source_url": "https://dblp.org/rec/journals/distribledger/DanishSZJH25",
+    "abstract_source_url": "https://openalex.org/W4402599958"
+  },
+  "a-blockchain-based-privacy-preserving-intelligent-charging-station-selection-for-electric-vehicles": {
+    "source_url": "https://dblp.org/rec/conf/icbc2/Danish0J20",
+    "abstract_source_url": "https://openalex.org/W3066383670"
+  },
+  "a-comprehensive-feature-study-for-appliance-recognition-on-high-frequency-energy-data": {
+    "source_url": "https://dblp.org/rec/conf/eenergy/KahlHKJ17",
+    "abstract_source_url": "https://openalex.org/W2615044227"
+  },
+  "a-comprehensive-study-on-benchmarking-permissioned-blockchains": {
+    "source_url": "https://dblp.org/rec/conf/tpctc/ChackoMFGJ23"
+  },
+  "a-comprehensive-survey-of-machine-unlearning-techniques-for-large-language-models": {
+    "source_url": "https://dblp.org/rec/journals/corr/abs-2503-01854",
+    "abstract_source_url": "https://openalex.org/W4415339025"
+  },
+  "a-crowdsourcing-approach-for-the-inference-of-distribution-grids": {
+    "source_url": "https://dblp.org/rec/conf/eenergy/NasirifardRZSJ18",
+    "abstract_source_url": "https://openalex.org/W2804137108"
+  },
+  "a-distributed-anytime-algorithm-for-network-utility-maximization-with-application-to-real-time-ev-charging-control": {
+    "source_url": "https://dblp.org/rec/conf/cdc/RiveraJ14",
+    "abstract_source_url": "https://openalex.org/W2063775187"
+  },
+  "a-distributed-anytime-algorithm-for-real-time-ev-charging-congestion-control": {
+    "source_url": "https://dblp.org/rec/conf/eenergy/RiveraGJ15",
+    "abstract_source_url": "https://openalex.org/W2041919000"
+  },
+  "a-distributed-framework-for-reliable-and-efficient-service-choreographies": {
+    "source_url": "https://dblp.org/rec/conf/www/YoonYJ11",
+    "abstract_source_url": "https://openalex.org/W2033368298"
+  },
+  "a-distributed-service-oriented-architecture-for-business-process-execution": {
+    "source_url": "https://dblp.org/rec/journals/tweb/LiMJ10",
+    "abstract_source_url": "https://openalex.org/W2027402731"
+  },
+  "a-framework-for-control-and-co-simulation-in-distribution-networks-applied-to-electric-vehicle-charging-with-vehicle-originating-signals": {
+    "source_url": "https://doi.org/10.1109/energycon.2016.7513941",
+    "abstract_source_url": "https://openalex.org/W2478525669"
+  },
+  "a-generalized-algorithm-for-publish-subscribe-overlay-design-and-its-fast-implementation": {
+    "source_url": "https://dblp.org/rec/conf/wdag/ChenVJ12"
+  },
+  "a-hybrid-b-tree-as-solution-for-in-memory-indexing-on-cpu-gpu-heterogeneous-computing-platforms": {
+    "source_url": "https://dblp.org/rec/conf/sigmod/ShahvaraniJ16",
+    "abstract_source_url": "https://openalex.org/W2426048753"
+  },
+  "a-memory-bandwidth-efficient-hybrid-radix-sort-on-gpus": {
+    "source_url": "https://dblp.org/rec/conf/sigmod/StehleJ17",
+    "abstract_source_url": "https://openalex.org/W2547543723"
+  },
+  "a-scalable-circular-pipeline-design-for-multi-way-stream-joins-in-hardware": {
+    "source_url": "https://dblp.org/rec/conf/icde/NajafiSJ18",
+    "abstract_source_url": "https://openalex.org/W2794632798"
+  },
+  "a-serverless-publish-subscribe-system": {
+    "source_url": "https://dblp.org/rec/journals/corr/abs-2210-07897",
+    "abstract_source_url": "https://openalex.org/W4306706940"
+  },
+  "a-system-for-semantic-data-fusion-in-sensor-networks": {
+    "source_url": "https://dblp.org/rec/conf/debs/WunPJ07",
+    "abstract_source_url": "https://openalex.org/W2133544364"
+  },
+  "a-taxonomy-for-denial-of-service-attacks-in-content-based-publish-subscribe-systems": {
+    "source_url": "https://dblp.org/rec/conf/debs/WunCJ07",
+    "abstract_source_url": "https://openalex.org/W2143252268"
+  },
+  "a-topss-a-publish-subscribe-system-supporting-approximate-matching": {
+    "source_url": "https://dblp.org/rec/conf/vldb/LiuJ02"
+  },
+  "a-topss-a-publish-subscribe-system-supporting-imperfect-information-processing": {
+    "source_url": "https://dblp.org/rec/conf/vldb/LiuJ04"
+  },
+  "a-unified-approach-to-routing-covering-and-merging-in-publish-subscribe-systems-based-on-modified-binary-decision-diagrams": {
+    "source_url": "https://dblp.org/rec/conf/icdcs/LiHJ05",
+    "abstract_source_url": "https://openalex.org/W2130677504"
+  },
+  "a-user-tunable-machine-learning-framework-for-step-wise-synthesis-planning": {
+    "source_url": "https://doi.org/10.1039/d5dd00562k",
+    "abstract_source_url": "https://pubs.rsc.org/en/content/articlelanding/2026/dd/d5dd00562k",
+    "abstract_license_url": "https://creativecommons.org/licenses/by/3.0/"
+  },
+  "adaptive-content-based-routing-in-general-overlay-topologies": {
+    "source_url": "https://dblp.org/rec/conf/middleware/LiMJ08",
+    "abstract_source_url": "https://openalex.org/W1608885791"
+  },
+  "adaptive-location-constraint-processing": {
+    "source_url": "https://dblp.org/rec/conf/sigmod/XuJ07",
+    "abstract_source_url": "https://openalex.org/W2117913411"
+  },
+  "adaptive-middleware-for-real-time-prescriptive-analytics-in-large-scale-power-systems": {
+    "source_url": "https://dblp.org/rec/conf/middleware/RusitschkaDGJ13",
+    "abstract_source_url": "https://openalex.org/W2052330128"
+  },
+  "adaptive-parallel-compressed-event-matching": {
+    "source_url": "https://dblp.org/rec/conf/icde/SadoghiJ14",
+    "abstract_source_url": "https://openalex.org/W1990240966"
+  },
+  "adversarial-robustness-in-distributed-quantum-machine-learning": {
+    "source_url": "https://doi.org/10.1007/978-3-032-11153-1_11"
+  },
+  "adversarial-robustness-of-partitioned-quantum-classifiers": {
+    "source_url": "https://dblp.org/rec/journals/corr/abs-2502-20403"
+  },
+  "aggregator-controlled-ev-charging-in-pay-as-bid-reserve-markets-with-strict-delivery-constraints": {
+    "source_url": "https://doi.org/10.1109/tpwrs.2016.2518648",
+    "abstract_source_url": "https://openalex.org/W2344677227"
+  },
+  "algorithms-based-on-divide-and-conquer-for-topic-based-publish-subscribe-overlay-design": {
+    "source_url": "https://dblp.org/rec/journals/ton/ChenJV16",
+    "abstract_source_url": "https://openalex.org/W2073549416"
+  },
+  "alternating-direction-method-of-multipliers-for-decentralized-electric-vehicle-charging-control": {
+    "source_url": "https://dblp.org/rec/conf/cdc/RiveraWHGJ13",
+    "abstract_source_url": "https://openalex.org/W2006918362"
+  },
+  "an-end-to-end-performance-comparison-of-seven-permissioned-blockchain-systems": {
+    "source_url": "https://dblp.org/rec/conf/middleware/GeyerJM023",
+    "abstract_source_url": "https://openalex.org/W4388989593"
+  },
+  "an-experimental-comparison-of-partitioning-strategies-for-distributed-graph-neural-network-training": {
+    "source_url": "https://dblp.org/rec/conf/edbt/MerkelSMJ25",
+    "abstract_source_url": "https://openalex.org/W4386346214"
+  },
+  "analysis-and-optimization-for-boolean-expression-indexing": {
+    "source_url": "https://dblp.org/rec/journals/tods/SadoghiJ13",
+    "abstract_source_url": "https://openalex.org/W2053495332"
+  },
+  "analysis-of-tpc-ds-the-first-standard-benchmark-for-sql-based-big-data-systems": {
+    "source_url": "https://dblp.org/rec/conf/cloud/PoessRJ17",
+    "abstract_source_url": "https://openalex.org/W2756536429"
+  },
+  "analysis-of-tpcx-iot-the-first-industry-standard-benchmark-for-iot-gateway-systems": {
+    "source_url": "https://dblp.org/rec/conf/icde/PoessNKNRJ18",
+    "abstract_source_url": "https://openalex.org/W2898587907"
+  },
+  "analyzing-common-electronic-structure-theory-algorithms-for-distributed-quantum-computing": {
+    "source_url": "https://dblp.org/rec/conf/qce/JonesJ25",
+    "abstract_source_url": "https://openalex.org/W4416874368"
+  },
+  "analyzing-geospatial-distribution-in-blockchains": {
+    "source_url": "https://dblp.org/rec/conf/dappcon/MotepalliJ23",
+    "abstract_source_url": "https://openalex.org/W4386486628"
+  },
+  "analyzing-initialization-strategies-for-the-local-unitary-cluster-jastrow-ansatz-within-the-quantum-centric-supercomputing-framework": {
+    "source_url": "https://arxiv.org/abs/2606.14933",
+    "abstract_source_url": "https://openalex.org/W7164925766"
+  },
+  "appliance-classification-across-multiple-high-frequency-energy-datasets": {
+    "source_url": "https://dblp.org/rec/conf/smartgridcomm/KahlKHJ17",
+    "abstract_source_url": "https://openalex.org/W2798444339"
+  },
+  "appliance-event-detection-a-multivariate-supervised-classification-approach": {
+    "source_url": "https://dblp.org/rec/conf/eenergy/KahlKJHJ19",
+    "abstract_source_url": "https://openalex.org/W2942454712"
+  },
+  "applications-of-noisy-quantum-computing-and-quantum-error-mitigation-to-adamantaneland-a-benchmarking-study-for-quantum-chemistry": {
+    "source_url": "https://doi.org/10.1039/d3cp03523a",
+    "abstract_source_url": "https://openalex.org/W4390456266"
+  },
+  "approximate-matching-in-publish-subscribe": {
+    "source_url": "https://dblp.org/rec/conf/cira/LiuJ03",
+    "abstract_source_url": "https://openalex.org/W2098055383"
+  },
+  "automatic-generation-of-real-power-transmission-grid-models-from-crowdsourced-data": {
+    "source_url": "https://dblp.org/rec/journals/tsg/RiveraNLJ19",
+    "abstract_source_url": "https://openalex.org/W2900798442"
+  },
+  "automating-sla-modeling": {
+    "source_url": "https://dblp.org/rec/conf/cascon/ChauMJLCC08",
+    "abstract_source_url": "https://openalex.org/W1992237536"
+  },
+  "balancing-power-and-performance-in-hpc-clouds": {
+    "source_url": "https://dblp.org/rec/journals/cj/ChenLMGJ20",
+    "abstract_source_url": "https://openalex.org/W3033848960"
+  },
+  "be-tree-an-index-structure-for-boolean-expression-matching": {
+    "source_url": "https://dblp.org/rec/conf/sigmod/SadoghiJ11",
+    "abstract_source_url": "https://openalex.org/W2020493833"
+  },
+  "benchmarking-a-car-originated-signal-approach-for-real-time-electric-vehicle-charging-control": {
+    "source_url": "https://dblp.org/rec/conf/isgt/RazoGJ14",
+    "abstract_source_url": "https://openalex.org/W2092411821"
+  },
+  "benchmarking-apache-kafka-under-network-faults": {
+    "source_url": "https://dblp.org/rec/conf/middleware/RazaTDMJ21",
+    "abstract_source_url": "https://openalex.org/W3214995238"
+  },
+  "bert4nilm-a-bidirectional-transformer-model-for-non-intrusive-load-monitoring": {
+    "source_url": "https://dblp.org/rec/conf/sensys/YueWJJ20",
+    "abstract_source_url": "https://openalex.org/W3107101618"
+  },
+  "beyond-message-passing-modern-gnn-architectures-for-online-planner-selection": {
+    "source_url": "https://doi.org/10.1609/icaps.v36i1.42845",
+    "abstract_source_url": "https://openalex.org/W7163905740"
+  },
+  "beyond-performance-measuring-the-environmental-impact-of-analytical-databases": {
+    "source_url": "https://dblp.org/rec/journals/corr/abs-2504-18980",
+    "abstract_source_url": "https://openalex.org/W4416891970"
+  },
+  "big-data-generation": {
+    "source_url": "https://dblp.org/rec/conf/wbdb/RablJ12"
+  },
+  "bigbench-specification-v0-1-bigbench-an-industry-standard-benchmark-for-big-data-analytics": {
+    "source_url": "https://dblp.org/rec/conf/wbdb/RablGHCRPJ12"
+  },
+  "bigbench-towards-an-industry-standard-benchmark-for-big-data-analytics": {
+    "source_url": "https://dblp.org/rec/conf/sigmod/GhazalRHRPCJ13",
+    "abstract_source_url": "https://openalex.org/W2052312648"
+  },
+  "blockaim-a-neural-network-based-intelligent-middleware-for-large-scale-iot-data-placement-decisions": {
+    "source_url": "https://dblp.org/rec/journals/tmc/DanishZJ23",
+    "abstract_source_url": "https://openalex.org/W3153580448"
+  },
+  "blockam-an-adaptive-middleware-for-intelligent-data-storage-selection-for-internet-of-things": {
+    "source_url": "https://dblp.org/rec/conf/dappcon/Danish0J20",
+    "abstract_source_url": "https://openalex.org/W3041363918"
+  },
+  "blockchain-for-v2x-a-taxonomy-of-design-use-cases-and-system-requirements": {
+    "source_url": "https://dblp.org/rec/conf/brains/MeijersACJMSVZZ21",
+    "abstract_source_url": "https://openalex.org/W3208070608"
+  },
+  "blockchain-for-v2x-applications-and-architectures": {
+    "source_url": "https://doi.org/10.1109/ojvt.2022.3172709",
+    "abstract_source_url": "https://openalex.org/W4285140876"
+  },
+  "blockev-efficient-and-secure-charging-station-selection-for-electric-vehicles": {
+    "source_url": "https://dblp.org/rec/journals/tits/DanishZJAQ21",
+    "abstract_source_url": "https://openalex.org/W3116763688"
+  },
+  "bpm-in-cloud-architectures-business-process-management-with-slas-and-events": {
+    "source_url": "https://dblp.org/rec/conf/bpm/MuthusamyJ10"
+  },
+  "brief-announcement-constructing-fault-tolerant-overlay-networks-for-topic-based-publish-subscribe": {
+    "source_url": "https://dblp.org/rec/conf/podc/ChenVJ13",
+    "abstract_source_url": "https://openalex.org/W2106327888"
+  },
+  "bringing-distributed-energy-storage-to-market": {
+    "source_url": "https://doi.org/10.1109/tpwrs.2015.2390263",
+    "abstract_source_url": "https://openalex.org/W2040345481"
+  },
+  "building-content-based-publish-subscribe-with-dhts": {
+    "source_url": "https://dblp.org/rec/conf/dbisp2p/TamAJ03",
+    "abstract_source_url": "https://openalex.org/W2460072859"
+  },
+  "building-fault-tolerant-overlays-with-low-node-degrees-for-topic-based-publish-subscribe": {
+    "source_url": "https://dblp.org/rec/journals/tdsc/ChenVJ22",
+    "abstract_source_url": "https://openalex.org/W3163303484"
+  },
+  "cabinet-dynamically-weighted-consensus-made-fast": {
+    "source_url": "https://dblp.org/rec/journals/pvldb/ZhangZBZJ25",
+    "abstract_source_url": "https://openalex.org/W4413755894"
+  },
+  "caching-in-video-cdns-building-strong-lines-of-defense": {
+    "source_url": "https://dblp.org/rec/conf/eurosys/MokhtarianJ14",
+    "abstract_source_url": "https://openalex.org/W2065468011"
+  },
+  "can-graph-reordering-speed-up-graph-neural-network-training": {
+    "source_url": "https://dblp.org/rec/journals/pvldb/MerkelTMJ24",
+    "abstract_source_url": "https://openalex.org/W4408061173"
+  },
+  "cassandra-an-ssd-boosted-key-value-store": {
+    "source_url": "https://dblp.org/rec/conf/icde/MenonRSJ14",
+    "abstract_source_url": "https://openalex.org/W2083708758"
+  },
+  "challenger-2-0": {
+    "source_url": "https://dblp.org/rec/conf/debs/TahirBSFDJ24",
+    "abstract_source_url": "https://openalex.org/W4400881052"
+  },
+  "choosing-a-classical-planner-with-graph-neural-networks": {
+    "source_url": "https://dblp.org/rec/journals/corr/abs-2402-04874",
+    "abstract_source_url": "https://openalex.org/W4391673335"
+  },
+  "clear-a-circuit-level-electric-appliance-radar-for-the-electric-cabinet": {
+    "source_url": "https://dblp.org/rec/conf/icit2/HaqKKJ17",
+    "abstract_source_url": "https://openalex.org/W2612374761"
+  },
+  "cms-topss-efficient-dissemination-of-rss-documents": {
+    "source_url": "https://dblp.org/rec/conf/vldb/PetrovicLJ05",
+    "abstract_source_url": "https://openalex.org/W2169290493"
+  },
+  "coddora-co2-based-occupancy-detection-model-trained-via-domain-randomization": {
+    "source_url": "https://dblp.org/rec/conf/ijcnn/WeberBSMMJ24",
+    "abstract_source_url": "https://openalex.org/W4402352406"
+  },
+  "community-clustering-for-distributed-publish-subscribe-systems": {
+    "source_url": "https://dblp.org/rec/conf/cluster/LiHLJ12",
+    "abstract_source_url": "https://openalex.org/W2077564315"
+  },
+  "composite-subscriptions-in-content-based-publish-subscribe-systems": {
+    "source_url": "https://dblp.org/rec/conf/middleware/LiJ05"
+  },
+  "configurable-hardware-based-streaming-architecture-using-online-programmable-blocks": {
+    "source_url": "https://dblp.org/rec/conf/icde/NajafiSJ15",
+    "abstract_source_url": "https://openalex.org/W1566552779"
+  },
+  "congestion-avoidance-with-incremental-filter-aggregation-in-content-based-routing-networks": {
+    "source_url": "https://dblp.org/rec/conf/icdcs/ChenHMJ15",
+    "abstract_source_url": "https://openalex.org/W1527508100"
+  },
+  "content-based-routing-in-mobile-ad-hoc-networks": {
+    "source_url": "https://dblp.org/rec/conf/mobiquitous/PetrovicMJ05",
+    "abstract_source_url": "https://openalex.org/W2122476743"
+  },
+  "coordinated-caching-in-planet-scale-cdns-analysis-of-feasibility-and-benefits": {
+    "source_url": "https://dblp.org/rec/conf/infocom/MokhtarianJ16",
+    "abstract_source_url": "https://openalex.org/W2489798131"
+  },
+  "d2worm-a-management-infrastructure-for-distributed-data-centric-workflows": {
+    "source_url": "https://dblp.org/rec/conf/sigmod/JerglerSJ15",
+    "abstract_source_url": "https://openalex.org/W2051680663"
+  },
+  "debs-2022-grand-challenge-data-set-trading-data": {
+    "source_url": "https://msrg.utoronto.ca/publications/?page=2"
+  },
+  "decentralization-in-pos-blockchain-consensus-quantification-and-advancement": {
+    "source_url": "https://dblp.org/rec/journals/tnsm/MotepalliJ25",
+    "abstract_source_url": "https://openalex.org/W4409474267"
+  },
+  "decentralized-and-policy-aware-serverless-orchestration-for-the-federated-web": {
+    "source_url": "https://dblp.org/rec/conf/www/ZhangJ25",
+    "abstract_source_url": "https://openalex.org/W4411549699"
+  },
+  "decentralized-execution-of-event-driven-scientific-workflows": {
+    "source_url": "https://dblp.org/rec/conf/scw/LiMJM06",
+    "abstract_source_url": "https://openalex.org/W2147228279"
+  },
+  "decentralizing-permissioned-blockchain-with-delay-towers": {
+    "source_url": "https://dblp.org/rec/journals/corr/abs-2203-09714",
+    "abstract_source_url": "https://openalex.org/W4221145241"
+  },
+  "deconstructing-blockchains-concepts-systems-and-insights": {
+    "source_url": "https://dblp.org/rec/conf/debs/0001VJ18",
+    "abstract_source_url": "https://openalex.org/W2809627415"
+  },
+  "delay-towers-to-bootstrap-blockchains": {
+    "source_url": "https://dblp.org/rec/conf/icbc2/MotepalliJ24a",
+    "abstract_source_url": "https://openalex.org/W4401719068"
+  },
+  "demo-a-framework-for-location-information-processing": {
+    "source_url": "https://dblp.org/rec/conf/mdm/XuJ05a",
+    "abstract_source_url": "https://openalex.org/W2022462411"
+  },
+  "dependable-distributed-content-based-publish-subscribe-systems-doctoral-symposium": {
+    "source_url": "https://dblp.org/rec/conf/debs/SalehiJ16",
+    "abstract_source_url": "https://openalex.org/W2422116896"
+  },
+  "dgfindex-for-smart-grid-enhancing-hive-with-a-cost-effective-multidimensional-range-index": {
+    "source_url": "https://dblp.org/rec/journals/pvldb/LiuHRLJWCL14",
+    "abstract_source_url": "https://openalex.org/W2131027594"
+  },
+  "diba-a-re-configurable-stream-processor": {
+    "source_url": "https://dblp.org/rec/journals/tkde/NajafiQSJ24",
+    "abstract_source_url": "https://openalex.org/W4393144966"
+  },
+  "disconnected-operation-in-publish-subscribe-middleware": {
+    "source_url": "https://dblp.org/rec/conf/mdm/BurceaJLMP04",
+    "abstract_source_url": "https://openalex.org/W2167318748"
+  },
+  "discussion-of-bigbench-a-proposed-industry-standard-performance-benchmark-for-big-data": {
+    "source_url": "https://dblp.org/rec/conf/tpctc/BaruBCDFGJJKNPRRRSSYY14"
+  },
+  "distributed-automatic-service-composition-in-large-scale-systems": {
+    "source_url": "https://dblp.org/rec/conf/debs/HuMLJ08",
+    "abstract_source_url": "https://openalex.org/W2076165157"
+  },
+  "distributed-convex-optimization-for-electric-vehicle-aggregators": {
+    "source_url": "https://dblp.org/rec/journals/tsg/RiveraGJ17",
+    "abstract_source_url": "https://openalex.org/W2344504222"
+  },
+  "distributed-event-aggregation-for-content-based-publish-subscribe-systems": {
+    "source_url": "https://dblp.org/rec/conf/debs/PandeyZWJV14",
+    "abstract_source_url": "https://openalex.org/W2032640310"
+  },
+  "distributed-quantum-computing-for-chemical-applications": {
+    "source_url": "https://dblp.org/rec/conf/qce/JonesJ24",
+    "abstract_source_url": "https://openalex.org/W4402713726"
+  },
+  "distributed-ranked-data-dissemination-in-social-networks": {
+    "source_url": "https://dblp.org/rec/conf/icdcs/ZhangSMJ13",
+    "abstract_source_url": "https://openalex.org/W2041991478"
+  },
+  "distributed-stream-knn-join": {
+    "source_url": "https://dblp.org/rec/conf/sigmod/ShahvaraniJ21",
+    "abstract_source_url": "https://openalex.org/W3174896615"
+  },
+  "divide-and-conquer-algorithms-for-publish-subscribe-overlay-design": {
+    "source_url": "https://dblp.org/rec/conf/icdcs/ChenJV10",
+    "abstract_source_url": "https://openalex.org/W2124874701"
+  },
+  "dl-store-a-distributed-hybrid-oltp-and-olap-data-processing-engine": {
+    "source_url": "https://dblp.org/rec/conf/icdcs/0001SJ16",
+    "abstract_source_url": "https://openalex.org/W2507120666"
+  },
+  "dualtable-a-hybrid-storage-model-for-update-optimization-in-hive": {
+    "source_url": "https://dblp.org/rec/conf/icde/HuLRHLXJPW15",
+    "abstract_source_url": "https://openalex.org/W1715440516"
+  },
+  "dynamic-load-balancing-in-distributed-content-based-publish-subscribe": {
+    "source_url": "https://dblp.org/rec/conf/middleware/CheungJ06",
+    "abstract_source_url": "https://openalex.org/W2116893958"
+  },
+  "dynamic-loss-based-sample-reweighting-for-improved-large-language-model-pretraining": {
+    "source_url": "https://dblp.org/rec/conf/iclr/SowWB0JL25",
+    "abstract_source_url": "https://openalex.org/W4407359523"
+  },
+  "effects-of-routing-computations-in-content-based-routing-networks-with-mobile-data-sources": {
+    "source_url": "https://dblp.org/rec/conf/mobicom/MuthusamyPJ05",
+    "abstract_source_url": "https://openalex.org/W2045329305"
+  },
+  "efficient-and-scalable-filtering-of-graph-based-metadata": {
+    "source_url": "https://dblp.org/rec/journals/ws/LiuPJ05"
+  },
+  "efficient-constraint-processing-for-highly-personalized-location-based-services": {
+    "source_url": "https://dblp.org/rec/conf/vldb/XuJ04"
+  },
+  "efficient-constraint-processing-for-location-aware-computing": {
+    "source_url": "https://dblp.org/rec/conf/mdm/XuJ05",
+    "abstract_source_url": "https://openalex.org/W2017629483"
+  },
+  "efficient-covering-for-top-k-filtering-in-content-based-publish-subscribe-systems": {
+    "source_url": "https://dblp.org/rec/conf/middleware/0001SMJ17",
+    "abstract_source_url": "https://openalex.org/W2772476628"
+  },
+  "efficient-data-transfer-in-shared-storage-cloud-data-processing-systems-with-optics": {
+    "source_url": "https://dblp.org/rec/conf/cascon/PaulosZZZKJ23"
+  },
+  "efficient-event-based-resource-discovery": {
+    "source_url": "https://dblp.org/rec/conf/debs/YanHMJZ09",
+    "abstract_source_url": "https://openalex.org/W2003561941"
+  },
+  "efficient-event-processing-through-reconfigurable-hardware-for-algorithmic-trading": {
+    "source_url": "https://dblp.org/rec/journals/pvldb/SadoghiJLSS10",
+    "abstract_source_url": "https://openalex.org/W2062482216"
+  },
+  "efficient-federated-learning-methods-for-foundation-model-training": {
+    "source_url": "https://dblp.org/rec/conf/ijcai/WoisetschlagerE24",
+    "abstract_source_url": "https://openalex.org/W4390784356"
+  },
+  "efficiently-mining-crosscutting-concerns-through-random-walks": {
+    "source_url": "https://dblp.org/rec/conf/aosd/ZhangJ07",
+    "abstract_source_url": "https://openalex.org/W2167984494"
+  },
+  "electrical-appliance-classification-using-deep-convolutional-neural-networks-on-high-frequency-current-measurements": {
+    "source_url": "https://dblp.org/rec/conf/smartgridcomm/JordeKJ18",
+    "abstract_source_url": "https://openalex.org/W2908443740"
+  },
+  "embedpart-embedding-driven-graph-partitioning-for-scalable-graph-neural-network-training": {
+    "source_url": "https://dblp.org/rec/journals/corr/abs-2604-01000",
+    "abstract_source_url": "https://openalex.org/W7148310868"
+  },
+  "enclavecache-a-secure-and-scalable-key-value-cache-in-multi-tenant-clouds-using-intel-sgx": {
+    "source_url": "https://dblp.org/rec/conf/middleware/ChenLMGJ19",
+    "abstract_source_url": "https://openalex.org/W2990965235"
+  },
+  "energieinformatik-aktuelle-und-zukunftige-forschungsschwerpunkte": {
+    "source_url": "https://dblp.org/rec/journals/wi/GoebelJRDRIFSWPASLKSFNSEZZL14"
+  },
+  "energy-informatics-current-and-future-research-directions": {
+    "source_url": "https://dblp.org/rec/journals/bise/GoebelJRDRIFSWPASLKSFNSEZZL14"
+  },
+  "energy-vs-privacy-estimating-the-ecological-impact-of-federated-learning": {
+    "source_url": "https://dblp.org/rec/conf/eenergy/SchwermerMJ23",
+    "abstract_source_url": "https://openalex.org/W4380885381"
+  },
+  "environmental-footprints-of-query-processing-a-vision-for-sustainable-database-architectures": {
+    "source_url": "https://dblp.org/rec/journals/pvldb/BachrasJ25",
+    "abstract_source_url": "https://openalex.org/W4413978687"
+  },
+  "epoch-based-optimistic-concurrency-control-in-geo-replicated-databases": {
+    "source_url": "https://dblp.org/rec/journals/pacmmod/MaoTBZZZJ26",
+    "abstract_source_url": "https://openalex.org/W7139129347"
+  },
+  "eqosystem-supporting-fluid-distributed-service-oriented-workflows": {
+    "source_url": "https://dblp.org/rec/conf/debs/MuthusamyYSJ11"
+  },
+  "escape-to-precaution-against-leader-failures": {
+    "source_url": "https://dblp.org/rec/conf/icdcs/ZhangJ22",
+    "abstract_source_url": "https://openalex.org/W4312710991"
+  },
+  "eva-fair-and-auditable-electric-vehicle-charging-service-using-blockchain": {
+    "source_url": "https://dblp.org/rec/conf/debs/PajicR0J18",
+    "abstract_source_url": "https://openalex.org/W2808806636"
+  },
+  "evaluating-interwell-connectivity-in-waterflooding-reservoirs-with-graph-based-cooperation-mission-neural-networks": {
+    "source_url": "https://doi.org/10.2118/209607-pa",
+    "abstract_source_url": "https://openalex.org/W4221002597"
+  },
+  "evaluating-proximity-relations-under-uncertainty": {
+    "source_url": "https://dblp.org/rec/conf/icde/XuJ07",
+    "abstract_source_url": "https://openalex.org/W1980418511"
+  },
+  "event-detection-for-energy-consumption-monitoring": {
+    "source_url": "https://dblp.org/rec/journals/tsusc/JordeJ21",
+    "abstract_source_url": "https://openalex.org/W3045638492"
+  },
+  "event-exposure-for-web-services-a-grey-box-approach-to-compose-and-evolve-web-services": {
+    "source_url": "https://dblp.org/rec/conf/cascon/YeJ10"
+  },
+  "evolving-pub-sub-subscriptions-for-multiplayer-online-games-demo": {
+    "source_url": "https://dblp.org/rec/conf/debs/Canas0KKJ16",
+    "abstract_source_url": "https://openalex.org/W2427008665"
+  },
+  "experiment-benchmark-paper-to-what-extent-does-quality-matter-the-impact-of-graph-data-quality-on-gnn-model-performance": {
+    "source_url": "https://dblp.org/rec/conf/vldb/VatterRMJ25",
+    "abstract_source_url": "https://www.vldb.org/2025/Workshops/VLDB-Workshops-2025/LSGDA/LSGDA25_05.pdf",
+    "abstract_license_url": "https://creativecommons.org/licenses/by-nc-nd/4.0/"
+  },
+  "expressive-location-based-continuous-query-evaluation-with-binary-decision-diagrams": {
+    "source_url": "https://dblp.org/rec/conf/icde/XuJ09",
+    "abstract_source_url": "https://openalex.org/W2150949003"
+  },
+  "externalizing-java-server-concurrency-with-cal": {
+    "source_url": "https://dblp.org/rec/conf/ecoop/ZhangJ08"
+  },
+  "fabriccrdt-a-conflict-free-replicated-datatypes-approach-to-permissioned-blockchains": {
+    "source_url": "https://dblp.org/rec/conf/middleware/NasirifardMJ19",
+    "abstract_source_url": "https://openalex.org/W2991281508"
+  },
+  "fabricunit-a-framework-for-faster-execution-of-unit-tests-on-hyperledger-fabric": {
+    "source_url": "https://dblp.org/rec/conf/icbc2/MotepalliVJ20",
+    "abstract_source_url": "https://openalex.org/W3066802614"
+  },
+  "fame-failure-aware-mixture-of-experts-for-message-level-log-anomaly-detection": {
+    "source_url": "https://dblp.org/rec/journals/corr/abs-2605-22779",
+    "abstract_source_url": "https://openalex.org/W7162133986"
+  },
+  "federated-computing-in-electric-vehicles-to-predict-coolant-temperature": {
+    "source_url": "https://dblp.org/rec/conf/middleware/SchwermerBSMJ23",
+    "abstract_source_url": "https://openalex.org/W4388742679"
+  },
+  "federated-computing-survey-on-building-blocks-extensions-and-systems": {
+    "source_url": "https://dblp.org/rec/journals/corr/abs-2404-02779",
+    "abstract_source_url": "https://openalex.org/W4393969247"
+  },
+  "federated-fine-tuning-of-llms-on-the-very-edge": {
+    "source_url": "https://dblp.org/rec/conf/deem/WoisetschlagerE24",
+    "abstract_source_url": "https://openalex.org/W4399117352"
+  },
+  "federated-learning-and-ai-regulation-in-the-european-union-who-is-responsible-an-interdisciplinary-analysis": {
+    "source_url": "https://blog.genlaw.org/pdfs/genlaw_icml2024/16.pdf",
+    "abstract_source_url": "https://openalex.org/W4400611446"
+  },
+  "federated-learning-priorities-under-the-european-union-ai-act": {
+    "source_url": "https://dblp.org/rec/journals/corr/abs-2402-05968",
+    "abstract_source_url": "https://openalex.org/W4391766346"
+  },
+  "federated-office-plug-load-identification-for-building-management-systems": {
+    "source_url": "https://dblp.org/rec/conf/eenergy/SchwermerBMJ22",
+    "abstract_source_url": "https://openalex.org/W4283365825"
+  },
+  "fledge": {
+    "source_url": "https://dblp.org/rec/conf/middleware/WoisetschlagerE24",
+    "abstract_source_url": "https://openalex.org/W4404788038"
+  },
+  "flexible-caching-algorithms-for-video-content-distribution-networks": {
+    "source_url": "https://dblp.org/rec/journals/ton/MokhtarianJ17",
+    "abstract_source_url": "https://openalex.org/W2551266388"
+  },
+  "flexible-query-processor-on-fpgas": {
+    "source_url": "https://dblp.org/rec/journals/pvldb/NajafiSJ13",
+    "abstract_source_url": "https://openalex.org/W2138167749"
+  },
+  "forecasting-household-electricity-demand-with-complex-event-processing-insights-from-a-prototypical-solution": {
+    "source_url": "https://dblp.org/rec/conf/middleware/ZiekowDGJ13",
+    "abstract_source_url": "https://openalex.org/W2097959755"
+  },
+  "foundations-for-highly-available-content-based-publish-subscribe-overlays": {
+    "source_url": "https://dblp.org/rec/conf/icdcs/YoonMJ11",
+    "abstract_source_url": "https://openalex.org/W2170735098"
+  },
+  "fpga-topss-line-speed-event-processing-on-fpgas": {
+    "source_url": "https://dblp.org/rec/conf/debs/SadoghiSJ11",
+    "abstract_source_url": "https://openalex.org/W2032265428"
+  },
+  "fractalsort-high-precision-compressed-radix-sort-on-fpga": {
+    "source_url": "https://dblp.org/rec/journals/tc/DanganaJ26",
+    "abstract_source_url": "https://openalex.org/W7123762735"
+  },
+  "fugue-online-elasticity-for-distributed-stateful-stream-processing": {
+    "source_url": "https://doi.org/10.14778/3836663.3836689",
+    "abstract_source_url": "https://openalex.org/W7208757828"
+  },
+  "g-topss-fast-filtering-of-graph-based-metadata": {
+    "source_url": "https://dblp.org/rec/conf/www/PetrovicLJ05",
+    "abstract_source_url": "https://openalex.org/W2110495371"
+  },
+  "gala-can-graph-augmented-large-language-model-agentic-workflows-elevate-root-cause-analysis": {
+    "source_url": "https://dblp.org/rec/journals/corr/abs-2508-12472",
+    "abstract_source_url": "https://openalex.org/W4414487891"
+  },
+  "gala-graph-augmented-llm-agents-for-root-cause-analysis-and-incident-response-in-microservices": {
+    "source_url": "https://dblp.org/rec/journals/corr/abs-2608-08968",
+    "abstract_source_url": "https://openalex.org/W7202167048"
+  },
+  "generic-middleware-substrate-through-modelware": {
+    "source_url": "https://dblp.org/rec/conf/middleware/ZhangGJ05"
+  },
+  "geo-distribution-of-flexible-business-processes": {
+    "source_url": "https://dblp.org/rec/conf/middleware/JerglerSJ16",
+    "abstract_source_url": "https://openalex.org/W2550260459"
+  },
+  "geospatial-event-analytics-leveraging-reactive-programming": {
+    "source_url": "https://dblp.org/rec/conf/debs/DoblanderPJ15",
+    "abstract_source_url": "https://openalex.org/W2117052376"
+  },
+  "gpos-geospatially-aware-proof-of-stake": {
+    "source_url": "https://dblp.org/rec/journals/tweb/MotepalliGZJ26",
+    "abstract_source_url": "https://openalex.org/W4415850618"
+  },
+  "gpx-matcher-a-generic-boolean-predicate-based-xpath-expression-matcher": {
+    "source_url": "https://dblp.org/rec/conf/edbt/SadoghiBJ11",
+    "abstract_source_url": "https://openalex.org/W2017988065"
+  },
+  "grand-challenge-real-time-soccer-analytics-leveraging-low-latency-complex-event-processing": {
+    "source_url": "https://dblp.org/rec/conf/debs/JerglerDNJ13",
+    "abstract_source_url": "https://openalex.org/W2088840086"
+  },
+  "grand-challenge-the-bluebay-soccer-monitoring-engine": {
+    "source_url": "https://dblp.org/rec/conf/debs/JacobsenMRSKYZ13",
+    "abstract_source_url": "https://openalex.org/W2009396504"
+  },
+  "green-middleware": {
+    "source_url": "https://doi.org/10.1007/978-3-642-22179-8_18"
+  },
+  "green-resource-allocation-algorithms-for-publish-subscribe-systems": {
+    "source_url": "https://dblp.org/rec/conf/icdcs/CheungJ11",
+    "abstract_source_url": "https://openalex.org/W2166042493"
+  },
+  "hardware-acceleration-landscape-for-distributed-real-time-analytics-virtues-and-limitations": {
+    "source_url": "https://dblp.org/rec/conf/icdcs/Najafi0SJ17",
+    "abstract_source_url": "https://openalex.org/W2735964774"
+  },
+  "high-performance-stream-queries-in-scala": {
+    "source_url": "https://dblp.org/rec/conf/debs/Song0RMJ15",
+    "abstract_source_url": "https://openalex.org/W2025843016"
+  },
+  "highly-available-content-based-publish-subscribe-via-gossiping": {
+    "source_url": "https://dblp.org/rec/conf/debs/SalehiDJ16",
+    "abstract_source_url": "https://openalex.org/W2440860577"
+  },
+  "historic-data-access-in-publish-subscribe": {
+    "source_url": "https://dblp.org/rec/conf/debs/LiCHHMSWJM07",
+    "abstract_source_url": "https://openalex.org/W2016580264"
+  },
+  "household-electricity-demand-forecasting-benchmarking-state-of-the-art-methods": {
+    "source_url": "https://dblp.org/rec/conf/eenergy/VeitGTDJ14",
+    "abstract_source_url": "https://openalex.org/W2030563576"
+  },
+  "how-can-we-train-deep-learning-models-across-clouds-and-continents-an-experimental-study": {
+    "source_url": "https://dblp.org/rec/journals/pvldb/ErbenMJ24",
+    "abstract_source_url": "https://openalex.org/W4396628099"
+  },
+  "how-does-stake-distribution-influence-consensus": {
+    "source_url": "https://dblp.org/rec/conf/icbc2/MotepalliJ24",
+    "abstract_source_url": "https://openalex.org/W4401719105"
+  },
+  "how-reliable-are-streams-end-to-end-processing-guarantee-validation-and-performance-benchmarking-of-stream-processing-systems": {
+    "source_url": "https://dblp.org/rec/journals/pvldb/TahirMDJ24",
+    "abstract_source_url": "https://openalex.org/W4409231750"
+  },
+  "how-to-optimize-my-blockchain-a-multi-level-recommendation-approach": {
+    "source_url": "https://dblp.org/rec/journals/pacmmod/ChackoMJ23",
+    "abstract_source_url": "https://openalex.org/W4380433250"
+  },
+  "hybrid-context-inconsistency-resolution-for-context-aware-services": {
+    "source_url": "https://dblp.org/rec/conf/percom/ChenYJ11",
+    "abstract_source_url": "https://openalex.org/W2118486116"
+  },
+  "hybrid-edge-partitioner-partitioning-large-power-law-graphs-under-memory-constraints": {
+    "source_url": "https://dblp.org/rec/conf/sigmod/MayerJ21",
+    "abstract_source_url": "https://openalex.org/W3139199248"
+  },
+  "hyscale-hybrid-and-network-scaling-of-dockerized-microservices-in-cloud-data-centres": {
+    "source_url": "https://dblp.org/rec/conf/icdcs/KwanWJM19",
+    "abstract_source_url": "https://openalex.org/W2982576723"
+  },
+  "i-know-what-you-mean-semantic-issues-in-internet-scale-publish-subscribe-systems": {
+    "source_url": "https://dblp.org/rec/conf/semweb/BurceaPJ03",
+    "abstract_source_url": "https://openalex.org/W1664839614"
+  },
+  "i13dr-a-distributed-real-time-demand-response-infrastructure-for-integrating-renewable-energy-resources": {
+    "source_url": "https://dblp.org/rec/conf/eenergy/NasirifardRJJ18",
+    "abstract_source_url": "https://openalex.org/W2804252553"
+  },
+  "i13dr-a-real-time-demand-response-infrastructure-for-integrating-renewable-energy-resources": {
+    "source_url": "https://dblp.org/rec/journals/corr/abs-2210-07789",
+    "abstract_source_url": "https://openalex.org/W4306706460"
+  },
+  "incremental-topology-transformation-for-publish-subscribe-systems-using-integer-programming": {
+    "source_url": "https://dblp.org/rec/conf/icdcs/Salehi0J17",
+    "abstract_source_url": "https://openalex.org/W2734465187"
+  },
+  "inference-of-distribution-grids-based-on-crowdsourced-grid-data-and-drone-imagery": {
+    "source_url": "https://dblp.org/rec/journals/tsusc/JacobsenNRB22",
+    "abstract_source_url": "https://openalex.org/W2998494411"
+  },
+  "infrastructure-free-content-based-publish-subscribe": {
+    "source_url": "https://dblp.org/rec/journals/ton/MuthusamyJ14",
+    "abstract_source_url": "https://openalex.org/W2052763829"
+  },
+  "just-can-t-get-enough-synthesizing-big-data": {
+    "source_url": "https://dblp.org/rec/conf/sigmod/RablDFSJ15",
+    "abstract_source_url": "https://openalex.org/W2138607828"
+  },
+  "krysha-cost-efficient-resource-orchestration-for-geo-distributed-serverless-microservices": {
+    "source_url": "https://dblp.org/rec/conf/hpdc/ZhangJ26",
+    "abstract_source_url": "https://openalex.org/W7168032794"
+  },
+  "ksurf-attention-kalman-filter-and-principal-component-analysis-for-prediction-under-highly-variable-cloud-workloads": {
+    "source_url": "https://doi.org/10.1109/eecsi63442.2024.10776180",
+    "abstract_source_url": "https://openalex.org/W4405305567"
+  },
+  "ksurf-attention-kalman-filter-for-prediction-under-highly-variable-cloud-workloads": {
+    "source_url": "https://dblp.org/rec/journals/tcc/DanganaJ25",
+    "abstract_source_url": "https://openalex.org/W4413967213"
+  },
+  "ksurf-drone-attention-kalman-filter-for-contextual-bandit-optimization-in-cloud-resource-allocation": {
+    "source_url": "https://dblp.org/rec/journals/tcc/DanganaZJ26",
+    "abstract_source_url": "https://openalex.org/W7123966759"
+  },
+  "lifting-the-fog-of-uncertainties": {
+    "source_url": "https://dblp.org/rec/conf/cloud/ZhangZZJ23",
+    "abstract_source_url": "https://openalex.org/W4388040916"
+  },
+  "linking-goals-to-aspects": {
+    "source_url": "https://oro.open.ac.uk/33844/",
+    "abstract_source_url": "https://openalex.org/W2337491900"
+  },
+  "load-balancing-content-based-publish-subscribe-systems": {
+    "source_url": "https://dblp.org/rec/journals/tocs/CheungJ10",
+    "abstract_source_url": "https://openalex.org/W2000718212"
+  },
+  "logstore-a-workload-aware-adaptable-key-value-store-on-hybrid-storage-systems": {
+    "source_url": "https://dblp.org/rec/journals/tkde/MenonQRSJ22",
+    "abstract_source_url": "https://openalex.org/W3090908182"
+  },
+  "making-crdts-not-so-eventual": {
+    "source_url": "https://dblp.org/rec/journals/pvldb/MaoZLNTJ24",
+    "abstract_source_url": "https://openalex.org/W4408061126"
+  },
+  "mar-fl-a-communication-efficient-peer-to-peer-federated-learning-system": {
+    "source_url": "https://neurips.cc/virtual/2025/123210",
+    "abstract_source_url": "https://openalex.org/W4417142091"
+  },
+  "materialized-views-in-cassandra": {
+    "source_url": "https://dblp.org/rec/conf/cascon/RablJ14",
+    "abstract_source_url": "https://openalex.org/W1934576426"
+  },
+  "mdms-music-data-matching-system-for-query-variant-retrieval": {
+    "source_url": "https://dblp.org/rec/conf/mm/RoyMJ21",
+    "abstract_source_url": "https://openalex.org/W3206119617"
+  },
+  "measurement-system-and-dataset-for-in-depth-analysis-of-appliance-energy-consumption-in-industrial-environment": {
+    "source_url": "https://doi.org/10.1515/teme-2018-0038",
+    "abstract_source_url": "https://openalex.org/W2897073097"
+  },
+  "medal-a-cost-effective-high-frequency-energy-data-acquisition-system-for-electrical-appliances": {
+    "source_url": "https://dblp.org/rec/conf/eenergy/KriechbaumerHKJ17",
+    "abstract_source_url": "https://openalex.org/W2616473319"
+  },
+  "meed-an-unsupervised-multi-environment-event-detector-for-non-intrusive-load-monitoring": {
+    "source_url": "https://dblp.org/rec/conf/smartgridcomm/JordeKJ19",
+    "abstract_source_url": "https://openalex.org/W2991082611"
+  },
+  "merc-match-at-edge-and-route-intra-cluster-for-content-based-publish-subscribe-systems": {
+    "source_url": "https://dblp.org/rec/conf/middleware/JiYWJ15",
+    "abstract_source_url": "https://openalex.org/W2250659747"
+  },
+  "mess-dynamically-learned-inference-time-llm-routing-in-model-zoos-with-service-level-guarantees": {
+    "source_url": "https://dblp.org/rec/conf/nips/WoisetschlagerZ25",
+    "abstract_source_url": "https://openalex.org/W4414786530"
+  },
+  "mess-energy-optimal-inferencing-in-language-model-zoos-with-service-level-guarantees": {
+    "source_url": "https://openreview.net/forum?id=OoReeQpwmW",
+    "abstract_source_url": "https://openalex.org/W4404350797"
+  },
+  "methods-for-quantifying-energy-consumption-in-tpc-h": {
+    "source_url": "https://dblp.org/rec/conf/wosp/PoessRRJ18",
+    "abstract_source_url": "https://openalex.org/W2796403873"
+  },
+  "minimal-broker-overlay-design-for-content-based-publish-subscribe-systems": {
+    "source_url": "https://dblp.org/rec/conf/cascon/TajuddinMJ13",
+    "abstract_source_url": "https://openalex.org/W139217162"
+  },
+  "minimizing-the-communication-cost-of-aggregation-in-publish-subscribe-systems": {
+    "source_url": "https://dblp.org/rec/conf/icdcs/Pandey0WJV15",
+    "abstract_source_url": "https://openalex.org/W1504659965"
+  },
+  "minimum-delay-multicast-algorithms-for-mesh-overlays": {
+    "source_url": "https://dblp.org/rec/journals/ton/MokhtarianJ15",
+    "abstract_source_url": "https://openalex.org/W2125430046"
+  },
+  "minimum-delay-overlay-multicast": {
+    "source_url": "https://dblp.org/rec/conf/infocom/MokhtarianJ13",
+    "abstract_source_url": "https://openalex.org/W2033132959"
+  },
+  "mining-crosscutting-concerns-through-random-walks": {
+    "source_url": "https://dblp.org/rec/journals/tse/ZhangJ12",
+    "abstract_source_url": "https://openalex.org/W1974446585"
+  },
+  "mocha-scalable-and-compliant-function-scheduling-for-federated-serverless-computing": {
+    "source_url": "https://dblp.org/rec/conf/middleware/ZhangJ25",
+    "abstract_source_url": "https://openalex.org/W7109976014"
+  },
+  "model-based-dispatch-strategies-for-lithium-ion-battery-energy-storage-applied-to-pay-as-bid-markets-for-secondary-reserve": {
+    "source_url": "https://doi.org/10.1109/tpwrs.2016.2626392",
+    "abstract_source_url": "https://openalex.org/W2554367017"
+  },
+  "modeling-uncertainties-in-publish-subscribe-systems": {
+    "source_url": "https://dblp.org/rec/conf/icde/LiuJ04",
+    "abstract_source_url": "https://openalex.org/W2152170845"
+  },
+  "mothpad-monitoring-pub-sub-activity-in-cyber-physical-systems": {
+    "source_url": "https://dblp.org/rec/conf/cascon/Canas0KKJ16",
+    "abstract_source_url": "https://openalex.org/W2594546957"
+  },
+  "multi-client-transactions-in-distributed-publish-subscribe-systems": {
+    "source_url": "https://dblp.org/rec/conf/icdcs/Jergler0J18",
+    "abstract_source_url": "https://openalex.org/W2808066670"
+  },
+  "multi-query-stream-processing-on-fpgas": {
+    "source_url": "https://dblp.org/rec/conf/icde/SadoghiJTSPJ12",
+    "abstract_source_url": "https://openalex.org/W2068346480"
+  },
+  "neurondepot-keeping-your-colleagues-in-sync-by-combining-modern-cloud-storage-services-the-local-file-system-and-simple-web-applications": {
+    "source_url": "https://dblp.org/rec/journals/fini/RautenbergKTDNKJAWI14",
+    "abstract_source_url": "https://openalex.org/W2050276970"
+  },
+  "next-generation-cloud-databases-balancing-performance-sustainability-and-resource-management": {
+    "source_url": "https://doi.org/10.1109/cascon62161.2024.10837926",
+    "abstract_source_url": "https://openalex.org/W4406500025"
+  },
+  "ninos-take-five-the-management-infrastructure-for-distributed-event-driven-workflows": {
+    "source_url": "https://dblp.org/rec/conf/debs/GanesanYJ11",
+    "abstract_source_url": "https://openalex.org/W1983176793"
+  },
+  "nofare-a-non-intrusive-facility-resource-monitoring-system": {
+    "source_url": "https://dblp.org/rec/conf/energieinformatik/KahlGHKJ15"
+  },
+  "omen-overlay-mending-for-topic-based-publish-subscribe-systems-under-churn": {
+    "source_url": "https://dblp.org/rec/conf/debs/ChenVJ16",
+    "abstract_source_url": "https://openalex.org/W2424120713"
+  },
+  "on-delivery-guarantees-in-distributed-content-based-publish-subscribe-systems": {
+    "source_url": "https://dblp.org/rec/conf/middleware/Salehi0J20",
+    "abstract_source_url": "https://openalex.org/W3111943635"
+  },
+  "on-the-effects-of-distributed-electric-vehicle-network-utility-maximization-in-low-voltage-feeders": {
+    "source_url": "https://dblp.org/rec/journals/corr/RiveraJ17",
+    "abstract_source_url": "https://openalex.org/W2730099201"
+  },
+  "on-the-effects-of-signal-design-in-electric-vehicle-charging-using-vehicle-originating-signals": {
+    "source_url": "https://dblp.org/rec/journals/ife/RazoGJ16"
+  },
+  "opengridmap-an-open-platform-for-inferring-power-grids-with-crowdsourced-data": {
+    "source_url": "https://dblp.org/rec/conf/energieinformatik/RiveraGSJ15"
+  },
+  "opengridmap-towards-automatic-power-grid-simulation-model-generation-from-crowdsourced-data": {
+    "source_url": "https://dblp.org/rec/journals/ife/RiveraLJ17"
+  },
+  "opportunistic-multipath-forwarding-in-content-based-publish-subscribe-overlays": {
+    "source_url": "https://dblp.org/rec/conf/middleware/KazemzadehJ12",
+    "abstract_source_url": "https://inria.hal.science/hal-01555549v1",
+    "abstract_license_url": "https://creativecommons.org/licenses/by/4.0/"
+  },
+  "optimized-cluster-based-filtering-algorithm-for-graph-metadata": {
+    "source_url": "https://dblp.org/rec/journals/isci/LiuWPJ11"
+  },
+  "optimizing-key-value-stores-for-hybrid-storage-architectures": {
+    "source_url": "https://dblp.org/rec/conf/cascon/MenonRSJ14",
+    "abstract_source_url": "https://openalex.org/W2198834745"
+  },
+  "orca-observability-grounded-program-repair-for-microservice-incidents": {
+    "source_url": "https://arxiv.org/abs/2608.17018",
+    "abstract_source_url": "https://openalex.org/W7203759532"
+  },
+  "orchestrating-soa-using-requirement-specifications-and-domain-ontologies": {
+    "source_url": "https://dblp.org/rec/conf/icsoc/BhatYJ14"
+  },
+  "orderlesschain-a-crdt-based-bft-coordination-free-blockchain-without-global-order-of-transactions": {
+    "source_url": "https://dblp.org/rec/conf/middleware/NasirifardMJ23",
+    "abstract_source_url": "https://openalex.org/W4302306230"
+  },
+  "out-of-core-edge-partitioning-at-linear-run-time": {
+    "source_url": "https://dblp.org/rec/conf/icde/MayerOJ22",
+    "abstract_source_url": "https://openalex.org/W4289866493"
+  },
+  "overcoming-data-scarcity-through-transfer-learning-in-co2-based-building-occupancy-detection": {
+    "source_url": "https://dblp.org/rec/conf/sensys/WeberB0JM23",
+    "abstract_source_url": "https://openalex.org/W4388320652"
+  },
+  "overlay-design-for-topic-based-publish-subscribe-under-node-degree-constraints": {
+    "source_url": "https://dblp.org/rec/conf/icdcs/ChenTJ16",
+    "abstract_source_url": "https://openalex.org/W2515387399"
+  },
+  "panjoin-a-partition-based-adaptive-stream-join": {
+    "source_url": "https://dblp.org/rec/journals/corr/abs-1811-05065",
+    "abstract_source_url": "https://openalex.org/W2901185014"
+  },
+  "parallel-index-based-stream-join-on-a-multicore-cpu": {
+    "source_url": "https://dblp.org/rec/conf/sigmod/ShahvaraniJ20",
+    "abstract_source_url": "https://openalex.org/W2920517911"
+  },
+  "parametrized-quantum-circuit-learning-for-quantum-chemical-applications": {
+    "source_url": "https://dblp.org/rec/journals/jcisd/JonesPFJ26",
+    "abstract_source_url": "https://openalex.org/W7135031199"
+  },
+  "parparaw-massively-parallel-parsing-of-delimiter-separated-raw-data": {
+    "source_url": "https://dblp.org/rec/journals/pvldb/StehleJ20",
+    "abstract_source_url": "https://openalex.org/W2947253668"
+  },
+  "partition-tolerant-distributed-publish-subscribe-systems": {
+    "source_url": "https://dblp.org/rec/conf/srds/KazemzadehJ11",
+    "abstract_source_url": "https://openalex.org/W2005330588"
+  },
+  "partitioner-selection-with-ease": {
+    "source_url": "https://dblp.org/rec/conf/icde/MerkelMFJ23",
+    "abstract_source_url": "https://openalex.org/W4385270466"
+  },
+  "performance-evaluation-and-optimization-of-multi-dimensional-indexes-in-hive": {
+    "source_url": "https://dblp.org/rec/journals/tsc/LiuGHRJLW18",
+    "abstract_source_url": "https://openalex.org/W2484289073"
+  },
+  "planning-the-transformation-of-overlays": {
+    "source_url": "https://dblp.org/rec/conf/sac/YoonRMMJ16",
+    "abstract_source_url": "https://openalex.org/W2467591515"
+  },
+  "popsub-improving-resource-utilization-in-distributed-content-based-publish-subscribe-systems": {
+    "source_url": "https://dblp.org/rec/conf/debs/Salehi0J17",
+    "abstract_source_url": "https://openalex.org/W2623350311"
+  },
+  "position-let-s-develop-data-probes-to-fundamentally-understand-how-data-affects-llm-performance": {
+    "source_url": "https://icml.cc/virtual/2026/poster/67154",
+    "abstract_source_url": "https://arxiv.org/abs/2605.18801",
+    "abstract_license_url": "https://creativecommons.org/licenses/by/4.0/"
+  },
+  "predict-predictive-dictionary-maintenance-for-message-compression-in-publish-subscribe": {
+    "source_url": "https://dblp.org/rec/conf/middleware/DoblanderKJ18",
+    "abstract_source_url": "https://openalex.org/W2903414282"
+  },
+  "predictive-publish-subscribe-matching": {
+    "source_url": "https://dblp.org/rec/conf/debs/MuthusamyLJ10",
+    "abstract_source_url": "https://openalex.org/W2048339977"
+  },
+  "prestigebft-revolutionizing-view-changes-in-bft-consensus-algorithms-with-reputation-mechanisms": {
+    "source_url": "https://dblp.org/rec/conf/icde/ZhangPTJ24",
+    "abstract_source_url": "https://openalex.org/W4400909999"
+  },
+  "prism-is-research-in-aspect-mining": {
+    "source_url": "https://dblp.org/rec/conf/oopsla/ZhangJ04"
+  },
+  "probabilistic-design-of-parametrized-quantum-circuits-through-local-gate-modifications": {
+    "source_url": "https://dblp.org/rec/journals/corr/abs-2602-12465",
+    "abstract_source_url": "https://openalex.org/W7129078615"
+  },
+  "process-discovery-from-dependence-complete-event-logs": {
+    "source_url": "https://dblp.org/rec/journals/tsc/0003JYM16",
+    "abstract_source_url": "https://openalex.org/W2329646465"
+  },
+  "processing-big-events-with-showers-and-streams": {
+    "source_url": "https://dblp.org/rec/conf/wbdb/DoblanderRJ12"
+  },
+  "processing-proximity-relations-in-road-networks": {
+    "source_url": "https://dblp.org/rec/conf/sigmod/XuJ10",
+    "abstract_source_url": "https://openalex.org/W2089906307"
+  },
+  "profitability-of-residential-battery-energy-storage-combined-with-solar-photovoltaics": {
+    "source_url": "https://doi.org/10.3390/en10070976",
+    "abstract_source_url": "https://openalex.org/W2735732687"
+  },
+  "prosecutor-an-efficient-bft-consensus-algorithm-with-behavior-aware-penalization-against-byzantine-attacks": {
+    "source_url": "https://dblp.org/rec/conf/middleware/ZhangJ21",
+    "abstract_source_url": "https://openalex.org/W3204280976"
+  },
+  "prospects-of-appliance-level-load-monitoring-in-off-the-shelf-energy-monitors-a-technical-review": {
+    "source_url": "https://doi.org/10.3390/en11010189",
+    "abstract_source_url": "https://openalex.org/W3103436608"
+  },
+  "pta-a-programmable-teaching-assistant-for-lab-courses": {
+    "source_url": "https://dblp.org/rec/conf/dataed/TahirMSJDM23",
+    "abstract_source_url": "https://openalex.org/W4381549091"
+  },
+  "publish-subscribe-for-mobile-applications-using-shared-dictionary-compression": {
+    "source_url": "https://dblp.org/rec/conf/icdcs/Doblander0J16",
+    "abstract_source_url": "https://openalex.org/W2511600948"
+  },
+  "publish-subscribe-network-designs-for-multiplayer-games": {
+    "source_url": "https://dblp.org/rec/conf/middleware/CanasZKKJ14",
+    "abstract_source_url": "https://openalex.org/W2084970449"
+  },
+  "publisher-mobility-in-distributed-publish-subscribe-systems": {
+    "source_url": "https://dblp.org/rec/conf/icdcsw/MuthusamyPGJ05",
+    "abstract_source_url": "https://openalex.org/W2152979493"
+  },
+  "publisher-placement-algorithms-in-content-based-publish-subscribe": {
+    "source_url": "https://dblp.org/rec/conf/icdcs/CheungJ10",
+    "abstract_source_url": "https://openalex.org/W2165611534"
+  },
+  "publiy-a-peer-assisted-publish-subscribe-service-for-timely-dissemination-of-bulk-content": {
+    "source_url": "https://dblp.org/rec/conf/icdcs/KazemzadehJ12",
+    "abstract_source_url": "https://openalex.org/W1984186194"
+  },
+  "q-dice-quantum-distributed-interconnect-compiler-and-emulator": {
+    "source_url": "https://arxiv.org/abs/2606.11340",
+    "abstract_source_url": "https://openalex.org/W7164328543"
+  },
+  "quantifying-aspects-in-middleware-platforms": {
+    "source_url": "https://dblp.org/rec/conf/aosd/ZhangJ03",
+    "abstract_source_url": "https://openalex.org/W2172069600"
+  },
+  "quantum-hypergraph-partitioning": {
+    "source_url": "https://doi.org/10.1145/3811628.3811836",
+    "abstract_source_url": "https://openalex.org/W7160442012"
+  },
+  "query-centric-partitioning-and-allocation-for-partially-replicated-database-systems": {
+    "source_url": "https://dblp.org/rec/conf/sigmod/RablJ17",
+    "abstract_source_url": "https://openalex.org/W2613136061"
+  },
+  "rapid-development-of-data-generators-using-meta-generators-in-pdgf": {
+    "source_url": "https://dblp.org/rec/conf/sigmod/RablPDJ13",
+    "abstract_source_url": "https://openalex.org/W2054374338"
+  },
+  "re-factoring-middleware-systems-a-case-study": {
+    "source_url": "https://dblp.org/rec/conf/coopis/ZhangJ03"
+  },
+  "reaching-consensus-in-the-byzantine-empire": {
+    "source_url": "https://dblp.org/rec/journals/csur/ZhangPMTDMZJ24",
+    "abstract_source_url": "https://openalex.org/W4389509728"
+  },
+  "real-time-load-prediction-with-high-velocity-smart-home-data-stream": {
+    "source_url": "https://dblp.org/rec/journals/corr/abs-1708-04613",
+    "abstract_source_url": "https://openalex.org/W2748668979"
+  },
+  "reducing-communication-requirements-for-electric-vehicle-charging-using-vehicle-originating-signals": {
+    "source_url": "https://dblp.org/rec/conf/smartgridcomm/RazoGJ14",
+    "abstract_source_url": "https://openalex.org/W2084265221"
+  },
+  "refactoring-middleware-with-aspects": {
+    "source_url": "https://dblp.org/rec/journals/tpds/ZhangJ03",
+    "abstract_source_url": "https://openalex.org/W1984473368"
+  },
+  "relevance-matters-capitalizing-on-less-top-k-matching-in-publish-subscribe": {
+    "source_url": "https://dblp.org/rec/conf/icde/SadoghiJ12",
+    "abstract_source_url": "https://openalex.org/W2008632807"
+  },
+  "reliable-and-highly-available-distributed-publish-subscribe-service": {
+    "source_url": "https://dblp.org/rec/conf/srds/KazemzadehJ09",
+    "abstract_source_url": "https://openalex.org/W2134387352"
+  },
+  "remon-remote-external-memory-over-the-network": {
+    "source_url": "https://dblp.org/rec/conf/icde/ZhangBZMJ26"
+  },
+  "remop-remote-memory-aware-operator-optimization": {
+    "source_url": "https://dblp.org/rec/journals/corr/abs-2606-19576",
+    "abstract_source_url": "https://openalex.org/W7165369776"
+  },
+  "representation-learning-for-appliance-recognition-a-comparison-to-classical-machine-learning": {
+    "source_url": "https://dblp.org/rec/journals/corr/abs-2209-03759",
+    "abstract_source_url": "https://openalex.org/W4297725807"
+  },
+  "resolving-feature-convolution-in-middleware-systems": {
+    "source_url": "https://dblp.org/rec/conf/oopsla/ZhangJ04a",
+    "abstract_source_url": "https://openalex.org/W1988741859"
+  },
+  "retrofitting-admission-control-in-an-internet-scale-application": {
+    "source_url": "https://webapps.cs.umu.se/uminf/reports/2016/017/part1.pdf",
+    "abstract_source_url": "https://openalex.org/W2738171721"
+  },
+  "reversible-conflict-free-replicated-data-types": {
+    "source_url": "https://dblp.org/rec/conf/middleware/MaoLJ22",
+    "abstract_source_url": "https://openalex.org/W4312038601"
+  },
+  "reward-mechanism-for-blockchains-using-evolutionary-game-theory": {
+    "source_url": "https://dblp.org/rec/conf/brains/MotepalliJ21",
+    "abstract_source_url": "https://openalex.org/W3153444696"
+  },
+  "routing-of-xml-and-xpath-queries-in-data-dissemination-networks": {
+    "source_url": "https://dblp.org/rec/conf/icdcs/LiHJ08",
+    "abstract_source_url": "https://openalex.org/W2141276288"
+  },
+  "s-topss-semantic-toronto-publish-subscribe-system": {
+    "source_url": "https://dblp.org/rec/conf/vldb/PetrovicBJ03",
+    "abstract_source_url": "https://openalex.org/W2951520541"
+  },
+  "safe-distribution-and-parallel-execution-of-data-centric-workflows-over-the-publish-subscribe-abstraction": {
+    "source_url": "https://dblp.org/rec/journals/tkde/SadoghiJJHV15",
+    "abstract_source_url": "https://openalex.org/W2086824798"
+  },
+  "scalable-deep-learning-on-distributed-infrastructures-challenges-techniques-and-tools": {
+    "source_url": "https://dblp.org/rec/journals/csur/MayerJ20",
+    "abstract_source_url": "https://openalex.org/W3004495293"
+  },
+  "scalable-multiway-stream-joins-in-hardware": {
+    "source_url": "https://dblp.org/rec/journals/tkde/NajafiSJ20",
+    "abstract_source_url": "https://openalex.org/W2945594129"
+  },
+  "scaling-construction-of-low-fan-out-overlays-for-topic-based-publish-subscribe-systems": {
+    "source_url": "https://dblp.org/rec/conf/icdcs/ChenVJ11",
+    "abstract_source_url": "https://openalex.org/W2165303722"
+  },
+  "scientific-workflow-mining-in-clouds": {
+    "source_url": "https://dblp.org/rec/journals/tpds/SongCJXYM17",
+    "abstract_source_url": "https://openalex.org/W2608436687"
+  },
+  "scope-fl-a-strategy-proof-chain-based-optimal-pareto-efficient-federated-learning-system": {
+    "source_url": "https://dblp.org/rec/journals/corr/abs-2606-18384",
+    "abstract_source_url": "https://openalex.org/W7165134244"
+  },
+  "sdn-like-the-next-generation-of-pub-sub": {
+    "source_url": "https://dblp.org/rec/journals/corr/ZhangJ13",
+    "abstract_source_url": "https://openalex.org/W1688396929"
+  },
+  "self-evolving-subscriptions-for-content-based-publish-subscribe-systems": {
+    "source_url": "https://dblp.org/rec/conf/icdcs/Canas0KKJ17",
+    "abstract_source_url": "https://openalex.org/W2735379054"
+  },
+  "server-provisioning-in-content-delivery-clouds": {
+    "source_url": "https://dblp.org/rec/conf/IEEEcloud/MokhtarianJ15",
+    "abstract_source_url": "https://openalex.org/W1581844963"
+  },
+  "service-subscription-and-consumption-for-personal-web-applications": {
+    "source_url": "https://dblp.org/rec/conf/cascon/YeYJ13"
+  },
+  "shared-dictionary-compression-in-publish-subscribe-systems": {
+    "source_url": "https://dblp.org/rec/conf/debs/DoblanderG0J16",
+    "abstract_source_url": "https://openalex.org/W2422976594"
+  },
+  "should-my-blockchain-learn-to-drive-a-study-of-hyperledger-fabric": {
+    "source_url": "https://dblp.org/rec/journals/corr/abs-2406-06318",
+    "abstract_source_url": "https://openalex.org/W4399554294"
+  },
+  "size-does-not-matter-sparsification-and-graph-neural-network-sampling-for-large-scale-graphs": {
+    "source_url": "https://dblp.org/rec/conf/vldb/VatterRMJ24",
+    "abstract_source_url": "https://vldb.org/workshops/2024/proceedings/LSGDA/LSGDA24.06.pdf",
+    "abstract_license_url": "https://creativecommons.org/licenses/by-nc-nd/4.0/"
+  },
+  "sla-driven-business-process-management-in-soa-2009": {
+    "source_url": "https://dblp.org/rec/conf/cascon/MuthusamyJCCC09",
+    "abstract_source_url": "https://openalex.org/W4252774423"
+  },
+  "sla-driven-business-process-management-in-soa": {
+    "source_url": "https://dblp.org/rec/conf/cascon/MuthusamyJCCWL07",
+    "abstract_source_url": "https://openalex.org/W2059788348"
+  },
+  "sla-driven-distributed-application-development": {
+    "source_url": "https://dblp.org/rec/conf/middleware/MuthusamyJ08",
+    "abstract_source_url": "https://openalex.org/W1980320703"
+  },
+  "small-scale-peer-to-peer-publish-subscribe": {
+    "source_url": "https://dblp.org/rec/conf/p2pkm/MuthusamyJ05",
+    "abstract_source_url": "https://openalex.org/W1495063990"
+  },
+  "smart-buildings-and-smart-grids-dagstuhl-seminar-15091": {
+    "source_url": "https://dblp.org/rec/journals/dagstuhl-reports/JacobsenKSG15",
+    "abstract_source_url": "https://openalex.org/W2284502685"
+  },
+  "smart-charging-schedules-for-highway-travel-with-electric-vehicles": {
+    "source_url": "https://doi.org/10.1109/tte.2016.2560524",
+    "abstract_source_url": "https://openalex.org/W2344152126"
+  },
+  "solving-big-data-challenges-for-enterprise-application-performance-management": {
+    "source_url": "https://dblp.org/rec/journals/pvldb/RablSJGMM12",
+    "abstract_source_url": "https://openalex.org/W2131164945"
+  },
+  "solving-manufacturing-equipment-monitoring-through-efficient-complex-event-processing-debs-grand-challenge": {
+    "source_url": "https://dblp.org/rec/conf/debs/RablZSPNWJ12",
+    "abstract_source_url": "https://openalex.org/W2092295977"
+  },
+  "splitjoin-a-scalable-low-latency-stream-join-architecture-with-adjustable-ordering-precision": {
+    "source_url": "https://dblp.org/rec/conf/usenix/NajafiSJ16",
+    "abstract_source_url": "https://openalex.org/W2359704875"
+  },
+  "sregym-a-live-benchmark-for-ai-sre-agents-with-high-fidelity-failure-scenarios": {
+    "source_url": "https://dblp.org/rec/journals/corr/abs-2605-07161",
+    "abstract_source_url": "https://openalex.org/W7160843318"
+  },
+  "subscription-covering-for-relevance-based-filtering-in-content-based-publish-subscribe-systems": {
+    "source_url": "https://dblp.org/rec/conf/icdcs/0001MSJ17",
+    "abstract_source_url": "https://openalex.org/W2735638814"
+  },
+  "the-debs-2021-grand-challenge-analyzing-environmental-impact-of-worldwide-lockdowns": {
+    "source_url": "https://dblp.org/rec/conf/debs/TahirDMFJ21",
+    "abstract_source_url": "https://openalex.org/W3167737483"
+  },
+  "the-debs-2022-grand-challenge-detecting-trading-trends-in-financial-tick-data": {
+    "source_url": "https://dblp.org/rec/conf/debs/FrischbierTDHMJ22",
+    "abstract_source_url": "https://openalex.org/W4283708463"
+  },
+  "the-debs-2025-grand-challenge-real-time-monitoring-of-defects-in-laser-powder-bed-fusion-l-pbf-manufacturing": {
+    "source_url": "https://dblp.org/rec/conf/debs/MartiniTMDFMJ25"
+  },
+  "the-evolution-of-distributed-systems-for-graph-neural-networks-and-their-origin-in-graph-processing-and-deep-learning-a-survey": {
+    "source_url": "https://dblp.org/rec/journals/csur/VatterMJ24",
+    "abstract_source_url": "https://openalex.org/W4377099260"
+  },
+  "the-fqp-vision-flexible-query-processing-on-a-reconfigurable-computing-fabric": {
+    "source_url": "https://dblp.org/rec/journals/sigmod/NajafiSJ15",
+    "abstract_source_url": "https://openalex.org/W1474354901"
+  },
+  "the-impact-of-state-of-charge-management-when-providing-regulation-power-with-energy-storage": {
+    "source_url": "https://doi.org/10.1109/tpwrs.2013.2292434",
+    "abstract_source_url": "https://openalex.org/W1981719736"
+  },
+  "the-padres-distributed-publish-subscribe-system": {
+    "source_url": "https://dblp.org/rec/conf/fiw/FidlerJLM05"
+  },
+  "the-padres-event-processing-network-uniform-querying-of-past-and-future-events-das-padres-ereignisverarbeitungsnetzwerk-einheitliche-anfragen-auf-ereignisse-der-vergangenheit-und-zukunft": {
+    "source_url": "https://dblp.org/rec/journals/it/JacobsenML09",
+    "abstract_source_url": "https://openalex.org/W1971179860"
+  },
+  "the-padres-publish-subscribe-system": {
+    "source_url": "https://dblp.org/rec/books/igi/HinzeB10/JacobsenCLMMK10",
+    "abstract_source_url": "https://openalex.org/W4237499061"
+  },
+  "the-potential-of-smart-home-sensors-in-forecasting-household-electricity-demand": {
+    "source_url": "https://dblp.org/rec/conf/smartgridcomm/ZiekowGSJ13",
+    "abstract_source_url": "https://openalex.org/W1995310630"
+  },
+  "the-vision-of-bigbench-2-0": {
+    "source_url": "https://dblp.org/rec/conf/sigmod/RablFDJG15",
+    "abstract_source_url": "https://openalex.org/W2021445484"
+  },
+  "total-order-in-content-based-publish-subscribe-systems": {
+    "source_url": "https://dblp.org/rec/conf/icdcs/ZhangMJ12",
+    "abstract_source_url": "https://openalex.org/W2025036412"
+  },
+  "toward-intelligent-sustainable-and-reliable-cloud-database-systems-a-unified-research-vision": {
+    "source_url": "https://doi.org/10.1109/cascon66301.2025.00122"
+  },
+  "towards-a-complete-bigbench-implementation": {
+    "source_url": "https://dblp.org/rec/conf/wbdb/RablFDGJ14"
+  },
+  "towards-an-optimally-distributed-quantum-fourier-transform-circuit": {
+    "source_url": "https://arxiv.org/abs/2606.18494",
+    "abstract_source_url": "https://openalex.org/W7165112175"
+  },
+  "towards-dependable-scalable-and-pervasive-distributed-ledgers-with-blockchains": {
+    "source_url": "https://dblp.org/rec/conf/icdcs/0001J18",
+    "abstract_source_url": "https://openalex.org/W2808185912"
+  },
+  "towards-highly-parallel-event-processing-through-reconfigurable-hardware": {
+    "source_url": "https://dblp.org/rec/conf/damon/SadoghiSJ11",
+    "abstract_source_url": "https://openalex.org/W1968925642"
+  },
+  "towards-just-in-time-middleware-architectures": {
+    "source_url": "https://dblp.org/rec/conf/aosd/ZhangGJ05",
+    "abstract_source_url": "https://openalex.org/W2063106869"
+  },
+  "towards-planning-the-transformation-of-overlays": {
+    "source_url": "https://dblp.org/rec/conf/icdcs/YoonRMMJ15",
+    "abstract_source_url": "https://openalex.org/W1594237328"
+  },
+  "towards-scalable-publish-subscribe-systems": {
+    "source_url": "https://dblp.org/rec/conf/icdcs/JiYWJ15",
+    "abstract_source_url": "https://openalex.org/W1554846139"
+  },
+  "towards-solving-the-data-availability-problem-for-sharded-ethereum": {
+    "source_url": "https://dblp.org/rec/conf/middleware/Sel0J18",
+    "abstract_source_url": "https://openalex.org/W2901968423"
+  },
+  "towards-vulnerability-based-intrusion-detection-with-event-processing": {
+    "source_url": "https://dblp.org/rec/conf/debs/FarroukhSJ11",
+    "abstract_source_url": "https://openalex.org/W1974715273"
+  },
+  "tpc-di-the-first-industry-benchmark-for-data-integration": {
+    "source_url": "https://dblp.org/rec/journals/pvldb/PoessRC14",
+    "abstract_source_url": "https://openalex.org/W2296703446"
+  },
+  "transactional-mobility-in-distributed-content-based-publish-subscribe-systems": {
+    "source_url": "https://dblp.org/rec/conf/icdcs/HuMLJ09",
+    "abstract_source_url": "https://openalex.org/W2136344560"
+  },
+  "transfer-learning-with-time-series-data-a-systematic-mapping-study": {
+    "source_url": "https://dblp.org/rec/journals/access/WeberADMJ21",
+    "abstract_source_url": "https://openalex.org/W4206564475"
+  },
+  "two-perspectives-on-blockchains-capabilities-vs-features": {
+    "source_url": "https://documentserver.uhasselt.be/handle/1942/28120",
+    "abstract_source_url": "https://openalex.org/W2962923369"
+  },
+  "using-publish-subscribe-middleware-for-distributed-ev-charging-optimization": {
+    "source_url": "https://dblp.org/rec/journals/ife/RiveraJSGJ16"
+  },
+  "v-guard": {
+    "source_url": "https://dblp.org/rec/journals/corr/abs-2301-06210",
+    "abstract_source_url": "https://openalex.org/W4317438846"
+  },
+  "variations-of-the-star-schema-benchmark-to-test-the-effects-of-data-skew-on-query-performance": {
+    "source_url": "https://dblp.org/rec/conf/wosp/RablPJOO13",
+    "abstract_source_url": "https://openalex.org/W2013042849"
+  },
+  "vehicle-originating-signals-for-real-time-charging-control-of-electric-vehicle-fleets": {
+    "source_url": "https://doi.org/10.1109/tte.2015.2445215",
+    "abstract_source_url": "https://openalex.org/W1484038335"
+  },
+  "waveform-signal-entropy-and-compression-study-of-whole-building-energy-datasets": {
+    "source_url": "https://dblp.org/rec/conf/eenergy/KriechbaumerJJ19",
+    "abstract_source_url": "https://openalex.org/W4289364680"
+  },
+  "wavegas-waveform-relaxation-for-scaling-graph-neural-networks": {
+    "source_url": "https://dblp.org/rec/journals/corr/abs-2502-19986",
+    "abstract_source_url": "https://openalex.org/W4416150205"
+  },
+  "weighted-overlay-design-for-topic-based-publish-subscribe-systems-on-geo-distributed-data-centers": {
+    "source_url": "https://dblp.org/rec/conf/icdcs/ChenTJV15",
+    "abstract_source_url": "https://openalex.org/W1498712689"
+  },
+  "when-agentic-executions-fail-detecting-and-localizing-runtime-faults-from-telemetry": {
+    "source_url": "https://dblp.org/rec/journals/corr/abs-2608-14680",
+    "abstract_source_url": "https://openalex.org/W7203713097"
+  },
+  "where-is-my-training-bottleneck-hidden-trade-offs-in-deep-learning-preprocessing-pipelines": {
+    "source_url": "https://dblp.org/rec/conf/sigmod/IsenkoMJJ22",
+    "abstract_source_url": "https://openalex.org/W4220938834"
+  },
+  "whitening-soa-testing-via-event-exposure": {
+    "source_url": "https://dblp.org/rec/journals/tse/YeJ13",
+    "abstract_source_url": "https://openalex.org/W2107915643"
+  },
+  "why-do-my-blockchain-transactions-fail-a-study-of-hyperledger-fabric": {
+    "source_url": "https://dblp.org/rec/conf/sigmod/ChackoMJ21",
+    "abstract_source_url": "https://openalex.org/W3175986586"
+  },
+  "xml-routing-in-data-dissemination-networks": {
+    "source_url": "https://dblp.org/rec/conf/icde/LiHJ07",
+    "abstract_source_url": "https://openalex.org/W2149498440"
+  }
+}

@@ -82,9 +82,21 @@ Choose **Publications**, select a paper or **Create an entry**, and fill in
 the title, year, authors (one per line), venue, paper URL, and publication type.
 Add research areas and related datasets where relevant.
 
-Paste the abstract into **Abstract**. Use Markdown for formatting and LaTeX for math.
-Full LaTeX documents and custom packages are not supported. 
+Use the published paper URL when available. Include full papers, not abstract-only
+conference, poster, or demo entries.
+
+Paste the original abstract into **Abstract**.
+Abstracts use **Markdown**, with **LaTeX equations** :
+
+- Text: `*italics*`, `**bold**`, and `[link text](https://example.org)`.
+- Inline equations: `$x^2$` or `\(x^2\)`.
+- Separate equations: `$$x^2$$` or `\[x^2\]`.
+
+Use `*text*` for italics, not `\textit{text}` outside an equation.
+Full LaTeX documents and custom packages are not supported.
 Put extra details in **Additional notes**.
+
+The archive shows 100 papers per page; search covers the entire archive.
 
 ### Create or edit a personal page
 

@@ -1,0 +1,10 @@
++++
+title = "Methods for Quantifying Energy Consumption in TPC-H"
+year = 2018
+authors = ["Meikel Poess", "Da Qi Ren", "Tilmann Rabl", "Hans-Arno Jacobsen"]
+venue = "Proceedings of the 2018 ACM/SPEC International Conference on Performance Engineering"
+publication_type = "Conference Paper"
+research = ["data-management"]
+external_url = "https://doi.org/10.1145/3184407.3184429"
+abstract = "Historically, performance and price-performance of computer systems have been the key purchasing arguments for customers. However, with rising energy costs and increasing power consumption due to the ever-growing demand for compute power (servers, storage, networks), electricity bills have become a significant expense for today»s data centers. In order to measure energy consumption in standardized ways, the Standard Performance Evaluation Corporation (SPEC) has developed a benchmark dedicated to measuring the power consumption of single servers (SPECpower\\_ssj2008), while the Transaction Processing Performance Council (TPC) and the Storage Performance Council (SPC) have developed general specifications that govern how energy is measured for any of its benchmarks. Energy reporting is optional in TPC and SPC results. While there are close to 600 SPECpower\\_ssj2008 results, there have been only three TPC and no SPC benchmark results published that report energy consumption. In this paper, we argue that the low number of TPC publications is due to the large setups required in TPC benchmarks and the, subsequently, complicated measurement setup. Running on a typical big data setup we evaluate two alternative methods to quantify energy consumption during TPC-H's multi-user runs, namely by taking measurements of on-chip power sensors controlled through Intelligent Platform Management Interface and by estimating power consumption via the nameplate power consumption method. We compare these later two methods with power measurements taken from external power meters as required by SPEC and TPC benchmarks."
++++

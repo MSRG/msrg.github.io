@@ -8,4 +8,5 @@ location = "MSRG alumnus"
 research = ["data-management"]
 orcid = "https://orcid.org/0000-0002-0629-7955"
 homepage = "https://www.cs.cit.tum.de/dis/alumni/dr-mohammadreza-najafi/"
+author_names = ["Mohammadreza Najafi", "Mohammedreza Najafi"]
 +++

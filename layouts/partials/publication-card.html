@@ -1,0 +1,10 @@
+<article class="list-card publication-card" data-publication-card>
+  <p class="muted">{{ partial "publication-authors.html" (dict "authors" .Params.authors) }}</p>
+  <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+  <p>{{ .Params.venue }}, {{ .Params.year }} · {{ .Params.publication_type }}</p>
+  {{ with .Params.tags }}
+    <div class="chip-row">
+      {{ range . }}<span class="chip chip-muted">{{ . }}</span>{{ end }}
+    </div>
+  {{ end }}
+</article>

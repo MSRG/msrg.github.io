@@ -1,0 +1,176 @@
+[
+  {
+    "path": "content/publications/367-graph-neural-networks-and-machine-learning-models-predict-cognitive-function-from-brain-connectivity-networks.md",
+    "title": "367. Graph Neural Networks and Machine Learning Models Predict Cognitive Function From Brain Connectivity Networks",
+    "reason": "Abstract-only publication",
+    "url": "https://doi.org/10.1016/j.biopsych.2026.03.601"
+  },
+  {
+    "path": "content/publications/3rd-event-driven-business-process-management-workshop-edbpm.md",
+    "title": "3rd Event-Driven Business Process Management Workshop (edBPM)",
+    "reason": "One-page workshop announcement",
+    "url": "https://doi.org/10.1145/1723028.1723085"
+  },
+  {
+    "path": "content/publications/a-blockchain-based-payment-and-validity-check-system-for-vehicle-services.md",
+    "title": "A Blockchain-based Payment and Validity Check System for Vehicle Services",
+    "reason": "Two-page poster/demo abstract",
+    "url": "https://doi.org/10.1145/3366627.3368107"
+  },
+  {
+    "path": "content/publications/a-distributed-analysis-and-benchmarking-framework-for-apache-openwhisk-serverless-platform.md",
+    "title": "A Distributed Analysis and Benchmarking Framework for Apache OpenWhisk Serverless Platform",
+    "reason": "Two-page poster/demo abstract",
+    "url": "https://doi.org/10.1145/3284014.3284016"
+  },
+  {
+    "path": "content/publications/a-publish-subscribe-network-engine-testbed-for-multiplayer-games.md",
+    "title": "A publish/subscribe network engine testbed for multiplayer games",
+    "reason": "Two-page poster/demo abstract",
+    "url": "https://doi.org/10.1145/2678508.2678518"
+  },
+  {
+    "path": "content/publications/a-serverless-approach-to-publish-subscribe-systems.md",
+    "title": "A Serverless Approach to Publish/Subscribe Systems",
+    "reason": "Two-page poster/demo abstract",
+    "url": "https://doi.org/10.1145/3284014.3284019"
+  },
+  {
+    "path": "content/publications/a-serverless-topic-based-and-content-based-pub-sub-broker-demo.md",
+    "title": "A serverless topic-based and content-based pub/sub broker: demo",
+    "reason": "Two-page poster/demo abstract",
+    "url": "https://doi.org/10.1145/3155016.3155024"
+  },
+  {
+    "path": "content/publications/a-zero-knowledge-proof-system-for-openlibra.md",
+    "title": "A zero-knowledge proof system for OpenLibra",
+    "reason": "Two-page poster/demo abstract",
+    "url": "https://doi.org/10.1145/3491086.3492469"
+  },
+  {
+    "path": "content/publications/attack-and-vulnerability-simulation-framework-for-bitcoin-like-blockchain-technologies.md",
+    "title": "Attack and Vulnerability Simulation Framework for Bitcoin-like Blockchain Technologies",
+    "reason": "Two-page poster/demo abstract",
+    "url": "https://doi.org/10.1145/3284014.3284017"
+  },
+  {
+    "path": "content/publications/blockchain-landscape-and-ai-renaissance-the-bright-path-forward.md",
+    "title": "Blockchain Landscape and AI Renaissance: The Bright Path Forward",
+    "reason": "One-page tutorial abstract",
+    "url": "https://doi.org/10.1145/3279945.3279947"
+  },
+  {
+    "path": "content/publications/cidds-a-configurable-and-distributed-dag-based-distributed-ledger-simulation-framework.md",
+    "title": "CIDDS: A Configurable and Distributed DAG-based Distributed Ledger Simulation Framework",
+    "reason": "Two-page poster/demo abstract",
+    "url": "https://doi.org/10.1145/3284014.3284018"
+  },
+  {
+    "path": "content/publications/combat-state-aware-interest-management-for-online-games-demo.md",
+    "title": "Combat state-aware interest management for online games: demo",
+    "reason": "Two-page poster/demo abstract",
+    "url": "https://doi.org/10.1145/3155016.3155019"
+  },
+  {
+    "path": "content/publications/demo-abstract-mos-a-bandwidth-efficient-cross-platform-middleware-for-publish-subscribe.md",
+    "title": "Demo Abstract: MOS: A Bandwidth-Efficient Cross-Platform Middleware for Publish/Subscribe",
+    "reason": "Abstract-only publication",
+    "url": "https://doi.org/10.1145/3007592.3007607"
+  },
+  {
+    "path": "content/publications/evibes-configurable-and-interactive-ethereum-blockchain-simulation-framework.md",
+    "title": "eVIBES: Configurable and Interactive Ethereum Blockchain Simulation Framework",
+    "reason": "Two-page poster/demo abstract",
+    "url": "https://doi.org/10.1145/3284014.3284020"
+  },
+  {
+    "path": "content/publications/fabric-visualizer-a-transaction-dependency-visualizer-for-hyperledger-fabric.md",
+    "title": "Fabric-Visualizer: A Transaction Dependency Visualizer for Hyperledger Fabric",
+    "reason": "Two-page poster/demo abstract",
+    "url": "https://doi.org/10.1145/3626564.3629098"
+  },
+  {
+    "path": "content/publications/hyperpubsub-a-decentralized-permissioned-publish-subscribe-service-using-blockchains-demo.md",
+    "title": "Hyperpubsub: a decentralized, permissioned, publish/subscribe service using blockchains: demo",
+    "reason": "Two-page poster/demo abstract",
+    "url": "https://doi.org/10.1145/3155016.3155018"
+  },
+  {
+    "path": "content/publications/introducing-publiy-a-multi-purpose-distributed-publish-subscribe-system.md",
+    "title": "Introducing Publiy: a multi-purpose distributed publish/subscribe system",
+    "reason": "Two-page poster/demo abstract",
+    "url": "https://doi.org/10.1145/2405153.2405154"
+  },
+  {
+    "path": "content/publications/location-based-matching-in-publish-subscribe-revisited.md",
+    "title": "Location-based matching in publish/subscribe revisited",
+    "reason": "Two-page poster/demo abstract",
+    "url": "https://doi.org/10.1145/2405153.2405162"
+  },
+  {
+    "path": "content/publications/logstore-a-workload-aware-adaptable-key-value-store-on-hybrid-storage-systems-extended-abstract.md",
+    "title": "LogStore: A Workload-aware, Adaptable Key-Value Store on Hybrid Storage Systems (Extended abstract)",
+    "reason": "Abstract-only publication",
+    "url": "https://doi.org/10.1109/icde51399.2021.00246"
+  },
+  {
+    "path": "content/publications/orderlesschain-a-crdt-enabled-blockchain-without-total-global-order-of-transactions-poster-abstract.md",
+    "title": "OrderlessChain: a CRDT-enabled blockchain without total global order of transactions: poster abstract",
+    "reason": "Abstract-only publication",
+    "url": "https://doi.org/10.1145/3565386.3565486"
+  },
+  {
+    "path": "content/publications/orderlessfile-a-crdt-enabled-permissioned-blockchain-for-file-storage-poster-abstract.md",
+    "title": "OrderlessFile: a CRDT-enabled permissioned blockchain for file storage: poster abstract",
+    "reason": "Abstract-only publication",
+    "url": "https://doi.org/10.1145/3565386.3565491"
+  },
+  {
+    "path": "content/publications/orderlessfl-a-crdt-enabled-permissioned-blockchain-for-federated-learning-poster-abstract.md",
+    "title": "OrderlessFL: a CRDT-enabled permissioned blockchain for federated learning: poster abstract",
+    "reason": "Abstract-only publication",
+    "url": "https://doi.org/10.1145/3565386.3565487"
+  },
+  {
+    "path": "content/publications/poster-abstract-real-time-load-prediction-with-high-velocity-smart-home-data-stream.md",
+    "title": "Poster Abstract: Real-time load prediction with high velocity smart home data stream",
+    "reason": "Abstract-only publication",
+    "url": "https://doi.org/10.1007/s00450-017-0364-5"
+  },
+  {
+    "path": "content/publications/poster-mades-a-multi-layered-adaptive-distributed-event-store.md",
+    "title": "Poster: MADES - a multi-layered, adaptive, distributed event store",
+    "reason": "Abstract-only publication",
+    "url": "https://doi.org/10.1145/2488222.2489274"
+  },
+  {
+    "path": "content/publications/psbench-a-benchmark-for-content-and-topic-based-publish-subscribe-systems.md",
+    "title": "PSBench: a benchmark for content- and topic-based publish/subscribe systems",
+    "reason": "Two-page poster/demo abstract",
+    "url": "https://doi.org/10.1145/2678508.2678517"
+  },
+  {
+    "path": "content/publications/psoccn-publish-subscribe-support-in-content-centric-networking.md",
+    "title": "PSoCCN: publish/subscribe support in content-centric networking",
+    "reason": "Two-page poster/demo abstract",
+    "url": "https://doi.org/10.1145/2678508.2678516"
+  },
+  {
+    "path": "content/publications/safe-distribution-and-parallel-execution-of-data-centric-workflows-over-the-publish-subscribe-abstraction-2016.md",
+    "title": "Safe distribution and parallel execution of data-centric workflows over the publish/subscribe abstraction",
+    "reason": "ICDE journal presentation abstract; full TKDE article retained",
+    "url": "https://doi.org/10.1109/icde.2016.7498393"
+  },
+  {
+    "path": "content/publications/smart-phone-application-for-connected-vehicles-and-smart-transportation.md",
+    "title": "Smart phone application for connected vehicles and smart transportation",
+    "reason": "Two-page poster/demo abstract",
+    "url": "https://doi.org/10.1145/2541614.2541627"
+  },
+  {
+    "path": "content/publications/vibes-fast-blockchain-simulations-for-large-scale-peer-to-peer-networks-demo.md",
+    "title": "VIBES: fast blockchain simulations for large-scale peer-to-peer networks: demo",
+    "reason": "Two-page poster/demo abstract",
+    "url": "https://doi.org/10.1145/3155016.3155020"
+  }
+]

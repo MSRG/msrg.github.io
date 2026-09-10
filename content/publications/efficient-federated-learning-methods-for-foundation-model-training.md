@@ -1,17 +1,11 @@
 +++
 title = "A Survey on Efficient Federated Learning Methods for Foundation Model Training"
 year = 2024
-authors = ["Herbert Woisetschlaeger", "Alexander Erben", "Shiqiang Wang", "Ruben Mayer", "Hans-Arno Jacobsen"]
-venue = "Proceedings of the Thirty-Third International Joint Conference on Artificial Intelligence"
+authors = ["Herbert Woisetschläger", "Alexander Erben", "Shiqiang Wang", "Ruben Mayer", "Hans-Arno Jacobsen"]
+venue = "Proceedings of the Thirty-Third International Joint Conference on Artificial Intelligence (IJCAI)"
 publication_type = "Conference Paper"
 research = ["distributed-machine-learning"]
 tags = ["federated-learning", "foundation-models", "systems-survey"]
-summary = "Survey of computationally and communication-efficient federated learning strategies for foundation-model settings."
-external_url = "https://arxiv.org/abs/2401.04472"
+external_url = "https://www.ijcai.org/proceedings/2024/919"
+abstract = "Federated Learning (FL) has become an established technique to facilitate privacy-preserving collaborative training across a multitude of clients. However, new approaches to FL often discuss their contributions involving small deep-learning models only and focus on training full models on clients. In the wake of Foundation Models (FM), the reality is different for many deep learning applications. Typically, FMs have already been pre-trained across a wide variety of tasks and can be fine-tuned to specific downstream tasks over significantly smaller datasets than required for full model training. However, access to such datasets is often challenging. By its design, FL can help to open data silos. With this survey, we introduce a novel taxonomy focused on computational and communication efficiency, the vital elements to make use of FMs in FL systems. We discuss the benefits and drawbacks of parameter-efficient fine-tuning (PEFT) for FL applications, elaborate on the readiness of FL frameworks to work with FMs, and provide future research opportunities on how to evaluate generative models in FL as well as the interplay of privacy and PEFT."
 +++
-
-This survey looks at what changes when federated learning meets foundation
-models. Rather than assuming small models and full-model training on each
-client, it focuses on efficiency questions that become central once pre-trained
-models, parameter-efficient fine-tuning, and communication costs dominate the
-design space.
