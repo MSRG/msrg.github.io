@@ -1,0 +1,10 @@
++++
+title = "When Agentic Executions Fail: Detecting and Localizing Runtime Faults from Telemetry"
+year = 2026
+authors = ["Chenkai Zhang", "Yiran Li", "Yifang Tian", "Michalis Bachras", "Hans-Arno Jacobsen"]
+venue = "arXiv"
+publication_type = "ArXiv Preprint"
+research = ["distributed-machine-learning"]
+external_url = "https://arxiv.org/abs/2608.14680"
+abstract = "Reliability in LLM-based agentic systems is a property of the whole execution (its tool calls, model calls, guardrails, and inter-agent messages), not of the final answer alone, yet evaluating only task outcomes reveals little about how or why a run fails. We present AGENTCHAOSBENCH, a benchmark for detecting and localizing runtime faults in agentic systems from their execution telemetry. We run five heterogeneous applications that coordinate agents over the Agent-to-Agent protocol and call tools through the Model Context Protocol, and inject ten types of operational fault (unavailable or slow tools, corrupted or oversized responses, and delayed, looped, or misrouted delegations and bypassed guardrails) at their tool, model, guardrail, and inter-agent boundaries, alongside a no-fault control. The resulting dataset contains 275 sanitized traces: 250 faulty executions spanning ten fault types and 25 no-fault controls. Each faulty trace is aligned with the no-fault execution of the same input; fault-type labels and, where applicable, location labels are held out from diagnosis. On structured single-trace inputs, a first set of zero-shot LLM baselines shows the task is far from solved: local detectors up to 14B parameters reach only 13.6-19.2% top-1 fault-type accuracy and the frontier DeepSeek-v4-pro only 24.8%, while jointly identifying the fault type and its location tops out at 22%; reference-dependent faults (above all a bypassed guardrail) stay near-unsolved from a single trace. An aligned reference improves selected relative faults but does not resolve guardrail bypass. The held-out labels and compact prediction format support reproducible comparison of LLM-based and non-LLM diagnosis methods."
++++

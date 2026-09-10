@@ -7,4 +7,5 @@ status = "alumni"
 location = "MSRG alumnus"
 research = ["data-management"]
 homepage = "https://www.cs.cit.tum.de/dis/alumni/dr-jose-adan-rivera-acevedo/"
+author_names = ["José Rivera", "Jose Rivera"]
 +++

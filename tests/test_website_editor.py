@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import base64
 import json
+import re
 from pathlib import Path
 import shutil
 import subprocess
@@ -159,7 +160,8 @@ class WebsiteEditorTests(unittest.TestCase):
         # Legacy pages can derive their URLs from a title longer than the filename.
         existing = self.store.get('fledge', 'publications')
         self.store.save({'kind': 'publications', 'slug': 'fledge', 'revision': existing['revision'],
-                         'data': {'title': 'An updated Fledge title'}})
+                         'data': {'title': 'An updated Fledge title', 'abstract': ''},
+                         'body': '\nCompanion material remains available.\n'})
         self.assertEqual(self.store.get('fledge', 'publications')['preview'], existing['preview'])
         self.store.save({'kind': 'personal', 'slug': 'jane-doe', 'data': defaults('personal') | {'layout': 'structured',
             'primary_link': {'label': 'A paper', 'url': '/publications/sample-paper/'}, 'highlights': [{'title': 'Editor-created highlight', 'description': 'Works'}]}, 'body': '\n## Editor-created page\nHello.\n'})
@@ -179,9 +181,39 @@ class WebsiteEditorTests(unittest.TestCase):
         self.assertIn('>Additional notes</h2>', paper_html)
         self.assertIn('Companion experiment notes.', paper_html)
         self.assertNotIn('Read the abstract and full publication', paper_html)
-        self.assertIn('entanglement', (self.root / 'public/publications/index.html').read_text())
+        # Source abstracts must render their formatting, not expose escaped TeX.
+        survey = self.store.get('a-comprehensive-survey-of-machine-unlearning-techniques-for-large-language-models', 'publications')
+        survey_html = (self.root / 'public' / survey['preview'].lstrip('/') / 'index.html').read_text()
+        self.assertIn('<em>LLM unlearning</em>', survey_html)
+        self.assertNotIn(r'\textit', survey_html)
+        for slug, equations in {
+            'mess-dynamically-learned-inference-time-llm-routing-in-model-zoos-with-service-level-guarantees': 1,
+            'building-fault-tolerant-overlays-with-low-node-degrees-for-topic-based-publish-subscribe': 12,
+            'how-does-stake-distribution-influence-consensus': 3,
+        }.items():
+            record = self.store.get(slug, 'publications')
+            markup = (self.root / 'public' / record['preview'].lstrip('/') / 'index.html').read_text()
+            self.assertEqual(markup.count('<math '), equations, slug)
+        archive_html = (self.root / 'public/publications/index.html').read_text()
+        self.assertNotIn('entanglement', archive_html)
+        self.assertEqual(archive_html.count('data-publication-card'), 100)
+        index = json.loads((self.root / 'public/publications/index.json').read_text())
+        self.assertTrue(any('entanglement' in record['search'] for record in index))
+        # Every record remains reachable with JavaScript disabled, exactly once.
+        archive_pages = [self.root / 'public/publications/index.html'] + sorted(
+            (self.root / 'public/publications/page').glob('*/index.html'))
+        urls = []
+        for archive_page in archive_pages:
+            markup = archive_page.read_text()
+            if 'http-equiv="refresh"' in markup:
+                continue
+            self.assertLessEqual(markup.count('data-publication-card'), 100)
+            urls.extend(re.findall(r'<h2><a href="([^"]+)"', markup))
+        self.assertEqual(len(urls), len(index))
+        self.assertEqual(set(urls), {record['url'] for record in index})
         legacy_html = (self.root / 'public' / existing['preview'].lstrip('/') / 'index.html').read_text()
         self.assertIn('Read the abstract and full publication at the source.', legacy_html)
+        self.assertRegex(legacy_html, r'<a href="[^"]+" target="_blank" rel="noopener noreferrer">Read the abstract and full publication')
         self.assertIn('>Additional notes</h2>', legacy_html)
         self.assertNotIn('>Overview</p>', legacy_html)
         self.assertTrue(list((self.root / 'public/downloads').glob('*.csv')))

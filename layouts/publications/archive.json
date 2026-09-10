@@ -1,0 +1,16 @@
+{{- $aliases := dict -}}
+{{- range (site.GetPage "/people").RegularPages -}}
+  {{- $names := .Params.author_names | default (slice (partial "page-title.html" .)) -}}
+  {{- range $names -}}
+    {{- $aliases = merge $aliases (dict (lower .) (delimit $names " ")) -}}
+  {{- end -}}
+{{- end -}}
+{{- $records := slice -}}
+{{- range sort .RegularPages "Params.year" "desc" -}}
+  {{- $search := printf "%s %s %v %v %v %s" .Title .Params.venue .Params.year .Params.authors .Params.tags (.Params.abstract | default "" | plainify) -}}
+  {{- range .Params.authors -}}
+    {{- with index $aliases (lower .) -}}{{- $search = printf "%s %s" $search . -}}{{- end -}}
+  {{- end -}}
+  {{- $records = $records | append (dict "title" .Title "url" .RelPermalink "authors" .Params.authors "venue" .Params.venue "year" .Params.year "type" .Params.publication_type "tags" (.Params.tags | default (slice)) "research" (.Params.research | default (slice)) "search" (lower $search)) -}}
+{{- end -}}
+{{- $records | jsonify -}}

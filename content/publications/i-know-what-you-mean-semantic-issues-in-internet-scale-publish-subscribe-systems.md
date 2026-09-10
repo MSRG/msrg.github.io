@@ -1,0 +1,10 @@
++++
+title = "I know what you mean: semantic issues in Internet-scale publish/subscribe systems"
+year = 2003
+authors = ["Ioana Burcea", "Milenko Petrovic", "Hans-Arno Jacobsen"]
+venue = "SWDB"
+publication_type = "Conference Paper"
+research = ["data-management"]
+external_url = "https://dblp.org/rec/conf/semweb/BurceaPJ03"
+abstract = "In recent years, the amount of information on the Internet has increased exponentially developing great interest in selective information dissemination systems. The publish/subscribe paradigm is particularly suited for designing systems for routing information and requests according to their content throughout wide-area network of brokers. Current publish/subscribe systems use limited syntax-based content routing but since publishers and subscribers are anonymous and decoupled in time, space and location, often over wide-area network boundary, they do not necessarily speak the same language. Consequently, adding semantics to current publish/subscribe systems is important. In this paper we identify and examine the issues in developing semantic-based content routing for publish/subscribe broker networks."
++++

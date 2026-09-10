@@ -1,0 +1,10 @@
++++
+title = "A Blockchain-Based Privacy-Preserving Charging Station Reservation and Payment Scheme for Electric Vehicles"
+year = 2025
+authors = ["Syed Muhammad Danish", "Muhammad Muneem Shabir", "Kaiwen Zhang", "Hans-Arno Jacobsen", "Syed Ali Hassan"]
+venue = "Distributed Ledger Technologies: Research and Practice"
+publication_type = "Journal Article"
+research = ["data-management"]
+external_url = "https://doi.org/10.1145/3696428"
+abstract = "EV charging infrastructures traditionally rely on untrusted centralized infrastructures that pose several privacy and security threats to EVs’ personal information. Targeted advertisements, privacy leaks and selling data to third parties are among the threats to privacy and security. By utilizing blockchain-based solutions, recent work address the security and privacy problems associated with EV charging protocols. Most of them are geared toward maintaining EV anonymity rather than preserving end-to-end privacy. As EV owners’ charging histories and payment information are associated with their wallet addresses on the blockchain, any threat of linkability of these blockchain addresses to physical identities can pose a serious risk to their privacy. In this paper, we propose a ring signature based privacy-preserving end-to-end charging station (CS) reservation and payment protocol, which provides EV owners with the ability to reserve and pay for a charging slot privately without sharing private information or exposing their identity or addresses at CS locations. Additionally, we provide EV owners with a decentralized charging slot information verification protocol with the help of secure multiparty computation (SMC), which allows them to verify available slots. A dispute resolution mechanism is also proposed that handles disputes between EVs and CSs and penalizes them accordingly by utilizing trusted execution environment (TEE). Results show that the proposed protocol ensures end-to-end EV owners’ privacy with low blockchain transaction and computation overhead."
++++

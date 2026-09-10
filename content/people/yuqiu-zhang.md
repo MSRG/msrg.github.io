@@ -12,4 +12,5 @@ interests = ["Cloud Resource Management", "Serverless Computing", "Stream Proces
 portrait = "/images/people/yuqiu-zhang.jpg"
 homepage = "https://qzhang.ca/"
 linkedin = "https://www.linkedin.com/in/yuqiu-quincy-zhang/"
+author_names = ["Quincy Yuqiu Zhang", "Yuqiu Zhang"]
 +++

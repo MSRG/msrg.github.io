@@ -7,5 +7,4 @@ publication_type = "Dataset"
 research = ["data-management"]
 tags = ["benchmarking"]
 external_url = "https://zenodo.org/records/6382482"
-source_url = "https://msrg.utoronto.ca/publications/?page=2"
 +++

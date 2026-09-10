@@ -1,0 +1,10 @@
++++
+title = "A Hybrid B+-tree as Solution for In-Memory Indexing on CPU-GPU Heterogeneous Computing Platforms"
+year = 2016
+authors = ["Amirhesam Shahvarani", "Hans-Arno Jacobsen"]
+venue = "Proceedings of the 2016 International Conference on Management of Data"
+publication_type = "Conference Paper"
+research = ["data-management"]
+external_url = "https://doi.org/10.1145/2882903.2882918"
+abstract = "An in-memory indexing tree is a critical component of many databases. Modern many-core processors, such as GPUs, are offering tremendous amounts of computing power making them an attractive choice for accelerating indexing. However, the memory available to the accelerating co-processor is rather limited and expensive in comparison to the memory available to the CPU. This drawback is a barrier to exploit the computing power of co-processors for arbitrarily large index trees. In this paper, we propose a novel design for a B+-tree based on the heterogeneous computing platform and the hybrid memory architecture found in GPUs. We propose a hybrid CPU-GPU B+-tree, \"HB+-tree,\" which targets high search throughput use cases. Unique to our design is the joint and simultaneous use of computing and memory resources of CPU-GPU systems. Our experiments show that our HB+-tree can perform up to 240 million index queries per second, which is 2.4X higher than our CPU-optimized solution."
++++

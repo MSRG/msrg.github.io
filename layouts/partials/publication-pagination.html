@@ -1,0 +1,6 @@
+{{ $pager := .pager }}
+<nav class="publication-pagination" aria-label="Publication pages, {{ .position }}" data-publication-pagination>
+  {{ with $pager.Prev }}<a class="button button-secondary" href="{{ .URL }}" rel="prev">Previous</a>{{ end }}
+  <span>Page {{ $pager.PageNumber }} of {{ $pager.TotalPages }}</span>
+  {{ with $pager.Next }}<a class="button button-secondary" href="{{ .URL }}" rel="next">Next</a>{{ end }}
+</nav>

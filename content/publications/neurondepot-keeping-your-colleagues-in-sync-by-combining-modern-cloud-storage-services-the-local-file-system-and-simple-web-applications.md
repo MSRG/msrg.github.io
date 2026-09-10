@@ -1,0 +1,10 @@
++++
+title = "NeuronDepot: keeping your colleagues in sync by combining modern cloud storage services, the local file system, and simple web applications"
+year = 2014
+authors = ["Philipp L. Rautenberg", "Ajayrama Kumaraswamy", "Álvaro Tejero-Cantero", "Christoph Doblander", "Mohammad Norouzian", "Kazuki Kai", "Hans-Arno Jacobsen", "Hiroyuki Ai", "Thomas Wachtler", "Hidetoshi Ikeno"]
+venue = "Frontiers in Neuroinformatics"
+publication_type = "Journal Article"
+research = ["data-management"]
+external_url = "https://doi.org/10.3389/fninf.2014.00055"
+abstract = "Neuroscience today deals with a \"data deluge\" derived from the availability of high-throughput sensors of brain structure and brain activity, and increased computational resources for detailed simulations with complex output. We report here (1) a novel approach to data sharing between collaborating scientists that brings together file system tools and cloud technologies, (2) a service implementing this approach, called NeuronDepot, and (3) an example application of the service to a complex use case in the neurosciences. The main drivers for our approach are to facilitate collaborations with a transparent, automated data flow that shields scientists from having to learn new tools or data structuring paradigms. Using NeuronDepot is simple: one-time data assignment from the originator and cloud based syncing-thus making experimental and modeling data available across the collaboration with minimum overhead. Since data sharing is cloud based, our approach opens up the possibility of using new software developments and hardware scalabitliy which are associated with elastic cloud computing. We provide an implementation that relies on existing synchronization services and is usable from all devices via a reactive web interface. We are motivating our solution by solving the practical problems of the GinJang project, a collaboration of three universities across eight time zones with a complex workflow encompassing data from electrophysiological recordings, imaging, morphological reconstructions, and simulations."
++++

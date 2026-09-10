@@ -1,0 +1,10 @@
++++
+title = "Hardware Acceleration Landscape for Distributed Real-Time Analytics: Virtues and Limitations"
+year = 2017
+authors = ["Mohammadreza Najafi", "Kaiwen Zhang", "Mohammad Sadoghi", "Hans-Arno Jacobsen"]
+venue = "2017 IEEE 37th International Conference on Distributed Computing Systems (ICDCS)"
+publication_type = "Conference Paper"
+research = ["data-management"]
+external_url = "https://doi.org/10.1109/icdcs.2017.194"
+abstract = "We are witnessing a technological revolution with a broad impact ranging from daily life (e.g., personalized medicine and education) to industry (e.g., data-driven healthcare, commerce, agriculture, and mining). At the core of this transformation lies \"data\". This transformation is facilitated by embedded devices, collectively known as Internet of Things (IoT), which produce real-time feeds of sensor data which are collected and processed to produce a dynamic physical model used for optimized real-time decision making. At the infrastructure level, there is a need to develop a scalable architecture for processing massive volumes of present and historical data at an unprecedented velocity to support the IoT paradigm. To cope with such extreme scale, we argue for the need to revisit the hardware and software co-design landscape in light of two key technological advancements. First is the virtualization of computation and storage over highly distributed data centers spanning across continents. Second is the emergence of a variety of specialized hardware accelerators that complement traditional general-purpose processors. Further efforts are required to unify these two trends in order to harness the power of big data. In this paper, we present a formulation and characterization of the hardware acceleration landscape geared towards real-time analytics in the cloud. Our goal is to assist both researchers and practitioners navigating the newly revived field of software and hardware co-design for building next generation distributed systems. We further present a case study to explore software and hardware interplay for designing distributed real-time stream processing."
++++

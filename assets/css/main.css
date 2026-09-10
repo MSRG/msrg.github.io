@@ -1195,6 +1195,16 @@ a.chip {
 }
 
 [data-publication-controls][hidden] { display: none; }
+
+.publication-pagination {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+[data-publication-results] { scroll-margin-top: 6rem; }
 button { cursor: pointer; }
 button:disabled { cursor: default; opacity: 0.6; }
 

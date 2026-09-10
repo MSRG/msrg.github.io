@@ -1,0 +1,10 @@
++++
+title = "Algorithms Based on Divide and Conquer for Topic-Based Publish/Subscribe Overlay Design"
+year = 2016
+authors = ["Chen Chen", "Hans-Arno Jacobsen", "Roman Vitenberg"]
+venue = "IEEE/ACM Transactions on Networking"
+publication_type = "Journal Article"
+research = ["data-management"]
+external_url = "https://doi.org/10.1109/tnet.2014.2369346"
+abstract = "Overlay design for topic-based publish/subscribe (pub/sub) systems is of primary importance because the overlay forms the basis for the system and directly impacts its performance. This paper focuses on the MinAvg-TCO problem: Use the minimum number of edges to construct a topic-connected overlay (TCO) such that all nodes that are interested in the same topic are organized in a directly connected dissemination suboverlay. Existing algorithms for MinAvg-TCO suffer from three key drawbacks: 1) prohibitively high runtime cost; 2) reliance on global knowledge and centralized operation; and 3) nonincremental operation by reconstructing the TCO from scratch. From a practical point of view, these are all severe limitations. To address these concerns, we develop algorithms that dynamically join multiple TCOs. Inspired by the divide-and-conquer character of this idea, we derive a number of algorithms for the original MinAvg-TCO problem that accommodate a variety of practical pub/sub workloads. Both theoretical analysis and experimental evaluations demonstrate that our divide-and-conquer algorithms seek a balance between time efficiency and the number of edges required: Our algorithms cost a fraction (up to 1.67%) of the runtime cost of their greedy alternatives, which come at the expense of an empirically insignificant increase in the average node degree. Furthermore, in order to reduce the probability of poor partitioning at the divide phase, we develop a bulk-lightweight partitioning scheme on top of random partitioning. This more refined partitioning imposes a marginally higher runtime cost, but leads to improvements in the output TCOs, including average node degrees and topic diameters."
++++
