@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import os
+import re
 from pathlib import Path
 import shutil
 import subprocess
@@ -11,8 +12,8 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
-from content_model import SCHEMA, iter_personal_pages
-from check_site import check
+from content_model import SCHEMA, iter_personal_pages, update_profile_text
+from check_site import Page, check
 
 HUGO = os.environ.get("HUGO_BIN") or shutil.which("hugo")
 
@@ -26,7 +27,24 @@ class PersonalSiteTests(unittest.TestCase):
         for directory in ("content", "layouts", "assets", "static", "data"):
             shutil.copytree(ROOT / directory, self.project / directory)
         shutil.copy2(ROOT / "hugo.yaml", self.project / "hugo.yaml")
+        # Exercise both publishing modes independently of Thomas's real custom site.
+        shutil.rmtree(self.project / "static/~thomas-trenty", ignore_errors=True)
+        fixture = self.project / "content/personal/grier-jones/index.md"
+        fixture.parent.mkdir(parents=True, exist_ok=True)
+        fixture.write_text('+++\nlayout = "single"\n+++\n\nA test personal page.\n')
         self.output = self.project / "public"
+        self.member = self.project / "content/people/thomas-trenty.md"
+        self.member.write_text(update_profile_text(self.member.read_text(), {
+            "homepage": "https://example.org/thomas/"}))
+
+    def assert_both_websites(self, html):
+        page = Page("/", html)
+        self.assertIn("/~thomas-trenty/", page.member_websites["MSRG personal page"])
+        self.assertIn("https://example.org/thomas/", page.member_websites["External personal website"])
+        self.assertFalse(page.contact_errors)
+        icons = [re.search(r'aria-label="' + label + r'"[^>]*>\s*(<svg.*?</svg>)', html, re.S)[1]
+                 for label in ("MSRG personal page", "External personal website")]
+        self.assertNotEqual(*icons)
 
     def build(self):
         return subprocess.run(
@@ -57,7 +75,7 @@ class PersonalSiteTests(unittest.TestCase):
                              (folder / relative).read_bytes())
         for relative in ("people", "research/quantum-computing-systems"):
             html = (self.output / relative / "index.html").read_text()
-            self.assertRegex(html, r'href=["\']?/~thomas-trenty/["\']? aria-label=["\']Personal website')
+            self.assert_both_websites(html)
         self.assertIn("thomas-trenty", [slug for _, slug, _ in iter_personal_pages(self.project)])
         self.assertEqual(check(self.output, self.project), [])
 
@@ -67,6 +85,9 @@ class PersonalSiteTests(unittest.TestCase):
         layouts = next(field["options"] for field in SCHEMA["types"]["personal"]["fields"] if field["key"] == "layout")
         for layout in layouts:
             with self.subTest(layout=layout):
+                alumni = layout == "structured"
+                self.member.write_text(update_profile_text(self.member.read_text(), {
+                    "status": "alumni" if alumni else "current"}))
                 (folder / "index.md").write_text(f'+++\nlayout = "{layout}"\n+++\n\n## About\n\nMy research.\n')
                 result = self.build()
                 self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
@@ -74,9 +95,15 @@ class PersonalSiteTests(unittest.TestCase):
                 self.assertIn("<h1>Thomas Trenty</h1>", html)
                 self.assertIn("<title>Thomas Trenty |", html)
                 self.assertIn("My research.", html)
+                self.assert_both_websites((self.output / "people/index.html").read_text())
+                if not alumni:
+                    self.assert_both_websites((self.output / "research/quantum-computing-systems/index.html").read_text())
                 if layout == "academic":
                     self.assertIn("thomas-trenty.jpg", html)
                     self.assertIn("PhD Student", html)
+                    page = Page("/~thomas-trenty/", html)
+                    self.assertIn("https://example.org/thomas/", page.member_websites["External personal website"])
+                    self.assertFalse(page.member_websites["MSRG personal page"])
                 self.assertEqual(check(self.output, self.project), [])
 
     def test_duplicate_standalone_and_template_url_fails_build(self):

@@ -23,6 +23,9 @@ a { color: #1e3765; text-underline-offset: .18em; }
 fieldset { min-width: 0; border: 1px solid #d4dce8; border-radius: .7rem; padding: 1.2rem; margin: 1.5rem 0; background: white; }
 .field { margin: 0 0 1.2rem; }
 .field:last-child { margin-bottom: 0; }
+.template-field { padding: 0; border: 0; background: transparent; }
+.row-actions { display: flex; gap: .5rem; flex-wrap: wrap; }
+.row-actions button:disabled { cursor: default; }
 .help, .note { color: #475569; font-size: .92rem; }
 .help { margin: .3rem 0 .6rem; }
 .checkbox { display: flex; align-items: center; gap: .6rem; min-height: 44px; font-weight: 400; }
@@ -46,8 +49,3 @@ a[aria-disabled=true] { color: #586578; text-decoration: none; cursor: default; 
 .personal-options { padding: 1rem; background: #eaf0f9; border: 1px solid #c6d2e5; border-radius: .7rem; }
 .personal-options summary { cursor: pointer; font-weight: 600; min-height: 44px; }
 .personal-options details[open] summary { margin-bottom: .6rem; }
-.personal-preview-panel { margin-top: 1.5rem; }
-.personal-preview-viewport { width: 100%; margin: auto; border: 1px solid #c6d2e5; border-radius: .5rem; overflow: hidden; background: white; }
-.personal-preview-viewport.phone { max-width: 390px; }
-.personal-preview-viewport iframe { display: block; width: 100%; height: 680px; border: 0; }
-.toolbar button[aria-pressed=true] { background: #1e3765; color: white; }

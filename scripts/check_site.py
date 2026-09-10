@@ -9,10 +9,7 @@ from urllib.parse import unquote, urljoin, urlsplit
 from xml.etree import ElementTree
 
 ROOT = Path(__file__).resolve().parents[1]
-from content_model import SCHEMA, iter_people_pages, iter_personal_pages, validate_fields
-
-EMAIL_FIELD = next(field for field in SCHEMA["types"]["people"]["fields"] if field["key"] == "email")
-EMAIL_PATTERN = re.compile(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}")
+from content_model import iter_people_pages, iter_personal_pages
 
 
 class Page(HTMLParser):
@@ -27,32 +24,24 @@ class Page(HTMLParser):
         self.title = ""
         self.capture = ""
         self.text = []
-        self.personal_websites = set()
+        self.member_websites = {"MSRG personal page": set(), "External personal website": set()}
         self.contact_errors = set()
         self.feed(text)
-
-    def check_emails(self, text):
-        for email in EMAIL_PATTERN.findall(unquote(text)):
-            if validate_fields([EMAIL_FIELD], {"email": email}, "people", ROOT):
-                self.contact_errors.add("non-University of Toronto email must not be published")
 
     def handle_starttag(self, tag, attrs):
         if tag in {"h1", "title"}:
             self.capture = tag
         attrs = dict(attrs)
-        for value in attrs.values():
-            if value:
-                self.check_emails(value)
         href = attrs.get("href", "")
         url = urlsplit(href)
-        if tag == "a" and (url.scheme == "mailto" or attrs.get("aria-label") == "Personal website"
+        if tag == "a" and (url.scheme == "mailto" or attrs.get("aria-label") in self.member_websites
                            or re.fullmatch(r"/~[^/]+/?", url.path)):
             if attrs.get("target") != "_blank":
                 self.contact_errors.add("email and personal website links must open in a new tab")
             if not {"noopener", "noreferrer"} & set(attrs.get("rel", "").split()):
                 self.contact_errors.add("new-tab contact links must protect the opening page")
-        if tag == "a" and attrs.get("aria-label") == "Personal website":
-            self.personal_websites.add(attrs.get("href", ""))
+        if tag == "a" and attrs.get("aria-label") in self.member_websites:
+            self.member_websites[attrs["aria-label"]].add(attrs.get("href", ""))
         if attrs.get("id"):
             if attrs["id"] in self.ids:
                 self.duplicate_ids.add(attrs["id"])
@@ -64,7 +53,6 @@ class Page(HTMLParser):
                 self.links.append(urljoin(self.url, attrs[name]))
 
     def handle_data(self, data):
-        self.check_emails(data)
         self.text.append(data)
         if self.capture == "h1":
             self.heading += data
@@ -93,7 +81,7 @@ def check(destination: Path, source: Path = ROOT) -> list[str]:
     host = urlsplit(home.canonical).netloc
 
     for path, page in pages.items():
-        # Contact privacy applies to standalone personal sites too.
+        # Contact link checks apply to standalone personal sites too.
         for error in page.contact_errors:
             failures.append(f"{page.url}: {error}")
         if path.relative_to(destination).parts[0] in standalone:
@@ -124,9 +112,11 @@ def check(destination: Path, source: Path = ROOT) -> list[str]:
         if not roster or f"member-{slug}" not in roster.ids or data["name"] not in "".join(roster.text):
             failures.append(f"Member is missing from the roster: {slug}")
         personal = personal_pages.get(slug)
-        website = personal["url"] if personal else data.get("homepage")
-        if website and roster and website not in roster.personal_websites:
-            failures.append(f"Missing Personal website link for {slug}: {website}")
+        websites = {"MSRG personal page": personal["url"] if personal else None,
+                    "External personal website": data.get("homepage")}
+        for label, website in websites.items():
+            if website and roster and website not in roster.member_websites[label]:
+                failures.append(f"Missing {label} link for {slug}: {website}")
         if personal and not (destination / personal["url"].lstrip("/") / "index.html").is_file():
             failures.append(f"Personal website was not published: {slug}")
 

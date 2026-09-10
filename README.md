@@ -1,43 +1,38 @@
 # MSRG website
 
-[Live website](https://msrg.github.io/) · [Repository](https://github.com/MSRG/msrg.github.io)
+Live website: https://msrg.github.io/
 
-Members propose changes through **pull requests (PRs)**. A maintainer reviews
-and merges them into `main`, which automatically publishes the website.
+Once polished, we plan to make the site available at `www.msrg.org` and
+`msrg.utoronto.ca` while keeping it hosted on GitHub Pages.
+
+Members propose changes through **pull requests (PRs)**. Thomas reviews and merges
+them into `main`, triggering the website's build and deployment.
+
+Ask Thomas (`ttrenty`) on Discord for collaborator access to create branches here,
+or fork the repository and submit a PR from your fork.
 
 ## Setup
 
-Install [Pixi](https://pixi.sh/latest/installation/) and Git. Pixi installs the
-pinned Hugo extended and Python versions automatically on Windows, macOS
-(Intel/Apple Silicon), and Linux (x86-64/ARM64). If you do not have write access,
-fork the repository on GitHub and use your fork's clone URL below.
+Install [Pixi](https://pixi.sh/latest/installation/) and Git.
+
+Pixi installs the project's pinned Hugo and Python dependencies on first run.
+
+If using a fork, replace the clone URL below with your fork's URL.
 
 ```sh
 git clone https://github.com/MSRG/msrg.github.io.git
 cd msrg.github.io
-git switch -c update-my-profile
-pixi run editor
+git switch -c <your-name>/<change-type>/<short-description> # example: ttrenty/fix/homepage-add-news
 ```
-
-Open **http://127.0.0.1:1314** to edit. The tool starts the local website too;
-use its preview link to view your changes. **Ctrl+C** stops both servers.
 
 | Command | Purpose |
 | --- | --- |
-| `pixi run serve` | Preview the website. |
-| `pixi run editor` | Open the website editor and start its local preview. |
-| `pixi run check` | Run tests, build, and check links. |
+| `pixi run serve` | Preview the website at the URL printed in the terminal. |
+| `pixi run editor` | Start the website editor and its local preview. |
+| `pixi run check` | Run tests, build, and check internal links. |
 | `pixi run build` | Build the website into `public/`. |
 
-The environment stays in `.pixi/`; commit `pixi.toml` and `pixi.lock`, not `.pixi/`.
-
-Tests, builds, and link checks use [Pixi's task cache](https://pixi.prefix.dev/latest/workspace/advanced_tasks/#caching)
-to skip unchanged work. Source or dependency changes invalidate it; missing or
-modified `public/` files trigger a rebuild. Builds also refresh across day
-changes for automatic alumni transitions. To force a fresh check, run
-`pixi run clean-cache`, then `pixi run check`. Preview and editor always start.
-
-## Edit your member profile
+## Edit with the website editor
 
 Run the editor from your local website folder:
 
@@ -45,85 +40,78 @@ Run the editor from your local website folder:
 pixi run editor
 ```
 
-Open **http://127.0.0.1:1314**. Choose **Member profiles**, select your name or
-**Create an entry**, fill in the form, then **Save changes**. Use **Upload a
-portrait** to add your photo; crop alignment, roles, dates, research areas,
-specialities, links, and awards are all in the form. No source-file editing or
-manual photo copying is needed.
+Open **http://127.0.0.1:1314** and choose what to edit using the selector at the
+top. The editor starts the local website preview automatically; **Ctrl+C** stops both.
 
-Use only a `utoronto.ca` email address (including subdomains such as
-`mail.utoronto.ca`), or leave it empty. Personal email addresses are not published.
-
-You can change **Member identifier** in the form. Saving asks for confirmation,
-renames the member file and matching personal-site folder, and updates local
-references. Old shared URLs change; preview custom sites carefully, since
-framework builds may need regenerating for the new address. Changing only your
-display name does not require a new identifier.
-
-Leave unknown details empty. A confirmed end date moves you to alumni on the
-first build after that day, month, or year ends (Toronto time).
-Alumni lists show only the end year. Dates saved in profiles are still visible
-in the public repository; leave start dates empty if you prefer not to share them.
-
-The editor starts Hugo automatically. **Preview on local website** becomes
-available when the preview is ready; Ctrl+C stops both. If port 1313 is already
-in use, the editor uses another available port and updates its preview link.
-The profile form also shows whether an on-site personal page is enabled.
-
-Saving stays local; [submit a pull request](#check-and-submit-your-pull-request)
-to request publication.
-
-## More edits through the same tool
-
-Choose what to edit using the selector at the top of the editor:
+<img src="docs/editor-dashboard.png" alt="Website editor showing the content selector and editing form" width="600">
 
 | Choose | What you can do |
 | --- | --- |
-| Personal Pages | Select your name and a template; write your page, add links, highlights, and timeline entries, and upload images or attachments. |
-| Publications | Create or update paper details, abstracts, authors, research areas, tags, related datasets, and additional notes. |
-| Datasets and downloads | Create or update descriptions, sources, related papers, and download links; upload files directly. |
+| Member profiles | Update your details, research areas, links, awards, and portrait. |
+| Publications | Add papers, abstracts, authors, tags, and related datasets. |
+| Personal Pages | Build a page from a template or preview your custom website. |
+| Datasets and downloads | Add descriptions, related papers, download links, and files. |
 
-Uploads support files up to **20 MB**. Link to an external repository for larger
-datasets. Each upload gets a unique filename, preserving existing files.
+Use **Save changes**, then **Open preview in new tab** to see saved edits.
+Saving stays local; [submit a pull request](#check-and-submit-your-pull-request)
+to publish. Uploads support up to **20 MB per file** and preserve existing files.
 
-For publications, paste the paper's abstract into **Abstract**. Use **Bold** or
-**Italic** for emphasis, **Inline formula** for math such as `\(x^2\)`, and
-**Equation** for a separate formula. Pasted `$...$`, `$$...$$`, and `\[...\]`
-also work. Save, then open **Preview on local website** to check the result.
-Use **Code** for literal dollar amounts. Math uses Hugo's built-in renderer;
-full LaTeX documents and custom packages are not supported. Existing overview
-text is kept under **Additional notes**, separate from the abstract.
+### Edit your member profile
 
-### Personal Pages
+Choose **Member profiles**, select your name or **Create an entry**, and fill in
+the form. Use **Upload a portrait** for a JPEG, PNG, or WebP photo, and adjust
+the crop alignment if needed.
+
+Avoid giving away your personal email address, as bots regularly scrape the web
+for email addresses. Prefer using your university or work email address.
+
+Changing **Member identifier** requires confirmation, renames your member file
+and personal-site folder, and updates local references. Shared URLs change;
+custom sites may need rebuilding. Editing your display name does not require a
+new identifier.
+
+Leave unknown details empty. A confirmed end date moves you to alumni on the
+first build after that day, month, or year ends (Toronto time).
+Alumni lists show only the end year, but saved dates remain public in the repository.
+Once you're an alumni, remove your start date from your profile if you prefer not 
+to share that.
+
+### Add or edit publications
+
+Choose **Publications**, select a paper or **Create an entry**, and fill in
+the title, year, authors (one per line), venue, paper URL, and publication type.
+Add research areas and related datasets where relevant.
+
+Paste the abstract into **Abstract**. Use Markdown for formatting and LaTeX for math.
+Full LaTeX documents and custom packages are not supported. 
+Put extra details in **Additional notes**.
+
+### Create or edit a personal page
 
 Save your member profile first, then choose **Personal Pages** and your
-name. Select **single** for a simple reading page, **academic** for a profile
-sidebar, or **structured** for focus areas, links, highlights, and a timeline.
+name. 
+You have the choice between multiple templates for your page, select the one that best 
+fits your needs.
 Write in **Page text**; formatting buttons and uploads help you add content.
-Use **Save and preview** to see the page inside the editor, at full width or
-phone width. The preview shows saved changes. Templates keep styling simple;
-custom CSS controls and stylesheet uploads are not available in the editor.
 
-For full control over HTML, CSS, JavaScript, or a framework, choose the
-[custom website approach](#build-your-own-site) instead. The editor explains
-this option and can preview an existing custom site.
+For custom HTML, CSS, JavaScript, or a framework, use the
+[custom website approach](#build-your-own-site). 
+The simple editor using templates does not offer CSS editing.
 
 Your page appears at **`/~your-member-identifier/`**, and your card automatically
-gets a **Personal website** icon. For a site hosted elsewhere, fill in **Personal
-website** in your member profile instead.
+gets an **MSRG personal page** icon.
 
-### Create a shared template
+#### Create a shared template
 
-Anyone can propose a new hand-written template in `layouts/personal/`, with shared
-styles or scripts in `assets/`. Add its layout name to the personal template
-choices in `data/content_schema.json`; it then appears in the editor for everyone
-to select. Submit the design through a pull request.
+Add a Hugo template in `layouts/personal/` and include any shared styles or scripts
+from `assets/`. Add its layout name to the personal template choices in
+`data/content_schema.json`, then submit a PR so everyone can select it in the editor.
 
-### Build your own site
+#### Build your own site
 
-Use your member identifier in place of `jane-doe`. Upload your complete website
-to **`static/~jane-doe/`**, starting with `index.html`.
-Use ordinary HTML/CSS/JS: **no TOML, Hugo front matter, or imposed page layout**.
+Save your member profile first, then copy your website to **`static/~jane-doe/`**,
+starting with `index.html`. Replace `jane-doe` with your member identifier.
+Use ordinary HTML/CSS/JS; no Hugo front matter or template is required.
 Reference assets relatively (`./style.css`) or under `/~jane-doe/`.
 
 For React, Vue, Svelte, or another framework, export a **static build**, set its
@@ -131,10 +119,17 @@ base URL to `/~jane-doe/`, and put the build output in that folder. The workflow
 does not build individual framework projects, and GitHub Pages cannot run a
 backend. Use hash routing or export an HTML file for each route.
 
-Choose your name in **Personal Pages** to preview the custom site, then submit
-the files through a PR.
-When switching between a template and a custom site, remove the previous version
-so both don't write to the same URL.
+When switching approaches, remove the previous `content/personal/jane-doe/`
+template folder or `static/~jane-doe/` custom site; having both fails the build.
+
+### Add or edit datasets and downloads
+
+Choose **Datasets and downloads**, select an entry or **Create an entry**,
+and add a title, summary, source / creator, and related publication if available.
+Under **Downloads**, add a label and link, or use **Upload a file** beside the
+link field. Save, preview the page, and check each download link.
+
+Link to an external repository for datasets larger than **20 MB**.
 
 ## Other website content
 
@@ -142,12 +137,12 @@ so both don't write to the same URL.
 | --- | --- |
 | Homepage text | `content/_index.md` |
 | Research themes | `content/research/` |
+| Navigation and site settings | `hugo.yaml` |
 
-These less frequent changes can be proposed using GitHub's file editor on a
-branch or fork, followed by a pull request.
+Use GitHub's file editor on a branch or fork, then submit a PR.
 
-Edit source files, not generated `public/` pages. Everything in `content/` and
-`static/` may be published; keep private notes outside them.
+Edit source files; `public/` is generated. Everything in `content/` and `static/`
+may be published. Keep unfinished work on a branch until ready to merge.
 
 ## Check and submit your pull request
 
@@ -157,20 +152,24 @@ Preview affected pages on desktop and phone widths. For local changes, run:
 pixi run check
 ```
 
-For local edits, commit your intended source files and photos, push your branch,
-and open a PR against **`MSRG/msrg.github.io:main`**. Describe the change, include sources for
-factual updates, and add screenshots for visual changes. Don't commit `public/`.
+Checks reuse cached results when inputs are unchanged. To force a fresh run,
+use `pixi run clean-cache`, then `pixi run check`. Check external links manually.
 
-The **Validate website** check must pass before review and merging. PRs test
-without deploying; merged changes publish automatically. Check the live site
-after deployment. If you edited only on GitHub, CI runs the checks for you.
+Commit your intended source files and uploads, push your branch, and open a PR
+against **`MSRG/msrg.github.io:main`**. Include a brief description, sources for
+factual updates where available, and screenshots for visual changes.
+Don't commit `public/`, `.pixi/`, or `resources/_gen/`.
+
+GitHub runs **Validate website** for every PR; it must pass before merging.
+Merged changes publish after the build and deployment succeed.
 
 ### Browser checks
 
 <details>
 <summary>Optional automated layout and accessibility checks</summary>
 
-With Node installed, build the site (`pixi run build`), then run:
+On macOS or Linux, with Node.js 20+ and npm installed, build the site
+(`pixi run build`), then run:
 
 ```sh
 npm install --prefix /tmp/msrg-browser playwright@1.63.0 axe-core@4.13.0
@@ -180,9 +179,10 @@ NODE_PATH=/tmp/msrg-browser/node_modules node scripts/editor_check.cjs
 BROWSER_ENGINE=firefox NODE_PATH=/tmp/msrg-browser/node_modules node scripts/browser_check.cjs public
 ```
 
-Playwright reports missing system dependencies. Reports and screenshots go to
-an output directory printed at completion. These optional checks block external
-services; check external links, the news widget, and physical phones separately.
+Playwright reports missing system dependencies. Site reports and screenshots go
+to the printed output directory; editor results appear in the terminal.
+The site checks block external services and exclude custom member sites from
+the page crawl. Check custom sites, the news widget, and physical phones separately.
 
 </details>
 
@@ -190,15 +190,9 @@ services; check external links, the news widget, and physical phones separately.
 
 - **Dependencies:** update `pixi.toml`, run `pixi install`, and commit the updated
   `pixi.lock`. CI uses that same locked environment; PR checks cover Linux,
-  macOS, and Windows.
+  macOS, and Windows..
 - **Handover:** keep repository administration with MSRG and ensure another
-  maintainer can review PRs and manage deployment. Members use GitHub and
-  the local Pixi editor; there is no hosted editing service or login server to maintain.
+  maintainer can review PRs and manage deployment. The editor runs locally.
 - **Content definitions:** [data/content_schema.json](data/content_schema.json)
   supplies the forms, archetypes, validation, and roster role groups. Change fields
   and choices there; research-area choices come from `content/research/`.
-- **Deployment:** Pages must use **GitHub Actions**. Configure `main` protection
-  to require PRs and the **Validate website** check; workflow files alone do not
-  enforce this. See [GitHub's branch protection guide](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/managing-a-branch-protection-rule).
-- **Local notes:** `docs/`, `local-notes/`, `hugo.txt`, and `New_Images/` are ignored
-  by Git. Final portraits belong in `static/images/people/`.

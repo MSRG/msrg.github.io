@@ -130,10 +130,6 @@ def validate_fields(fields: list[dict], data: dict, kind: str, root: Path = ROOT
         if fmt == "email":
             if not re.fullmatch(r"[^\s@,;?&#]+@[A-Za-z0-9.-]+\.[A-Za-z]+", value):
                 errors.append(f"{label}: use an email address")
-            elif field.get("host"):
-                domain = value.rsplit("@", 1)[1].lower()
-                if domain != field["host"] and not domain.endswith("." + field["host"]):
-                    errors.append(f"{label}: use an address on {field['host']} or its subdomains, or leave empty")
     return errors
 
 

@@ -9,7 +9,7 @@
       {{ with $member }}
         {{ with .Params.role }}<p>{{ . }}</p>{{ end }}
         {{ with .Params.location }}<p>{{ . }}</p>{{ end }}
-        {{ partial "profile-links.html" (dict "page" . "skip" (slice "website")) }}
+        {{ partial "profile-links.html" (dict "page" . "skip" (slice "personal-page")) }}
       {{ end }}
     </header>
     <div class="personal-academic__content prose">{{ .Content }}</div>
