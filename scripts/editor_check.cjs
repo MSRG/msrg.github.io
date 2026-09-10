@@ -28,7 +28,7 @@ let browser;
   let previewState = { state: 'starting', message: 'Starting the local preview…' };
   await page.route(base + '/api/preview', route => route.fulfill({ json: previewState }));
   await page.route(base + '/api/preview/personal/*', route => route.fulfill({ json: previewState }));
-  await page.route(base + '/~*/', route => route.fulfill({ contentType: 'text/html', body: '<!doctype html><html lang="en"><head><title>Personal preview</title></head><body><main><h1>Personal page preview fixture</h1></main></body></html>' }));
+  await page.context().route(base + '/~*/', route => route.fulfill({ contentType: 'text/html', body: '<!doctype html><html lang="en"><head><title>Personal preview</title></head><body><main><h1>Personal page preview fixture</h1></main></body></html>' }));
   await page.goto(base);
   console.log('Editor loaded');
   assert.equal(await page.locator('#preview').getAttribute('href'), null);
@@ -68,8 +68,14 @@ let browser;
   assert.equal(await page.locator('#custom-site-folder').textContent(), 'static/~jane-doe/');
   assert.equal(await page.locator('#custom-site-folder').isVisible(), true);
   assert.equal(await page.locator('#preview').getAttribute('href'), null, 'An unsaved personal page cannot be previewed');
+  const structuredFields = ['subtitle', 'tone', 'focus', 'primary_link', 'quick_links', 'highlights', 'timeline'];
+  async function assertStructuredFields(visible) {
+    for (const key of structuredFields) assert.equal(await page.locator('#field-' + key).isVisible(), visible, key);
+  }
+  await assertStructuredFields(false);
 
   await page.locator('#layout').selectOption('structured');
+  await assertStructuredFields(true);
   await page.locator('#body').fill('My research interests.');
   await page.getByRole('button', { name: 'Add highlights', exact: true }).click();
   await page.getByLabel('Title *', { exact: true }).fill('Research highlight');
@@ -77,13 +83,64 @@ let browser;
   await page.getByLabel('Label *', { exact: true }).fill('MSRG');
   await page.getByLabel('Link *', { exact: true }).fill('https://msrg.github.io/');
   await save();
-  await page.waitForFunction(() => document.querySelector('#personal-preview-frame').hasAttribute('src'));
+  await page.waitForFunction(() => document.querySelector('#preview').hasAttribute('href'));
   assert.match(await page.locator('#preview').getAttribute('href'), /\/~jane-doe\/$/);
-  assert.equal(await page.frameLocator('#personal-preview-frame').getByRole('heading', { name: 'Personal page preview fixture' }).isVisible(), true);
-  await page.locator('#preview-phone').click();
-  await page.waitForFunction(() => document.querySelector('#preview-phone').getAttribute('aria-pressed') === 'true');
-  assert.equal(await page.locator('#personal-preview-frame').evaluate(frame => frame.clientWidth <= 390), true);
-  await page.locator('#preview-wide').click();
+  async function checkNewTabPreview(slug) {
+    assert.equal(await page.locator('iframe').count(), 0);
+    const [preview] = await Promise.all([
+      page.waitForEvent('popup'), page.getByRole('link', { name: 'Open preview in new tab ↗', exact: true }).click(),
+    ]);
+    await preview.waitForLoadState();
+    assert.equal(preview.url(), base + '/~' + slug + '/');
+    assert.equal(await preview.getByRole('heading', { name: 'Personal page preview fixture' }).isVisible(), true);
+    assert.equal(page.url(), base + '/');
+    await preview.close();
+  }
+  await checkNewTabPreview('jane-doe');
+  const timeline = page.locator('#field-timeline');
+  const timelineRows = timeline.locator('.award');
+  async function addTimeline(title) {
+    await timeline.getByRole('button', { name: 'Add timeline', exact: true }).click();
+    const row = timelineRows.last();
+    await row.getByLabel('Title *', { exact: true }).fill(title);
+    await row.getByLabel('Period', { exact: true }).fill('2026');
+    await row.getByLabel('Description', { exact: true }).fill('Details for ' + title);
+  }
+  async function assertTimeline(titles) {
+    assert.deepEqual(await timeline.locator('input[id$="-title"]').evaluateAll(inputs => inputs.map(input => input.value)), titles);
+    assert.equal(await timelineRows.first().getByRole('button', { name: 'Move up', exact: true }).isDisabled(), true);
+    assert.equal(await timelineRows.last().getByRole('button', { name: 'Move down', exact: true }).isDisabled(), true);
+  }
+  for (const title of ['First', 'Second', 'Third']) await addTimeline(title);
+  await assertTimeline(['First', 'Second', 'Third']);
+  await timelineRows.last().getByRole('button', { name: 'Move up', exact: true }).click();
+  await assertTimeline(['First', 'Third', 'Second']);
+  await page.setViewportSize({ width: 390, height: 900 });
+  const moveDown = timelineRows.first().getByRole('button', { name: 'Move down', exact: true });
+  await moveDown.focus(); await page.keyboard.press('Enter');
+  await assertTimeline(['Third', 'First', 'Second']);
+  await timelineRows.nth(1).getByRole('button', { name: 'Remove item', exact: true }).click();
+  await assertTimeline(['Third', 'Second']);
+  await addTimeline('Fourth');
+  await save();
+  await assertTimeline(['Third', 'Second', 'Fourth']);
+  const savedPage = await (await page.request.get(base + '/api/records/personal/jane-doe')).json();
+  assert.deepEqual(savedPage.data.timeline.map(item => [item.title, item.description]),
+    ['Third', 'Second', 'Fourth'].map(title => [title, 'Details for ' + title]));
+  // An incomplete field from another template must not block saving this one.
+  await timeline.getByRole('button', { name: 'Add timeline', exact: true }).click();
+  for (const layout of ['academic', 'single']) {
+    await page.locator('#layout').selectOption(layout);
+    await assertStructuredFields(false);
+    await save();
+    assert.equal(await page.locator('#body').inputValue(), 'My research interests.');
+  }
+  await page.locator('#layout').selectOption('structured');
+  await assertStructuredFields(true);
+  await assertTimeline(['Third', 'Second', 'Fourth']);
+  await save();
+  await page.setViewportSize({ width: 1440, height: 900 });
+  console.log('Template fields, hidden-field preservation, and timeline reordering passed');
   await page.getByRole('button', { name: 'Remove item', exact: true }).first().click();
   await save();
 
@@ -173,8 +230,8 @@ let browser;
   assert.equal(await page.locator('#save').isVisible(), false, 'Custom websites should not open a template editor');
   assert.equal(await page.locator('#fields').textContent(), '');
   assert.equal(await page.locator('#custom-site-guide').getAttribute('open'), '');
-  await page.waitForFunction(() => document.querySelector('#personal-preview-frame').hasAttribute('src'));
-  assert.match(await page.locator('#personal-preview-frame').getAttribute('src'), /\/~jane-smith\/$/);
+  await page.waitForFunction(() => document.querySelector('#preview').hasAttribute('href'));
+  await checkNewTabPreview('jane-smith');
   previewState = { state: 'failed', message: 'Preview stopped', details: 'Example error' };
   await page.waitForFunction(() => document.querySelector('#preview').getAttribute('aria-disabled') === 'true');
   assert.equal(await page.locator('#preview').getAttribute('href'), null);

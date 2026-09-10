@@ -70,7 +70,7 @@ function uploadControl(category, complete) {
   return label;
 }
 function fieldControl(field, value, prefix = '') {
-  const wrapper = node('div', undefined, 'field');
+  const wrapper = node(field.templates ? 'fieldset' : 'div', undefined, field.templates ? 'field template-field' : 'field');
   const id = prefix + field.key;
   const label = node('label', field.label + (field.required ? ' *' : '')); label.htmlFor = id; wrapper.append(label);
   const helpText = field.help || (field.type === 'strings' && !field.choices ? 'One item per line.' : '');
@@ -81,6 +81,14 @@ function fieldControl(field, value, prefix = '') {
     label.removeAttribute('for');
     const rows = node('div');
     const add = node('button', 'Add ' + field.label.toLowerCase(), 'secondary'); add.type = 'button';
+    function updateOrderControls() {
+      Array.from(rows.children).forEach((row, index) => {
+        if (!field.reorderable) return;
+        row.querySelector('legend').textContent = field.label + ' ' + (index + 1);
+        row.querySelector('[data-move="up"]').disabled = index === 0;
+        row.querySelector('[data-move="down"]').disabled = index === rows.children.length - 1;
+      });
+    }
     function addRow(item) {
       const row = node('fieldset', undefined, 'award'); row.append(node('legend', field.label));
       const entries = field.fields.map(child => {
@@ -88,9 +96,25 @@ function fieldControl(field, value, prefix = '') {
         row.append(control.wrapper); return [child.key, control.read];
       });
       row.readValue = () => ({ ...item, ...Object.fromEntries(entries.map(([key, get]) => [key, get()])) });
+      const actions = node('div', undefined, 'row-actions');
+      if (field.reorderable) {
+        row.tabIndex = -1;
+        for (const direction of ['up', 'down']) {
+          const move = node('button', 'Move ' + direction, 'secondary'); move.type = 'button'; move.dataset.move = direction;
+          move.addEventListener('click', () => {
+            const neighbor = direction === 'up' ? row.previousElementSibling : row.nextElementSibling;
+            if (!neighbor) return;
+            if (direction === 'up') rows.insertBefore(row, neighbor);
+            else rows.insertBefore(neighbor, row);
+            updateOrderControls(); markDirty();
+            (move.disabled ? row : move).focus();
+          });
+          actions.append(move);
+        }
+      }
       const remove = node('button', 'Remove item', 'secondary'); remove.type = 'button';
-      remove.addEventListener('click', () => { row.remove(); add.hidden = false; markDirty(); });
-      row.append(remove); rows.append(row);
+      remove.addEventListener('click', () => { row.remove(); add.hidden = false; updateOrderControls(); markDirty(); });
+      actions.append(remove); row.append(actions); rows.append(row); updateOrderControls();
       if (field.type === 'object') add.hidden = true;
     }
     (field.type === 'object' ? (value && Object.keys(value).length ? [value] : []) : value || []).forEach(addRow);
@@ -201,21 +225,9 @@ function renderPreview() {
   document.querySelector('#preview-error').hidden = !previewState.details;
   document.querySelector('#preview-error-text').textContent = previewState.details || '';
   const hint = document.querySelector('#preview-hint');
-  hint.hidden = !unsavedPage;
-  hint.textContent = unsavedPage ? 'Save this personal page before previewing it.' : '';
-  const panel = document.querySelector('#personal-preview-panel');
-  panel.hidden = kind !== 'personal';
-  const frame = document.querySelector('#personal-preview-frame');
-  const frameUrl = kind === 'personal' && enabled ? previewState.url + path : '';
-  frame.hidden = !frameUrl;
-  if (frameUrl) {
-    if (frame.getAttribute('src') !== frameUrl) frame.src = frameUrl;
-  } else frame.removeAttribute('src');
-  document.querySelector('#preview-refresh').disabled = !frameUrl;
-  document.querySelector('#personal-preview-note').textContent = unsavedPage ? 'Choose a template, add your text, then select Save and preview.'
-    : !enabled ? (previewState.state === 'ready' ? 'Preparing your page preview…' : previewState.message)
-    : dirty ? 'Saved version shown. Select Save and preview to see your edits.'
-    : 'Your saved page. Changes reload automatically; open the full preview link above for a separate tab.';
+  hint.hidden = !unsavedPage && !dirty;
+  hint.textContent = unsavedPage ? 'Save this personal page before previewing it.'
+    : dirty ? 'Save your changes before opening the preview to see your latest edits.' : '';
 }
 async function checkPreview() {
   if (previewRequest) return;
@@ -256,7 +268,7 @@ function render() {
   document.querySelector('#custom-site-folder').textContent = 'static/~' + (current.slug || 'your-member-identifier') + '/';
   document.querySelector('#custom-site-url').textContent = '/~' + (current.slug || 'your-member-identifier') + '/';
   saveButton.hidden = custom;
-  saveButton.textContent = personal ? 'Save and preview' : 'Save changes';
+  saveButton.textContent = 'Save changes';
   const identity = document.querySelector('#record-identifier');
   identity.hidden = kind === 'people' || custom;
   document.querySelector('#record-slug').required = !identity.hidden;
@@ -269,8 +281,22 @@ function render() {
       section = node('fieldset'); section.append(node('legend', field.section || collections[kind].label)); container.append(section);
     }
     const control = fieldControl(field, current.data[field.key] ?? initialValues[field.key]);
+    control.wrapper.id = 'field-' + field.key;
     section.append(control.wrapper); readers.set(field.key, control.read);
     if (kind === 'people' && field.key === 'homepage') control.wrapper.append(personalPageStatus());
+  }
+  if (personal) {
+    function updateTemplateFields() {
+      const template = readers.get('layout')();
+      for (const field of definition.fields) {
+        if (!field.templates) continue;
+        const wrapper = document.querySelector('#field-' + field.key);
+        wrapper.hidden = !field.templates.includes(template);
+        wrapper.disabled = wrapper.hidden;
+      }
+    }
+    document.querySelector('#layout').addEventListener('change', updateTemplateFields);
+    updateTemplateFields();
   }
   if (kind === 'people' || kind === 'publications' || kind === 'data-sets') {
     const slug = kind === 'people' ? document.querySelector('#slug') : document.querySelector('#record-slug');
@@ -318,7 +344,7 @@ async function loadRecord(slug) {
   personalPreviewState = null;
   current = { ...record, slug }; dirty = false; picker.value = slug; render();
   notify(kind === 'personal' && record.personal_page?.kind === 'custom' ? 'Custom website selected. Its source files remain fully under your control.'
-    : kind === 'personal' && !record.revision ? 'Choose a template and write your page. Save to add a Personal website link to your member card.' : 'Edit the form, save, then check the local preview.');
+    : kind === 'personal' && !record.revision ? 'Choose a template and write your page. Save to add an MSRG personal page link to your member card, alongside any external personal website.' : 'Edit the form, save, then check the local preview.');
   if (kind === 'personal') await checkPreview();
 }
 async function changeKind(next) {
@@ -345,22 +371,13 @@ document.querySelector('#preview-start').addEventListener('click', async event =
   catch (error) { previewState = { state: 'failed', message: error.message }; }
   finally { event.target.disabled = false; renderPreview(); }
 });
-for (const [id, phone] of [['preview-wide', false], ['preview-phone', true]]) {
-  document.querySelector('#' + id).addEventListener('click', () => {
-    document.querySelector('#personal-preview-viewport').classList.toggle('phone', phone);
-    document.querySelector('#preview-wide').setAttribute('aria-pressed', String(!phone));
-    document.querySelector('#preview-phone').setAttribute('aria-pressed', String(phone));
-  });
-}
-document.querySelector('#preview-refresh').addEventListener('click', () => {
-  const frame = document.querySelector('#personal-preview-frame');
-  if (frame.hasAttribute('src')) frame.src = frame.getAttribute('src');
-});
 form.addEventListener('submit', event => {
   event.preventDefault();
   if (kind === 'personal' && current.personal_page?.kind === 'custom') return;
   run(async () => {
-    const values = Object.fromEntries(Array.from(readers, ([key, read]) => [key, read()]));
+    const values = Object.fromEntries(Array.from(readers)
+      .filter(([key]) => !document.querySelector('#field-' + key).hidden)
+      .map(([key, read]) => [key, read()]));
     const data = Object.fromEntries(Object.entries(values).filter(([key, value]) => key in current.data || JSON.stringify(value) !== JSON.stringify(initialValues[key]) || !current.revision));
     const slug = identifier();
     const payload = { kind, slug, data, revision: current.revision };
@@ -374,10 +391,7 @@ form.addEventListener('submit', event => {
     current = { ...await api('/api/records/' + kind + '/' + encodeURIComponent(slug)), slug };
     dirty = false; render(); await refreshList();
     notify('Saved ' + result.path + (result.moved ? '. Identifier changed; preview the profile and personal site, and update any shared old URLs.' : '.') + ' Preview your changes, then submit a pull request.');
-    if (kind === 'personal') {
-      await checkPreview();
-      document.querySelector('#personal-preview-panel').scrollIntoView({ block: 'start', behavior: 'instant' });
-    }
+    if (kind === 'personal') await checkPreview();
   });
 });
 (async () => {

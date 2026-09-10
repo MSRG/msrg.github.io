@@ -183,14 +183,20 @@ let browser;
     }
   }
   await snapContext.close();
-  await page.locator('#member-grier-jones').getByRole('link', { name: 'Personal website', exact: true }).click();
-  await page.waitForURL('**/~grier-jones/');
-  await page.getByRole('link', { name: 'MSRG people', exact: true }).click();
-  await page.waitForURL('**/people/');
-  assert.equal(await page.locator('#member-hans-arno-jacobsen').getByRole('link', { name: 'Personal website', exact: true }).getAttribute('href'), 'https://www.eecg.toronto.edu/~jacobsen');
+  async function openPersonalPage() {
+    const [personal] = await Promise.all([
+      page.waitForEvent('popup'),
+      page.locator('#member-thomas-trenty').getByRole('link', { name: 'MSRG personal page', exact: true }).click(),
+    ]);
+    await personal.waitForURL('**/~thomas-trenty/');
+    await personal.getByRole('link', { name: 'MSRG people', exact: true }).click();
+    await personal.waitForURL('**/people/');
+    await personal.close();
+  }
+  await openPersonalPage();
+  assert.equal(await page.locator('#member-hans-arno-jacobsen').getByRole('link', { name: 'External personal website', exact: true }).getAttribute('href'), 'https://www.eecg.toronto.edu/~jacobsen');
   await page.goto(base + '/research/quantum-computing-systems/');
-  await page.locator('#member-grier-jones').getByRole('link', { name: 'Personal website', exact: true }).click();
-  await page.waitForURL('**/~grier-jones/');
+  await openPersonalPage();
   for (const slug of ['hans-arno-jacobsen', 'grier-jones']) {
     const removed = await page.goto(base + `/people/${slug}/`);
     assert.equal(removed.status(), 404, 'Individual member pages must not be generated');
@@ -207,7 +213,7 @@ let browser;
   await page.keyboard.type('msrg', { delay: 90 });
   assert.equal(await page.locator('[data-msrg-rounds]').textContent(), '2', 'Hardware keyboard must complete a round');
 
-  for (const route of ['/', '/people/', '/publications/', '/research/quantum-computing-systems/', '/data-sets/begen/', '/~grier-jones/', '/data-sets/']) {
+  for (const route of ['/', '/people/', '/publications/', '/research/quantum-computing-systems/', '/data-sets/begen/', '/~thomas-trenty/', '/data-sets/']) {
     await page.goto(base + route);
     await page.addScriptTag({ path: require.resolve('axe-core/axe.min.js') });
     const results = await page.evaluate(async () => axe.run(document, { runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21aa', 'best-practice'] } }));

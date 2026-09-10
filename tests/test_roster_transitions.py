@@ -152,7 +152,7 @@ class RosterTransitionTests(unittest.TestCase):
         labels = re.findall(r'aria-label="([^"]+)"', row)
         self.assertEqual(labels[:2], ["Award: Research award", "Research funding opportunities"])
         self.assertIn("Email", labels[2:])
-        self.assertIn("Personal website", labels[2:])
+        self.assertIn("External personal website", labels[2:])
 
     def test_day_year_and_leap_month_are_inclusive(self):
         cases = [

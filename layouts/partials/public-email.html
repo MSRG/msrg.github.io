@@ -1,10 +1,6 @@
 {{- $email := . | default "" -}}
 {{- $allowed := "" -}}
-{{- $field := index (where hugo.Data.content_schema.types.people.fields "key" "email") 0 -}}
 {{- if findRE `^[^\s@,;?&#]+@[A-Za-z0-9.-]+\.[A-Za-z]+$` $email -}}
-  {{- $domain := index (split (lower $email) "@") 1 -}}
-  {{- if or (eq $domain $field.host) (strings.HasSuffix $domain (printf ".%s" $field.host)) -}}
-    {{- $allowed = $email -}}
-  {{- end -}}
+  {{- $allowed = $email -}}
 {{- end -}}
 {{- return $allowed -}}

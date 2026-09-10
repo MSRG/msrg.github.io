@@ -8,17 +8,18 @@
     {{ $links = $links | append (dict "label" "Email" "url" (printf "mailto:%s" .) "icon" "email") }}
   {{ end }}
 {{ end }}
-{{ if not (in $skip "website") }}
+{{ if not (in $skip "personal-page") }}
   {{ $personal := site.GetPage (printf "/personal/%s" $page.Params.slug) }}
   {{ if fileExists (printf "static/~%s/index.html" $page.Params.slug) }}
     {{ if $personal }}{{ errorf "Choose either content/personal/%s or static/~%s, not both" $page.Params.slug $page.Params.slug }}{{ end }}
-    {{ $links = $links | append (dict "label" "Personal website" "url" (printf "/~%s/" $page.Params.slug | relURL) "icon" "website") }}
+    {{ $links = $links | append (dict "label" "MSRG personal page" "url" (printf "/~%s/" $page.Params.slug | relURL) "icon" "personal-page") }}
   {{ else if $personal }}
-    {{ $links = $links | append (dict "label" "Personal website" "url" $personal.RelPermalink "icon" "website") }}
-  {{ else }}
-    {{ with $page.Params.homepage }}
-      {{ $links = $links | append (dict "label" "Personal website" "url" . "icon" "website") }}
-    {{ end }}
+    {{ $links = $links | append (dict "label" "MSRG personal page" "url" $personal.RelPermalink "icon" "personal-page") }}
+  {{ end }}
+{{ end }}
+{{ if not (in $skip "website") }}
+  {{ with $page.Params.homepage }}
+    {{ $links = $links | append (dict "label" "External personal website" "url" . "icon" "website") }}
   {{ end }}
 {{ end }}
 {{ $scholarUrl := $page.Params.scholar | default $page.Params.google_scholar }}
@@ -78,6 +79,8 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
       {{ else if eq .icon "website" }}
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></svg>
+      {{ else if eq .icon "personal-page" }}
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="18" rx="2"/><path d="M2 7h20"/><circle cx="9" cy="12" r="2"/><path d="M5 18a4 4 0 0 1 8 0m3-7h3m-3 4h3"/></svg>
       {{ else if eq .icon "scholar" }}
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
       {{ else if eq .icon "orcid" }}

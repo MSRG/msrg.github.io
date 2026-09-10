@@ -12,4 +12,5 @@ portrait = "/images/people/grier-jones.jpg"
 linkedin = "https://www.linkedin.com/in/grier-jones-ph-d-654970159/"
 email = "grier.jones@utoronto.ca"
 # Contact address supplied in the maintainer's group-member list, 2026-09-09.
+homepage = "https://grierjones.com"
 +++

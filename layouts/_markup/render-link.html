@@ -1,7 +1,7 @@
 {{- $url := urls.Parse .Destination -}}
 {{- $email := eq (lower $url.Scheme) "mailto" -}}
 {{- if and $email (not (partial "public-email.html" $url.Opaque)) -}}
-  {{- errorf "Only University of Toronto email links are allowed: %s" .Page.File.Path -}}
+  {{- errorf "Use a valid email address in mailto links: %s" .Page.File.Path -}}
 {{- else -}}
   <a href="{{ .Destination | safeURL }}"{{ with .Title }} title="{{ . }}"{{ end }}{{ if or $email (findRE `^/~[^/]+/?$` $url.Path) }} target="_blank" rel="noopener noreferrer"{{ end }}>{{ .Text | safeHTML }}</a>
 {{- end -}}

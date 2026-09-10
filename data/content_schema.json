@@ -190,19 +190,19 @@
         },
         {
           "key": "email",
-          "label": "University of Toronto email",
+          "label": "Email",
           "type": "string",
           "default": "",
           "format": "email",
-          "host": "utoronto.ca",
-          "help": "Public contact address. Only utoronto.ca addresses or its subdomains (such as mail.utoronto.ca) are allowed. Leave empty if unavailable; do not enter a personal email."
+          "help": "Public contact address. Prefer your university or work email, as bots regularly scrape the web for email addresses. Leave empty if you prefer not to share one."
         },
         {
           "key": "homepage",
-          "label": "Personal website",
+          "label": "External personal website",
           "type": "string",
           "default": "",
-          "format": "url"
+          "format": "url",
+          "help": "Your website hosted elsewhere. It has a separate globe icon and can appear alongside your MSRG personal page."
         },
         {
           "key": "scholar",
@@ -298,185 +298,6 @@
       "editor": {
         "label": "Member profiles",
         "body": false
-      }
-    },
-    "personal": {
-      "fields": [
-        {
-          "key": "layout",
-          "label": "Page template",
-          "type": "string",
-          "default": "single",
-          "options": [
-            "single",
-            "academic",
-            "structured"
-          ],
-          "help": "single: simple reading page; academic: profile sidebar; structured: sections and highlights.",
-          "allow_empty": false
-        },
-        {
-          "key": "title",
-          "label": "Title override",
-          "type": "string",
-          "default": "",
-          "archetype": false,
-          "help": "Defaults to the name in your member record."
-        },
-        {
-          "key": "url",
-          "label": "URL (legacy override)",
-          "type": "string",
-          "default": "",
-          "archetype": false,
-          "editor": false
-        },
-        {
-          "key": "custom_css",
-          "label": "Extra stylesheets",
-          "type": "strings",
-          "default": [],
-          "archetype": false,
-          "editor": false
-        },
-        {
-          "key": "description",
-          "label": "Short description",
-          "type": "string",
-          "default": "",
-          "multiline": true,
-          "archetype": false
-        },
-        {
-          "key": "subtitle",
-          "label": "Subtitle",
-          "type": "string",
-          "default": "",
-          "archetype": false
-        },
-        {
-          "key": "tone",
-          "label": "Colour theme",
-          "type": "string",
-          "default": "navy",
-          "options": [
-            "navy",
-            "copper",
-            "sage"
-          ],
-          "archetype": false
-        },
-        {
-          "key": "focus",
-          "label": "Current focus",
-          "type": "strings",
-          "default": [],
-          "archetype": false
-        },
-        {
-          "key": "primary_link",
-          "label": "Primary link",
-          "type": "object",
-          "default": {},
-          "fields": [
-            {
-              "key": "label",
-              "label": "Label",
-              "type": "string",
-              "default": "",
-              "required": true
-            },
-            {
-              "key": "url",
-              "label": "Link",
-              "type": "string",
-              "default": "",
-              "format": "link",
-              "required": true
-            }
-          ],
-          "archetype": false
-        },
-        {
-          "key": "quick_links",
-          "label": "Quick links",
-          "type": "objects",
-          "default": [],
-          "fields": [
-            {
-              "key": "label",
-              "label": "Label",
-              "type": "string",
-              "default": "",
-              "required": true
-            },
-            {
-              "key": "url",
-              "label": "Link",
-              "type": "string",
-              "default": "",
-              "format": "link",
-              "required": true
-            }
-          ],
-          "archetype": false
-        },
-        {
-          "key": "highlights",
-          "label": "Highlights",
-          "type": "objects",
-          "default": [],
-          "fields": [
-            {
-              "key": "title",
-              "label": "Title",
-              "type": "string",
-              "default": "",
-              "required": true
-            },
-            {
-              "key": "description",
-              "label": "Description",
-              "type": "string",
-              "default": "",
-              "multiline": true
-            }
-          ],
-          "archetype": false
-        },
-        {
-          "key": "timeline",
-          "label": "Timeline",
-          "type": "objects",
-          "default": [],
-          "fields": [
-            {
-              "key": "period",
-              "label": "Period",
-              "type": "string",
-              "default": ""
-            },
-            {
-              "key": "title",
-              "label": "Title",
-              "type": "string",
-              "default": "",
-              "required": true
-            },
-            {
-              "key": "description",
-              "label": "Description",
-              "type": "string",
-              "default": "",
-              "multiline": true
-            }
-          ],
-          "archetype": false
-        }
-      ],
-      "editor": {
-        "label": "Personal Pages",
-        "body": true
       }
     },
     "publications": {
@@ -582,6 +403,207 @@
         "body": true,
         "body_label": "Additional notes",
         "body_help": "Optional commentary, companion material, or other details. Put the paper's abstract in the Abstract field above."
+      }
+    },
+    "personal": {
+      "fields": [
+        {
+          "key": "layout",
+          "label": "Page template",
+          "type": "string",
+          "default": "single",
+          "options": [
+            "single",
+            "academic",
+            "structured"
+          ],
+          "help": "single: simple reading page; academic: profile sidebar; structured: sections and highlights.",
+          "allow_empty": false
+        },
+        {
+          "key": "title",
+          "label": "Title override",
+          "type": "string",
+          "default": "",
+          "archetype": false,
+          "help": "Defaults to the name in your member record."
+        },
+        {
+          "key": "url",
+          "label": "URL (legacy override)",
+          "type": "string",
+          "default": "",
+          "archetype": false,
+          "editor": false
+        },
+        {
+          "key": "custom_css",
+          "label": "Extra stylesheets",
+          "type": "strings",
+          "default": [],
+          "archetype": false,
+          "editor": false
+        },
+        {
+          "key": "description",
+          "label": "Short description",
+          "type": "string",
+          "default": "",
+          "multiline": true,
+          "archetype": false
+        },
+        {
+          "key": "subtitle",
+          "label": "Subtitle",
+          "type": "string",
+          "default": "",
+          "archetype": false,
+          "templates": [
+            "structured"
+          ]
+        },
+        {
+          "key": "tone",
+          "label": "Colour theme",
+          "type": "string",
+          "default": "navy",
+          "options": [
+            "navy",
+            "copper",
+            "sage"
+          ],
+          "archetype": false,
+          "templates": [
+            "structured"
+          ]
+        },
+        {
+          "key": "focus",
+          "label": "Current focus",
+          "type": "strings",
+          "default": [],
+          "archetype": false,
+          "templates": [
+            "structured"
+          ]
+        },
+        {
+          "key": "primary_link",
+          "label": "Primary link",
+          "type": "object",
+          "default": {},
+          "fields": [
+            {
+              "key": "label",
+              "label": "Label",
+              "type": "string",
+              "default": "",
+              "required": true
+            },
+            {
+              "key": "url",
+              "label": "Link",
+              "type": "string",
+              "default": "",
+              "format": "link",
+              "required": true
+            }
+          ],
+          "archetype": false,
+          "templates": [
+            "structured"
+          ]
+        },
+        {
+          "key": "quick_links",
+          "label": "Quick links",
+          "type": "objects",
+          "default": [],
+          "fields": [
+            {
+              "key": "label",
+              "label": "Label",
+              "type": "string",
+              "default": "",
+              "required": true
+            },
+            {
+              "key": "url",
+              "label": "Link",
+              "type": "string",
+              "default": "",
+              "format": "link",
+              "required": true
+            }
+          ],
+          "archetype": false,
+          "templates": [
+            "structured"
+          ]
+        },
+        {
+          "key": "highlights",
+          "label": "Highlights",
+          "type": "objects",
+          "default": [],
+          "fields": [
+            {
+              "key": "title",
+              "label": "Title",
+              "type": "string",
+              "default": "",
+              "required": true
+            },
+            {
+              "key": "description",
+              "label": "Description",
+              "type": "string",
+              "default": "",
+              "multiline": true
+            }
+          ],
+          "archetype": false,
+          "templates": [
+            "structured"
+          ]
+        },
+        {
+          "key": "timeline",
+          "label": "Timeline",
+          "type": "objects",
+          "default": [],
+          "fields": [
+            {
+              "key": "period",
+              "label": "Period",
+              "type": "string",
+              "default": ""
+            },
+            {
+              "key": "title",
+              "label": "Title",
+              "type": "string",
+              "default": "",
+              "required": true
+            },
+            {
+              "key": "description",
+              "label": "Description",
+              "type": "string",
+              "default": "",
+              "multiline": true
+            }
+          ],
+          "archetype": false,
+          "templates": [
+            "structured"
+          ],
+          "reorderable": true
+        }
+      ],
+      "editor": {
+        "label": "Personal Pages",
+        "body": true
       }
     },
     "data-sets": {
