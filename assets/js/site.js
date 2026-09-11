@@ -3,7 +3,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const navPanel = document.querySelector("[data-nav-panel]");
 
   if (navButton && navPanel) {
-    const mobileNav = window.matchMedia("(max-width: 980px)");
+    // Match the phone navigation breakpoint in assets/css/main.css.
+    const mobileNav = window.matchMedia("(max-width: 760px)");
     const setNavOpen = (open) => {
       navButton.setAttribute("aria-expanded", String(open));
       navPanel.classList.toggle("is-open", open);

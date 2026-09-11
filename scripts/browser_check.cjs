@@ -38,7 +38,8 @@ let browser;
   }
   report.baseURL = base;
   browser = await ({ chromium, firefox, webkit }[engine]).launch(
-    process.env.BROWSER_EXECUTABLE ? { executablePath: process.env.BROWSER_EXECUTABLE } : {},
+    process.env.BROWSER_EXECUTABLE ? { executablePath: process.env.BROWSER_EXECUTABLE } :
+      process.env.BROWSER_CHANNEL ? { channel: process.env.BROWSER_CHANNEL } : {},
   );
   const createContext = async (options = {}, dismissNotice = true) => {
     const context = await browser.newContext(options);
@@ -49,6 +50,70 @@ let browser;
     context.on('page', page => page.on('pageerror', error => report.errors.push(error.message)));
     return context;
   };
+
+  // Width is measured in CSS pixels: a scaled desktop can be below 980px.
+  // Pixel density and a touchscreen must not independently collapse its menu.
+  report.navigation = [];
+  for (const options of [
+    { deviceScaleFactor: 1 },
+    { deviceScaleFactor: 1.25 },
+    { deviceScaleFactor: 1.5 },
+    { deviceScaleFactor: 2, hasTouch: true },
+    { javaScriptEnabled: false },
+  ]) {
+    const responsiveContext = await createContext(options);
+    const responsive = await responsiveContext.newPage();
+    for (const width of [1440, 1100, 1024, 981, 980, 911, 853, 800, 768, 761, 760, 700, 390, 320]) {
+      await responsive.setViewportSize({ width, height: 900 });
+      await responsive.goto(base + '/');
+      const desktop = width > 760;
+      const scripted = options.javaScriptEnabled !== false;
+      const label = `${width}px ${JSON.stringify(options)}`;
+      assert.equal(await responsive.locator('[data-nav-toggle]').isVisible(), !desktop && scripted, `${label}: wrong menu layout`);
+      assert.equal(await responsive.locator('#site-nav').isVisible(), desktop || !scripted, `${label}: wrong navigation visibility`);
+      const layout = await responsive.evaluate(() => {
+        const header = document.querySelector('.site-header').getBoundingClientRect();
+        const brand = document.querySelector('.brand-row').getBoundingClientRect();
+        const links = [...document.querySelectorAll('#site-nav > .nav-item > a')].map(link => {
+          const rect = link.getBoundingClientRect();
+          return { top: rect.top, bottom: rect.bottom, left: rect.left, right: rect.right };
+        });
+        return {
+          overflow: document.documentElement.scrollWidth > innerWidth + 1,
+          columns: getComputedStyle(document.querySelector('.content-grid')).gridTemplateColumns.split(' ').length,
+          linksFit: links.every(rect => rect.left >= brand.right && rect.right <= innerWidth && rect.top >= header.top && rect.bottom <= header.bottom),
+          oneRow: links.every(rect => Math.abs(rect.top - links[0].top) < 1),
+        };
+      });
+      assert.equal(layout.overflow, false, `${label}: horizontal overflow`);
+      assert.equal(layout.columns, desktop ? 2 : 1, `${label}: wrong content layout`);
+      if (desktop) {
+        assert(layout.linksFit && layout.oneRow, `${label}: desktop links must fit beside the branding in one row`);
+      }
+      report.navigation.push({ width, ...options, desktop });
+    }
+    if (options.javaScriptEnabled !== false) {
+      // Crossing the breakpoint must reset state in both directions without a reload.
+      await responsive.locator('[data-nav-toggle]').click();
+      await responsive.setViewportSize({ width: 800, height: 900 });
+      await responsive.waitForFunction(() => document.querySelector('[data-nav-toggle]').getAttribute('aria-expanded') === 'false');
+      assert(await responsive.locator('#site-nav').isVisible(), 'Resizing to desktop must reveal navigation');
+      await responsive.setViewportSize({ width: 760, height: 900 });
+      assert.equal(await responsive.locator('#site-nav').isVisible(), false, 'Returning to mobile must close the menu');
+      await responsive.locator('[data-nav-toggle]').click();
+      assert(await responsive.locator('#site-nav').isVisible(), 'Mobile menu must still open after resizing');
+      await responsive.keyboard.press('Escape');
+      assert.equal(await responsive.locator('#site-nav').isVisible(), false, 'Escape must close the mobile menu');
+    }
+    await responsiveContext.close();
+  }
+  console.log(`${engine}: ${report.navigation.length} desktop/mobile layout configurations passed`);
+  if (process.env.RESPONSIVE_ONLY) {
+    assert.deepEqual(report.errors, [], 'JavaScript errors found');
+    fs.writeFileSync(path.join(output, 'report.json'), JSON.stringify(report, null, 2));
+    console.log(`Artifacts: ${output}`);
+    return;
+  }
   for (const width of process.env.SKIP_PAGE_CRAWL ? [] : report.widths) {
     const context = await createContext({ viewport: { width, height: 900 } });
     const page = await context.newPage();
@@ -82,7 +147,7 @@ let browser;
   await menu.click();
   await page.locator('#site-nav a[href="/data-sets/"]').click();
   await page.waitForURL('**/data-sets/');
-  await page.setViewportSize({ width: 844, height: 390 });
+  await page.setViewportSize({ width: 740, height: 390 });
   await menu.click();
   assert(await page.locator('#site-nav').evaluate(element => element.getBoundingClientRect().bottom <= innerHeight + 1), 'Landscape menu must fit the viewport');
   await page.locator('#site-nav a[href="/publications/"]').click();
