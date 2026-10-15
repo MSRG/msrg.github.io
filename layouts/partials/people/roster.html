@@ -1,7 +1,7 @@
 {{/* One build-time classification shared by the people and research pages. */}}
 {{ $current := slice }}
 {{ $alumni := slice }}
-{{ $now := now }}
+{{ $now := partial "people/now.html" . }}
 {{ range (site.GetPage "/people").RegularPages }}
   {{ partial "content/validate.html" (dict "page" . "schema" hugo.Data.content_schema.types.people) }}
   {{ $status := .Params.status }}

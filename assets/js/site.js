@@ -72,15 +72,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const errorState = document.querySelector("[data-publication-error]");
     const emptyState = document.querySelector("[data-publication-empty]");
     const controls = document.querySelector("[data-publication-controls]");
-    const researchSelect = document.querySelector("[data-publication-research]");
+    const researchButtons = [...document.querySelectorAll("[data-publication-research]")];
     const resultCount = document.querySelector("[data-publication-count]");
     const clearButton = document.querySelector("[data-publication-clear]");
-    const filterButtons = [...document.querySelectorAll("[data-publication-tag]")];
     const normalize = (text) => text.normalize("NFD").replace(/\p{M}/gu, "").replace(/[‘’]/g, "'").toLowerCase();
     const pageSize = 100;
     let records;
     let indexRequest;
-    let activeTag = "all";
+    let activeResearch = "all";
     let currentPage = Number(archive.dataset.publicationPage);
     let revision = 0;
     let searchTimer;
@@ -126,7 +125,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
     const filterURL = (page = currentPage) => {
       const url = new URL(archive.dataset.publicationBase, location.href);
-      for (const [key, value] of [["q", searchInput.value.trim()], ["tag", activeTag], ["research", researchSelect?.value]]) {
+      for (const [key, value] of [["q", searchInput.value.trim()], ["research", activeResearch]]) {
         if (value && value !== "all") url.searchParams.set(key, value);
       }
       if (page > 1) url.searchParams.set("page", page);
@@ -157,8 +156,17 @@ document.addEventListener("DOMContentLoaded", () => {
         if (currentPage < pageCount) addLink("Next", currentPage + 1, "next");
       });
     };
+    const updateControls = () => {
+      researchButtons.forEach((button) => {
+        const selected = button.dataset.publicationResearch === activeResearch;
+        button.classList.toggle("is-active", selected);
+        button.setAttribute("aria-pressed", String(selected));
+      });
+      clearButton.disabled = !searchInput.value.trim() && activeResearch === "all";
+    };
     const applyFilter = async (updateURL = true) => {
       const requestRevision = ++revision;
+      updateControls();
       if (!records) resultCount.textContent = "Loading publication search…";
       try { await loadIndex(); } catch {
         if (requestRevision === revision) {
@@ -170,25 +178,17 @@ document.addEventListener("DOMContentLoaded", () => {
       if (requestRevision !== revision) return;
       errorState.hidden = true;
       const terms = normalize(searchInput.value.trim()).split(/\s+/).filter(Boolean);
-      const research = researchSelect?.value || "all";
       const matches = records.filter((record) => terms.every((term) => record.search.includes(term)) &&
-        (activeTag === "all" || record.tags.includes(activeTag)) &&
-        (research === "all" || record.research.includes(research)));
+        (activeResearch === "all" || record.research.includes(activeResearch)));
       const pageCount = Math.max(1, Math.ceil(matches.length / pageSize));
       currentPage = Math.min(Math.max(1, currentPage), pageCount);
       const start = (currentPage - 1) * pageSize;
       results.replaceChildren(...matches.slice(start, start + pageSize).map(cardFor));
-      filterButtons.forEach((button) => {
-        const selected = button.dataset.publicationTag === activeTag;
-        button.classList.toggle("is-active", selected);
-        button.setAttribute("aria-pressed", String(selected));
-      });
       emptyState.hidden = matches.length !== 0;
       resultCount.textContent = matches.length ?
         `Showing ${start + 1}–${Math.min(start + pageSize, matches.length)} of ${matches.length} publications` :
         "0 publications";
       renderPagination(pageCount);
-      clearButton.disabled = !searchInput.value && activeTag === "all" && research === "all";
       if (updateURL) history.replaceState(null, "", filterURL());
     };
     const restoreFilter = () => {
@@ -197,15 +197,13 @@ document.addEventListener("DOMContentLoaded", () => {
       const url = new URL(location.href);
       const params = url.searchParams;
       searchInput.value = params.get("q") || params.get("author") || "";
-      const tag = params.get("tag");
-      activeTag = filterButtons.some((button) => button.dataset.publicationTag === tag) ? tag : "all";
       const area = params.get("research");
-      researchSelect.value = [...researchSelect.options].some((option) => option.value === area) ? area : "all";
+      activeResearch = researchButtons.some((button) => button.dataset.publicationResearch === area) ? area : "all";
       const page = params.get("page") || url.pathname.match(/\/page\/(\d+)\//)?.[1] || "1";
       currentPage = /^[1-9]\d*$/.test(page) && Number.isSafeInteger(Number(page)) ? Number(page) : 1;
-      const filtered = searchInput.value || activeTag !== "all" || researchSelect.value !== "all";
+      const filtered = searchInput.value || activeResearch !== "all";
+      updateControls();
       if (records || filtered || params.has("page")) applyFilter(false);
-      clearButton.disabled = !filtered;
     };
     const changeFilter = () => {
       clearTimeout(searchTimer);
@@ -218,15 +216,13 @@ document.addEventListener("DOMContentLoaded", () => {
       currentPage = 1;
       searchTimer = setTimeout(() => applyFilter(), 150);
     });
-    researchSelect.addEventListener("change", changeFilter);
-    filterButtons.forEach((button) => button.addEventListener("click", () => {
-      activeTag = button.dataset.publicationTag || "all";
+    researchButtons.forEach((button) => button.addEventListener("click", () => {
+      activeResearch = button.dataset.publicationResearch;
       changeFilter();
     }));
     clearButton.addEventListener("click", () => {
       searchInput.value = "";
-      activeTag = "all";
-      researchSelect.value = "all";
+      activeResearch = "all";
       changeFilter();
       searchInput.focus();
     });

@@ -36,7 +36,7 @@ function markDirty() { dirty = true; if (kind === 'personal') renderPreview(); }
 function canLeave() { return !busy && (!dirty || window.confirm('Discard your unsaved edits?')); }
 function setBusy(value) {
   busy = value;
-  for (const control of [picker, kindPicker, saveButton, document.querySelector('#new-profile'), document.querySelector('#reload')]) control.disabled = value;
+  for (const control of [picker, kindPicker, saveButton, document.querySelector('#reload')]) control.disabled = value;
   document.querySelector('#fields').inert = value;
   document.querySelector('#record-identifier').inert = value;
 }
@@ -69,11 +69,80 @@ function uploadControl(category, complete) {
   });
   return label;
 }
+function itemControl(field, value, id, helpId) {
+  const container = node('div', undefined, 'item-control');
+  const items = node('ul', undefined, 'items');
+  items.setAttribute('aria-label', field.label + ' added items');
+  const entry = node('div', undefined, 'item-entry');
+  const input = node('input'); input.type = 'text'; input.id = id;
+  input.autocomplete = 'off';
+  input.placeholder = field.suggestions_source === 'member_names' ? 'Search members or type an author' : 'Type an item';
+  input.setAttribute('aria-describedby', helpId);
+  const add = node('button', 'Add', 'secondary'); add.type = 'button';
+  add.setAttribute('aria-label', 'Add to ' + field.label.toLowerCase());
+  const suggestions = node('datalist'); suggestions.id = id + '-suggestions';
+  if (field.suggestions?.length) input.setAttribute('list', suggestions.id);
+  let values = [...(value || [])];
+  function validate() {
+    input.required = Boolean(field.required) && values.length === 0;
+    input.setCustomValidity(input.required && input.value && !input.value.trim() ? 'Add at least one item.' : '');
+  }
+  function updateSuggestions() {
+    const normalize = text => text.normalize('NFKC').trim().replace(/\s+/g, ' ').toLowerCase();
+    const selected = new Set(values.map(normalize));
+    const query = normalize(input.value);
+    suggestions.replaceChildren();
+    for (const suggestion of field.suggestions || []) {
+      const names = [suggestion.value, ...(suggestion.aliases || [])];
+      if (names.some(name => selected.has(normalize(name)))) continue;
+      // Offer one spelling per person, matching a published variant when searched.
+      const value = names.find(name => normalize(name).includes(query));
+      if (value === undefined) continue;
+      const option = node('option'); option.value = value; option.label = suggestion.label;
+      suggestions.append(option);
+    }
+  }
+  function renderItems() {
+    items.replaceChildren(); items.hidden = values.length === 0;
+    values.forEach((value, index) => {
+      const item = node('li', undefined, 'item');
+      const remove = node('button', '×', 'secondary'); remove.type = 'button';
+      remove.setAttribute('aria-label', 'Remove ' + value);
+      remove.addEventListener('click', () => {
+        values.splice(index, 1); renderItems(); markDirty(); input.focus();
+      });
+      item.append(node('span', value), remove); items.append(item);
+    });
+    updateSuggestions(); validate();
+  }
+  function append(text) {
+    const added = text.split(/\r?\n/).map(item => item.trim()).filter(Boolean);
+    if (!added.length) return;
+    values.push(...added); input.value = ''; renderItems(); markDirty();
+  }
+  input.addEventListener('input', () => { validate(); updateSuggestions(); });
+  input.addEventListener('keydown', event => {
+    if (event.key === 'Enter' && !event.isComposing) {
+      event.preventDefault(); append(input.value);
+    }
+  });
+  input.addEventListener('paste', event => {
+    const text = event.clipboardData.getData('text');
+    if (!/[\r\n]/.test(text)) return;
+    event.preventDefault();
+    append(input.value.slice(0, input.selectionStart) + text + input.value.slice(input.selectionEnd));
+  });
+  add.addEventListener('click', () => { append(input.value); input.focus(); });
+  entry.append(input, add); container.append(items, entry, suggestions); renderItems();
+  // Include unfinished input when saving, even if Enter or Add was not used.
+  return { container, read: () => [...values, ...input.value.split(/\r?\n/).map(item => item.trim()).filter(Boolean)] };
+}
 function fieldControl(field, value, prefix = '') {
   const wrapper = node(field.templates ? 'fieldset' : 'div', undefined, field.templates ? 'field template-field' : 'field');
   const id = prefix + field.key;
   const label = node('label', field.label + (field.required ? ' *' : '')); label.htmlFor = id; wrapper.append(label);
-  const helpText = field.help || (field.type === 'strings' && !field.choices ? 'One item per line.' : '');
+  const helpText = [field.help, field.type === 'strings' && !field.choices
+    ? 'Type an item and press Enter or choose Add. Remove an item with its × button.' : ''].filter(Boolean).join(' ');
   const help = node('p', helpText, 'help'); help.id = id + '-help';
   if (helpText) wrapper.append(help);
   let input, read;
@@ -130,6 +199,9 @@ function fieldControl(field, value, prefix = '') {
     }
     wrapper.append(choices);
     read = () => Array.from(choices.querySelectorAll('input:checked'), check => check.value);
+  } else if (field.type === 'strings') {
+    const control = itemControl(field, value, id, help.id);
+    wrapper.append(control.container); read = control.read;
   } else {
     if (field.type === 'boolean') {
       input = node('input'); input.type = 'checkbox'; input.checked = Boolean(value);
@@ -139,9 +211,9 @@ function fieldControl(field, value, prefix = '') {
       if (!field.required && field.allow_empty !== false) input.add(new Option('None', ''));
       for (const choice of field.choices) input.add(new Option(choice.label, choice.value));
       input.value = value || ''; read = () => input.value;
-    } else if (field.type === 'strings' || field.multiline) {
-      input = node('textarea'); input.value = field.type === 'strings' ? (value || []).join('\n') : value || '';
-      read = () => field.type === 'strings' ? input.value.split('\n').map(line => line.trim()).filter(Boolean) : input.value;
+    } else if (field.multiline) {
+      input = node('textarea'); input.value = value || '';
+      read = () => input.value;
     } else {
       input = node('input');
       input.type = field.type === 'integer' ? 'number' : ({ email: 'email', url: 'url' }[field.format] || 'text');
@@ -268,12 +340,23 @@ function render() {
   document.querySelector('#custom-site-folder').textContent = 'static/~' + (current.slug || 'your-member-identifier') + '/';
   document.querySelector('#custom-site-url').textContent = '/~' + (current.slug || 'your-member-identifier') + '/';
   saveButton.hidden = custom;
-  saveButton.textContent = 'Save changes';
+  saveButton.textContent = current.revision ? 'Save changes' : 'Create';
   const identity = document.querySelector('#record-identifier');
   identity.hidden = kind === 'people' || custom;
   document.querySelector('#record-slug').required = !identity.hidden;
   document.querySelector('#record-slug').value = current.slug;
   document.querySelector('#record-slug').readOnly = Boolean(current.slug) || kind === 'personal';
+  document.querySelector('#record-slug-help').textContent = kind === 'publications'
+    ? 'Assigned automatically from the original title when you create the entry. A number is added if needed. Later title changes keep this identifier and add an alias URL pointing to the original page.'
+    : 'Generated from the title. Keep it stable so existing links keep working.';
+  document.querySelector('#record-aliases').hidden = kind !== 'publications';
+  const aliases = kind === 'publications' ? current.data.aliases || [] : [];
+  const aliasList = document.querySelector('#record-alias-list');
+  aliasList.replaceChildren(...aliases.map(alias => {
+    const item = node('li'); item.append(node('code', alias)); return item;
+  }));
+  aliasList.hidden = aliases.length === 0;
+  document.querySelector('#record-aliases-empty').hidden = aliases.length > 0;
   if (custom) { renderPreview(); return; }
   let section;
   for (const field of definition.fields) {
@@ -300,7 +383,7 @@ function render() {
   }
   if (kind === 'people' || kind === 'publications' || kind === 'data-sets') {
     const slug = kind === 'people' ? document.querySelector('#slug') : document.querySelector('#record-slug');
-    slug.readOnly = kind !== 'people' && Boolean(current.slug);
+    slug.readOnly = kind === 'publications' || (kind !== 'people' && Boolean(current.slug));
     if (kind === 'people' && current.slug) {
       const warning = node('p', undefined, 'rename-warning');
       warning.id = 'rename-warning'; warning.setAttribute('role', 'status');
@@ -315,7 +398,10 @@ function render() {
     if (!current.slug) {
       const name = document.querySelector(kind === 'people' ? '#name' : '#title');
       let manual = false; slug.oninput = () => { manual = Boolean(slug.value); };
-      name.addEventListener('input', () => { if (!manual) slug.value = slugify(name.value); });
+      name.addEventListener('input', () => {
+        if (kind === 'publications') slug.value = slugify(name.value).slice(0, 180).replace(/-$/, '') || (name.value.trim() ? 'publication' : '');
+        else if (!manual) slug.value = slugify(name.value);
+      });
     }
   }
   if (collections[kind].body) bodyControl(container);
@@ -352,7 +438,6 @@ async function changeKind(next) {
   kind = next; definition = config.schema; initialValues = config.defaults;
   current = { data: {}, body: '', revision: null, slug: '' };
   await refreshList();
-  document.querySelector('#new-profile').hidden = kind === 'personal';
   await loadRecord(kind === 'personal' ? picker.options[0]?.value || '' : '');
 }
 async function run(action) {
@@ -363,7 +448,6 @@ async function run(action) {
 }
 picker.addEventListener('change', () => { if (canLeave()) run(() => loadRecord(picker.value)); else picker.value = current.slug; });
 kindPicker.addEventListener('change', () => { if (canLeave()) run(() => changeKind(kindPicker.value)); else kindPicker.value = kind; });
-document.querySelector('#new-profile').addEventListener('click', () => { if (canLeave()) run(() => loadRecord('')); });
 document.querySelector('#reload').addEventListener('click', () => { if (canLeave()) run(() => loadRecord(current.slug)); });
 document.querySelector('#preview-start').addEventListener('click', async event => {
   event.target.disabled = true;
@@ -388,7 +472,10 @@ form.addEventListener('submit', event => {
     }
     if (collections[kind].body) payload.body = document.querySelector('#body').value;
     const result = await post('/api/records', payload);
-    current = { ...await api('/api/records/' + kind + '/' + encodeURIComponent(slug)), slug };
+    const savedSlug = result.slug || slug;
+    current = { ...await api('/api/records/' + kind + '/' + encodeURIComponent(savedSlug)), slug: savedSlug };
+    const config = await api('/api/schema/' + kind);
+    definition = config.schema; initialValues = config.defaults;
     dirty = false; render(); await refreshList();
     notify('Saved ' + result.path + (result.moved ? '. Identifier changed; preview the profile and personal site, and update any shared old URLs.' : '.') + ' Preview your changes, then submit a pull request.');
     if (kind === 'personal') await checkPreview();

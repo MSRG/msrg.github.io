@@ -12,17 +12,11 @@
       <div class="stack" data-publication-controls hidden>
       <label class="search-label" for="publication-search">Search titles, authors, venues, years, and abstracts</label>
       <input id="publication-search" class="search-input" type="search" placeholder="Try graph, federated, quantum, or Jacobsen" data-publication-search>
-      <label for="publication-research">Research area</label>
-      <select id="publication-research" class="search-input" data-publication-research>
-        <option value="all">All research areas</option>
+      <p id="publication-research-label">Research area</p>
+      <div class="filter-toolbar" role="group" aria-labelledby="publication-research-label">
+        <button class="filter-chip is-active" type="button" aria-pressed="true" data-publication-research="all">All research areas</button>
         {{ range (site.GetPage "/research").Pages.ByWeight }}
-          <option value="{{ .File.ContentBaseName }}">{{ .Title }}</option>
-        {{ end }}
-      </select>
-      <div class="filter-toolbar" role="group" aria-label="Publication topics" data-publication-filters>
-        <button class="filter-chip is-active" type="button" aria-pressed="true" data-publication-tag="all">All topics</button>
-        {{ range site.Params.publication_filters }}
-          <button class="filter-chip" type="button" aria-pressed="false" data-publication-tag="{{ .slug }}">{{ .label }}</button>
+          <button class="filter-chip" type="button" aria-pressed="false" data-publication-research="{{ .File.ContentBaseName }}">{{ .Title }}</button>
         {{ end }}
       </div>
       <div class="section-header-row">

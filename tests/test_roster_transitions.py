@@ -102,10 +102,16 @@ class RosterTransitionTests(unittest.TestCase):
         for earlier, later in zip(positions_by_date, positions_by_date[1:]):
             self.assertLess(max(earlier), min(later))
 
-    def build(self, clock):
+    def build(self, clock, running_clock=None):
+        # Hugo's --clock keeps ticking. A slow build can cross midnight after
+        # starting at 23:59:59, so freeze only the roster's time source in this
+        # disposable site. The classification and page templates remain real.
+        (self.project / "layouts/partials/people/now.html").write_text(
+            '{{ return (time.AsTime ' + json.dumps(clock) + ') }}\n'
+        )
         result = subprocess.run(
             [HUGO, "--source", str(self.project), "--destination", str(self.project / "public"),
-             "--cacheDir", str(self.project / "cache"), "--clock", clock, "--panicOnWarning"],
+             "--cacheDir", str(self.project / "cache"), "--clock", running_clock or clock, "--panicOnWarning"],
             capture_output=True, text=True,
         )
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
@@ -116,7 +122,9 @@ class RosterTransitionTests(unittest.TestCase):
         member = "member-test-" + slug
         self.assertEqual(html.count(f'id="{member}"'), 1, member)
         tag = "article" if active else "li"
-        self.assertRegex(html, rf'<{tag}\b[^>]*id="{member}"')
+        element = re.search(rf'<(\w+)\b[^>]*id="{member}"', html)
+        self.assertIsNotNone(element, member)
+        self.assertEqual(element[1], tag, f"{member}: expected {'current' if active else 'alumni'} roster placement")
 
     def test_month_boundary_visitor_roles_and_research_roster(self):
         # UTC September 1 is still August 31 in Toronto until 04:00 UTC.
@@ -162,8 +170,22 @@ class RosterTransitionTests(unittest.TestCase):
         ]
         for slug, before, after in cases:
             with self.subTest(slug=slug):
-                self.assert_placement(self.build(before)[0], slug, True)
-                self.assert_placement(self.build(after)[0], slug, False)
+                roster_before, research_before = self.build(before)
+                roster_after, research_after = self.build(after)
+                self.assert_placement(roster_before, slug, True)
+                self.assert_placement(roster_after, slug, False)
+                self.assert_placement(research_before, slug, True)
+                self.assertNotIn(f'id="member-test-{slug}"', research_after)
+
+    def test_roster_clock_stays_fixed_when_build_time_crosses_midnight(self):
+        # Reproduce the clock drift that made the Windows leap-year test flaky,
+        # without relying on machine speed or sleeping during every CI run.
+        after = "2028-03-01T05:00:10Z"
+        for clock, active in (("2028-03-01T04:59:59Z", True), ("2028-03-01T05:00:00Z", False)):
+            with self.subTest(clock=clock):
+                roster, research = self.build(clock, running_clock=after)
+                self.assert_placement(roster, "leap", active)
+                self.assertEqual('id="member-test-leap"' in research, active)
 
     def test_archetypes_read_schema_fields_and_current_role_choices(self):
         import tomllib
