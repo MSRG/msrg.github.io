@@ -164,7 +164,8 @@
           "label": "Specialities",
           "type": "strings",
           "default": [],
-          "help": "One speciality per line, for example Distributed Systems or Quantum Computing."
+          "suggestions_source": "saved_values",
+          "help": "Add your specialities, for example Distributed Systems or Quantum Computing."
         },
         {
           "key": "portrait",
@@ -257,11 +258,11 @@
         },
         {
           "key": "author_names",
-          "label": "Publication name variants",
+          "label": "Your name as it appears on publications",
           "type": "strings",
           "default": [],
           "section": "Publications and awards",
-          "help": "One name per line, exactly as it appears in publication author lists."
+          "help": "Add each version of your own name used in publication author lists, for example Jane Doe or J. Doe. Use the exact spelling from the paper so publications can be linked to your profile."
         },
         {
           "key": "awards",
@@ -312,10 +313,12 @@
         },
         {
           "key": "date",
-          "label": "Created",
+          "label": "Entry creation date",
           "type": "string",
           "default": "",
-          "seed": "date"
+          "editor": false,
+          "seed": "date",
+          "help": "Optional date this website entry was created, used for page metadata and feeds. Leave blank if unknown. Use Year below for the paper's publication year."
         },
         {
           "key": "year",
@@ -330,6 +333,8 @@
           "label": "Authors",
           "type": "strings",
           "default": [],
+          "suggestions_source": "member_names",
+          "help": "Search website members or type any author's name. Add authors in the order shown on the paper, using their published names.",
           "required": true
         },
         {
@@ -352,7 +357,23 @@
           "label": "Publication type",
           "type": "string",
           "default": "Conference Paper",
-          "required": true
+          "required": true,
+          "options": [
+            "Conference Paper",
+            "Journal Article",
+            "Workshop Paper",
+            "Book Chapter",
+            "Book",
+            "Edited Book",
+            "ArXiv Preprint",
+            "Preprint",
+            "Technical Report",
+            "Doctoral Thesis",
+            "Master's Thesis",
+            "Dataset",
+            "Software"
+          ],
+          "help": "Choose the publication's format. If the correct option is not available, contact the site owner to have it added."
         },
         {
           "key": "research",
@@ -382,6 +403,7 @@
           "key": "tags",
           "label": "Tags",
           "type": "strings",
+          "suggestions_source": "saved_values",
           "default": []
         },
         {
@@ -690,7 +712,7 @@
           "label": "Previous website paths",
           "type": "strings",
           "default": [],
-          "help": "Optional redirects, one /path/ per line."
+          "help": "Add previous website paths such as /old-page/ to redirect them to this page."
         }
       ]
     }

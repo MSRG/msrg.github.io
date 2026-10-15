@@ -31,6 +31,8 @@ let browser;
   await page.context().route(base + '/~*/', route => route.fulfill({ contentType: 'text/html', body: '<!doctype html><html lang="en"><head><title>Personal preview</title></head><body><main><h1>Personal page preview fixture</h1></main></body></html>' }));
   await page.goto(base);
   console.log('Editor loaded');
+  assert.equal(await page.locator('#new-profile').count(), 0);
+  assert.equal(await page.locator('#save').textContent(), 'Create');
   assert.equal(await page.locator('#preview').getAttribute('href'), null);
   assert.equal(await page.locator('#preview').getAttribute('aria-disabled'), 'true');
   previewState = { state: 'ready', message: 'Local preview is running.', url: base };
@@ -45,6 +47,29 @@ let browser;
   await page.getByRole('button', { name: 'Add awards and funding', exact: true }).click();
   await page.getByLabel('Award name').fill('Example award');
   await page.getByLabel('Award page *', { exact: true }).fill('https://example.org/award');
+  async function addItem(key, value) {
+    await page.locator('#' + key).fill(value);
+    await page.locator('#' + key).press('Enter');
+    assert.equal(await page.locator('#' + key).inputValue(), '');
+  }
+  async function items(key) {
+    return page.locator('#field-' + key + ' .item span').allTextContents();
+  }
+  async function pasteItems(key, text) {
+    await page.locator('#' + key).evaluate((input, text) => {
+      // Firefox does not retain clipboardData passed to a synthetic ClipboardEvent.
+      const event = new Event('paste', { bubbles: true, cancelable: true });
+      Object.defineProperty(event, 'clipboardData', { value: { getData: () => text } });
+      input.dispatchEvent(event);
+    }, text);
+  }
+  await addItem('author_names', 'J. Doe');
+  await addItem('interests', 'Distributed Systems');
+  await page.locator('#interests').fill('Quantum Computing');
+  await page.getByRole('button', { name: 'Add to specialities', exact: true }).click();
+  await page.getByRole('button', { name: 'Remove Distributed Systems', exact: true }).click();
+  assert.deepEqual(await items('interests'), ['Quantum Computing']);
+  assert.equal(fs.existsSync(path.join(fixture, 'content/people/jane-doe.md')), false, 'Enter adds an item without submitting the form');
   async function save() {
     await page.locator('#save').click();
     await page.waitForFunction(() => document.querySelector('#message').textContent.startsWith('Saved ') || document.querySelector('#message').classList.contains('error'));
@@ -57,11 +82,15 @@ let browser;
   }
   await save();
   console.log('Profile saved');
+  assert.equal(await page.locator('#save').textContent(), 'Save changes');
+  assert.deepEqual(await items('author_names'), ['J. Doe']);
+  assert.deepEqual(await items('interests'), ['Quantum Computing']);
   assert.equal(await page.locator('#slug').getAttribute('readonly'), null);
   await page.waitForFunction(() => { const image = document.querySelector('.portrait-preview'); return image.complete && image.naturalWidth > 0; });
 
   await choose('personal');
   console.log('Personal page form loaded');
+  assert.equal(await page.locator('#save').textContent(), 'Create', 'A member can exist before their personal page');
   assert.equal(await page.locator('#kind option:checked').textContent(), 'Personal Pages');
   assert.equal(await page.locator('#custom_css').count(), 0);
   await page.locator('#custom-site-guide summary').click();
@@ -76,6 +105,7 @@ let browser;
 
   await page.locator('#layout').selectOption('structured');
   await assertStructuredFields(true);
+  await addItem('focus', 'Quantum systems');
   await page.locator('#body').fill('My research interests.');
   await page.getByRole('button', { name: 'Add highlights', exact: true }).click();
   await page.getByLabel('Title *', { exact: true }).fill('Research highlight');
@@ -83,6 +113,8 @@ let browser;
   await page.getByLabel('Label *', { exact: true }).fill('MSRG');
   await page.getByLabel('Link *', { exact: true }).fill('https://msrg.github.io/');
   await save();
+  assert.equal(await page.locator('#save').textContent(), 'Save changes');
+  assert.deepEqual(await items('focus'), ['Quantum systems']);
   await page.waitForFunction(() => document.querySelector('#preview').hasAttribute('href'));
   assert.match(await page.locator('#preview').getAttribute('href'), /\/~jane-doe\/$/);
   async function checkNewTabPreview(slug) {
@@ -146,9 +178,40 @@ let browser;
 
   await choose('publications');
   console.log('Publication form loaded');
+  assert.equal(await page.locator('#save').textContent(), 'Create');
   await page.locator('#title').fill('Example Paper');
+  assert.equal(await page.locator('#date').count(), 0, 'Publication entry creation date is hidden');
+  assert.equal(await page.locator('#record-slug').evaluate(input => input.readOnly), true);
+  assert.equal(await page.locator('#record-slug').inputValue(), 'example-paper');
   await page.locator('#year').fill('2026');
-  await page.locator('#authors').fill('Jane Doe\nJohn Doe');
+  const publicationType = page.getByRole('combobox', { name: 'Publication type *', exact: true });
+  assert.equal(await publicationType.inputValue(), 'Conference Paper');
+  await publicationType.selectOption('Journal Article');
+  assert.match(await page.locator('#publication_type-help').textContent(), /contact the site owner/i);
+  assert.equal(await page.locator('#authors').evaluate(input => input.tagName), 'INPUT');
+  assert.deepEqual(await page.locator('#authors-suggestions option').evaluateAll(options => options.map(option => [option.value, option.label])),
+    [['Jane Doe', 'Jane Doe']], 'Suggest each member once');
+  assert.equal(await page.locator('#authors').evaluate(input => input.checkValidity()), false, 'Empty authors are required');
+  await addItem('authors', 'Jane Doe');
+  assert.equal(await page.locator('#authors-suggestions option').count(), 0, 'Adding a member also hides their published variants');
+  assert.equal(await page.locator('#authors').evaluate(input => input.checkValidity()), true, 'Added authors satisfy the required field');
+  await page.getByRole('button', { name: 'Remove Jane Doe', exact: true }).click();
+  assert.equal(await page.locator('#authors-suggestions option').count(), 1, 'Removing a member restores their suggestion');
+  await page.locator('#authors').fill('j.');
+  assert.deepEqual(await page.locator('#authors-suggestions option').evaluateAll(options => options.map(option => [option.value, option.label])),
+    [['J. Doe', 'Jane Doe']], 'Search published variants without duplicating the member');
+  await addItem('authors', ' j. doe ');
+  assert.equal(await page.locator('#authors-suggestions option').count(), 0, 'Matching ignores case and surrounding whitespace');
+  await page.getByRole('button', { name: 'Remove j. doe', exact: true }).click();
+  await page.locator('#authors').fill('   ');
+  assert.equal(await page.locator('#authors').evaluate(input => input.checkValidity()), false, 'Whitespace is not an author');
+  await addItem('authors', 'J. Doe');
+  assert.equal(await page.locator('#authors-suggestions option').count(), 0, 'A published variant also hides the member name');
+  await pasteItems('authors', 'John Doe\r\n\r\nDoe, Alex');
+  assert.deepEqual(await items('authors'), ['J. Doe', 'John Doe', 'Doe, Alex'], 'Pasted author order and commas are preserved');
+  await page.locator('#authors').fill('External Author');
+  await addItem('tags', 'quantum');
+  await page.locator('#tags').fill('systems');
   await page.locator('#venue').fill('Example Conference');
   await page.locator('#external_url').fill('https://example.org/paper');
   await page.getByLabel('Abstract', { exact: true }).fill('An abstract with ');
@@ -160,24 +223,50 @@ let browser;
   assert.match(abstract, /\$\$\n\\sum_\{i=1\}\^\{n\} x_i\n\$\$/);
   await page.getByLabel('Additional notes', { exact: true }).fill('Companion notes. [Member](/people/#member-jane-doe)');
   await save();
+  assert.equal(await page.locator('#save').textContent(), 'Save changes');
+  assert.equal(await publicationType.inputValue(), 'Journal Article');
+  assert.deepEqual(await items('authors'), ['J. Doe', 'John Doe', 'Doe, Alex', 'External Author'], 'Saving includes unfinished input');
+  assert.deepEqual(await items('tags'), ['quantum', 'systems']);
   assert.equal(await page.locator('#record-slug').inputValue(), 'example-paper');
+  await page.locator('#profile').selectOption('');
+  await page.waitForFunction(() => !document.querySelector('#save').disabled && document.querySelector('#save').textContent === 'Create');
+  assert.deepEqual(await items('authors'), [], 'New entry resets the list controls');
+  assert.deepEqual(await page.locator('#tags-suggestions option').evaluateAll(options => options.map(option => option.value)),
+    ['quantum', 'systems'], 'Newly saved tags are immediately available for the next entry');
+  await page.locator('#title').fill('Example Paper');
+  await addItem('authors', 'Another Author');
+  await page.locator('#venue').fill('Another Conference');
+  await page.locator('#external_url').fill('https://example.org/another-paper');
+  await save();
+  assert.equal(await page.locator('#record-slug').inputValue(), 'example-paper-2');
+  assert.equal(await page.locator('#profile').inputValue(), 'example-paper-2');
+  assert.match(await page.locator('#preview').getAttribute('href'), /\/publications\/example-paper-2\/$/);
+  assert.equal(await page.locator('#record-slug').evaluate(input => input.readOnly), true);
 
   await choose('data-sets');
   console.log('Dataset form loaded');
+  assert.equal(await page.locator('#save').textContent(), 'Create');
   await page.locator('#title').fill('Example Dataset');
+  await addItem('aliases', '/previous-dataset/');
   await page.locator('#related_publication').selectOption('example-paper');
   await page.getByRole('button', { name: 'Add downloads', exact: true }).click();
   await page.getByLabel('Label *', { exact: true }).fill('Results CSV');
   await page.getByLabel('Upload a file', { exact: true }).first().setInputFiles({ name: 'results.csv', mimeType: 'text/csv', buffer: Buffer.from('a,b\n1,2\n') });
   await page.waitForFunction(() => document.querySelector('#message').textContent.startsWith('Uploaded '));
   await save();
+  assert.equal(await page.locator('#save').textContent(), 'Save changes');
+  assert.deepEqual(await items('aliases'), ['/previous-dataset/']);
   assert.equal(fs.readdirSync(path.join(fixture, 'static/downloads')).length, 1);
 
   await choose('publications');
   console.log('Publication form loaded');
+  assert.deepEqual(await page.locator('#tags-suggestions option').evaluateAll(options => options.map(option => option.value)), ['quantum', 'systems']);
   await page.locator('#profile').selectOption('example-paper');
   await page.waitForFunction(() => !document.querySelector('#save').disabled && document.querySelector('#title').value === 'Example Paper');
+  assert.equal(await publicationType.inputValue(), 'Journal Article', 'Publication type survives reopening');
   assert.equal(await page.locator('#abstract').inputValue(), abstract, 'LaTeX survives saving and reopening');
+  assert.deepEqual(await items('authors'), ['J. Doe', 'John Doe', 'Doe, Alex', 'External Author']);
+  assert.equal(await page.locator('#save').textContent(), 'Save changes');
   await page.getByLabel('Example Dataset', { exact: true }).check();
   await save();
   const publication = path.join(fixture, 'content/publications/example-paper.md');
@@ -190,6 +279,12 @@ let browser;
   page.once('dialog', dialog => dialog.accept());
   await page.getByRole('button', { name: 'Reload saved entry' }).click();
   await page.waitForFunction(() => !document.querySelector('#save').disabled && !document.querySelector('#message').classList.contains('error'));
+  const originalPreview = await page.locator('#preview').getAttribute('href');
+  await page.locator('#title').fill('Revised Paper');
+  await save();
+  assert.equal(await page.locator('#record-slug').inputValue(), 'example-paper');
+  assert.equal(await page.locator('#preview').getAttribute('href'), originalPreview);
+  assert.match(fs.readFileSync(publication, 'utf8'), /aliases = \["\/publications\/revised-paper\/"\]/);
 
   await choose('people');
   await page.locator('#profile').selectOption('jane-doe');
@@ -216,6 +311,11 @@ let browser;
     await page.setViewportSize({ width, height: 900 });
     for (const kind of ['people', 'personal', 'publications', 'data-sets']) {
       await choose(kind);
+      if (kind !== 'personal') {
+        const slug = { people: 'jane-smith', publications: 'example-paper', 'data-sets': 'example-dataset' }[kind];
+        await page.locator('#profile').selectOption(slug);
+        await page.waitForFunction(() => !document.querySelector('#save').disabled && document.querySelector('#save').textContent === 'Save changes');
+      }
       assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1), false, `Overflow at ${width}px: ${kind}`);
       await page.addScriptTag({ path: require.resolve('axe-core/axe.min.js') });
       const violations = await page.evaluate(async () => (await axe.run()).violations.filter(v => ['serious', 'critical'].includes(v.impact)).map(v => v.id));

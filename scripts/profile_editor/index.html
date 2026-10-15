@@ -14,7 +14,6 @@
     <section class="picker" aria-label="Choose content">
       <div><label for="kind">What would you like to edit?</label><select id="kind"></select></div>
       <div><label for="profile">Entry</label><select id="profile"></select></div>
-      <button type="button" id="new-profile">Create an entry</button>
     </section>
     <p class="note">Changes save locally. They appear online after your pull request is reviewed and merged. Fields marked * are required.</p>
     <p id="message" role="status" aria-live="polite"></p>
@@ -30,10 +29,16 @@
     </section>
     <form id="editor">
       <div id="record-identifier" class="field" hidden><label for="record-slug">Page identifier</label>
-        <p class="help">Generated from the title. Keep it stable so existing links keep working.</p>
-        <input id="record-slug" pattern="[a-z0-9]+(?:-[a-z0-9]+)*"></div>
+        <p id="record-slug-help" class="help">Generated from the title. Keep it stable so existing links keep working.</p>
+        <input id="record-slug" aria-describedby="record-slug-help" pattern="[a-z0-9]+(?:-[a-z0-9]+)*"></div>
+      <section id="record-aliases" class="field" aria-labelledby="record-aliases-label" hidden>
+        <h2 id="record-aliases-label">Aliases</h2>
+        <p class="help">These addresses redirect to the original publication page. Aliases are added automatically when you save a changed title.</p>
+        <ul id="record-alias-list" aria-labelledby="record-aliases-label"></ul>
+        <p id="record-aliases-empty" class="help">No aliases yet.</p>
+      </section>
       <div id="fields"></div>
-      <div class="actions"><button type="submit" id="save" disabled>Save changes</button>
+      <div class="actions"><button type="submit" id="save" disabled>Create</button>
         <a id="preview" role="link" aria-disabled="true" tabindex="-1" target="_blank" rel="noopener noreferrer">Open preview in new tab ↗</a></div>
       <p id="preview-status" class="help" role="status">Checking local preview…</p>
       <p id="preview-hint" class="help" hidden></p>

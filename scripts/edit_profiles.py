@@ -17,8 +17,9 @@ import shutil
 import subprocess
 import tempfile
 import threading
+import unicodedata
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
-from urllib.parse import urlsplit
+from urllib.parse import unquote, urljoin, urlsplit
 import tomllib
 from member_rename import rename_member
 from editor_preview import EditorPreview
@@ -37,6 +38,18 @@ class Conflict(ValueError):
 
 def revision(text):
     return hashlib.sha256(text.encode()).hexdigest() if text else None
+
+
+def publication_identifier(title):
+    if not isinstance(title, str) or not title.strip():
+        raise ValueError('title: required')
+    title = re.sub(r'[\u0300-\u036f]', '', unicodedata.normalize('NFKD', title))
+    return re.sub(r'[^a-z0-9]+', '-', title.lower()).strip('-')[:180].rstrip('-') or 'publication'
+
+
+def route_key(url):
+    path = unquote(urlsplit(url).path).lower().rstrip('/')
+    return path.removesuffix('/index.html')
 
 
 class ProfileStore:
@@ -65,11 +78,8 @@ class ProfileStore:
             return self.safe_path(f'content/personal/{slug}/index.md')
         return self.safe_path(f'content/{kind}/{slug}.md')
 
-    def preview(self, slug, kind):
-        if kind == 'people':
-            return '/people/#member-' + slug
-        if kind == 'personal':
-            return '/~' + slug + '/'
+    def page_urls(self):
+        """Resolve legacy title-based and explicitly overridden URLs with Hugo."""
         if (self.root / 'hugo.yaml').exists():
             hugo = shutil.which('hugo')
             if not hugo:
@@ -78,12 +88,57 @@ class ProfileStore:
                                     capture_output=True, text=True, encoding='utf-8', timeout=30)
             if result.returncode:
                 raise ValueError('Hugo could not resolve page URLs: ' + result.stderr.strip())
+            return {row['path'].replace('\\', '/'): urlsplit(row['permalink']).path
+                    for row in csv.DictReader(io.StringIO(result.stdout))}
+        return {}
+
+    def preview(self, slug, kind):
+        if kind == 'people':
+            return '/people/#member-' + slug
+        if kind == 'personal':
+            return '/~' + slug + '/'
+        if (self.root / 'hugo.yaml').exists():
             relative = self.path(slug, kind).relative_to(self.root).as_posix()
-            for row in csv.DictReader(io.StringIO(result.stdout)):
-                if row['path'].replace('\\', '/') == relative:
-                    return urlsplit(row['permalink']).path
+            urls = self.page_urls()
+            if relative in urls:
+                return urls[relative]
             raise ValueError('Hugo could not find this page for preview')
-        return f'/{kind}/{slug}/'
+        data = self.get(slug, kind, include_preview=False)['data']
+        return data.get('url') or f'/{kind}/{data.get("slug") or slug}/'
+
+    def available_publication_identifier(self, title, owner=None):
+        """Allocate a filename/URL without taking another page's URL or redirect.
+
+        Called under the save lock so concurrent creates cannot claim the same name.
+        The owner may reuse its own routes when a title changes back.
+        """
+        base = publication_identifier(title)
+        urls = self.page_urls()
+        owner_path = owner.relative_to(self.root).as_posix() if owner else None
+        blocked = {route_key(url) for path, url in urls.items() if path != owner_path}
+        blocked.update({'/publications/index', '/publications/page'})
+        for path in (self.root / 'content').rglob('*'):
+            if path.suffix not in {'.md', '.html'} or not path.is_file() or path == owner:
+                continue
+            relative = path.relative_to(self.root).as_posix()
+            match = FRONT_MATTER.match(self.safe_path(relative).read_text(encoding='utf-8'))
+            if not match:
+                continue
+            data = tomllib.loads(match[1])
+            fallback = f'/{path.parent.name}/{data.get("slug") or path.stem}/'
+            url = urls.get(relative) or data.get('url') or fallback
+            blocked.add(route_key(url))
+            blocked.update(route_key(urljoin(url, alias)) for alias in data.get('aliases', []))
+            if path.parent == self.root / 'content/publications':
+                blocked.add(route_key(f'/publications/{path.stem}/'))
+        for path in (self.root / 'static/publications').rglob('*'):
+            blocked.add(route_key('/' + path.relative_to(self.root / 'static').as_posix()))
+        candidate = base
+        number = 2
+        while route_key(f'/publications/{candidate}/') in blocked:
+            candidate = f'{base}-{number}'
+            number += 1
+        return candidate
 
     def get(self, slug: str, kind='people', include_preview=True) -> dict:
         path = self.path(slug, kind)
@@ -139,12 +194,34 @@ class ProfileStore:
                     continue
                 if field.get('options_source') or field.get('options'):
                     field['choices'] = [{'value': v, 'label': labels.get(v, v)} for v in field_options(field, kind, self.root)]
+                if field.get('suggestions_source'):
+                    field['suggestions'] = self.suggestions(kind, field)
                 if 'fields' in field:
                     field['fields'] = prepare(field['fields'])
                 result.append(field)
             return result
         definition['fields'] = prepare(definition['fields'])
         return {'schema': definition, 'defaults': defaults(kind)}
+
+    def suggestions(self, kind, field):
+        if field['suggestions_source'] == 'member_names':
+            suggestions = []
+            for member in self.records('people'):
+                data = self.get(member['slug'], include_preview=False)['data']
+                name = data['name'].strip()
+                aliases = list(dict.fromkeys(alias.strip() for alias in data.get('author_names', [])
+                                             if alias.strip() and alias.strip() != name))
+                suggestions.append({'value': name, 'label': name, 'aliases': aliases, 'member': member['slug']})
+            return suggestions
+        suggestions = {}
+        if field['suggestions_source'] == 'saved_values':
+            for record in self.records(kind):
+                data = self.get(record['slug'], kind, include_preview=False)['data']
+                for value in data.get(field['key'], []):
+                    if value.strip():
+                        suggestions.setdefault(value, value)
+        return [{'value': value, 'label': label} for value, label in
+                sorted(suggestions.items(), key=lambda item: (item[1].casefold(), item[0].casefold()))]
 
     def write(self, path, text):
         path.parent.mkdir(parents=True, exist_ok=True)
@@ -172,14 +249,15 @@ class ProfileStore:
     def save(self, payload: dict) -> dict:
         kind = payload.get('kind', 'people')
         slug = payload.get('slug', '')
-        path = self.path(slug, kind)
+        creating_publication = kind == 'publications' and payload.get('revision') is None
+        if kind not in KINDS:
+            raise ValueError('Unknown content type')
         original_slug = payload.get('original_slug', slug)
         renaming = original_slug != slug
         if renaming and kind != 'people':
             raise ValueError('Only member identifiers can be renamed')
         if renaming and payload.get('confirm_rename') is not True:
             raise ValueError('Confirm the identifier-change warning before saving')
-        source = self.path(original_slug, kind)
         changes = payload.get('data')
         if not isinstance(changes, dict):
             raise ValueError('Expected content fields')
@@ -187,6 +265,12 @@ class ProfileStore:
         if set(changes) - allowed:
             raise ValueError('Unknown editor field')
         with self.lock:
+            if creating_publication:
+                # The title, never a caller-supplied identifier, determines a new page's URL.
+                slug = self.available_publication_identifier(changes.get('title'))
+                original_slug = slug
+            path = self.path(slug, kind)
+            source = self.path(original_slug, kind)
             original = source.read_text(encoding='utf-8') if source.exists() else ''
             if renaming and not original:
                 raise Conflict('The original member no longer exists. Reload the member list before saving.')
@@ -202,6 +286,13 @@ class ProfileStore:
                     changes = changes | {'slug': slug}
                 elif changes.get('title', old.get('title')) != old.get('title') and not old.get('slug') and not old.get('url'):
                     changes = changes | {'url': self.preview(slug, kind)}
+            if kind == 'publications' and original and changes.get('title', old.get('title')) != old.get('title'):
+                canonical = changes.get('url') or self.preview(slug, kind)
+                alias_slug = self.available_publication_identifier(changes['title'], owner=source)
+                alias = f'/publications/{alias_slug}/'
+                aliases = old.get('aliases', [])
+                if route_key(alias) not in {route_key(url) for url in [canonical, *aliases]}:
+                    changes = changes | {'aliases': [*aliases, alias]}
             merged = old | changes
             errors = validate_record(kind, merged, slug, self.root)
             if errors:
@@ -231,7 +322,7 @@ class ProfileStore:
                 renamed = rename_member(self, original_slug, slug, text, original)
                 return {'revision': revision(renamed.pop('text')), 'path': path.relative_to(self.root).as_posix(), **renamed}
             self.write(path, text)
-            return {'revision': revision(text), 'path': path.relative_to(self.root).as_posix()}
+            return {'revision': revision(text), 'path': path.relative_to(self.root).as_posix(), 'slug': slug}
 
     def upload(self, payload):
         category = payload.get('category')
@@ -377,6 +468,10 @@ def main():
     try:
         preview.start()
         print(f'Website editor: http://127.0.0.1:{server.server_port}', flush=True)
+        if preview.process:
+            print(f'Live website preview: http://127.0.0.1:{preview.port}/', flush=True)
+        else:
+            print(preview.status()['message'], flush=True)
         print('The local Hugo preview starts automatically. Ctrl+C stops both the editor and its preview.', flush=True)
         print('Saves changes locally. Preview and submit a pull request when ready.', flush=True)
         server.serve_forever()

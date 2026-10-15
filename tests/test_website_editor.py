@@ -70,7 +70,7 @@ class WebsiteEditorTests(unittest.TestCase):
     def test_create_publication_dataset_and_related_links(self):
         upload = self.upload()
         self.store.save({'kind': 'publications', 'slug': 'sample-paper', 'data': defaults('publications') | {
-            'title': 'A paper', 'authors': ['Jane Doe'], 'year': 2026, 'venue': 'Conference', 'external_url': 'https://example.org/paper', 'abstract': ABSTRACT}, 'body': '\nCompanion experiment notes.\n'})
+            'title': 'Sample Paper', 'authors': ['Jane Doe'], 'year': 2026, 'venue': 'Conference', 'external_url': 'https://example.org/paper', 'abstract': ABSTRACT}, 'body': '\nCompanion experiment notes.\n'})
         self.store.save({'kind': 'data-sets', 'slug': 'sample-data', 'data': defaults('data-sets') | {
             'title': 'Sample data', 'related_publication': 'sample-paper', 'downloads': [{'label': 'CSV', 'url': upload['url']}]}, 'body': '\nReproduction instructions.\n'})
         paper = self.store.get('sample-paper', 'publications')
@@ -85,6 +85,68 @@ class WebsiteEditorTests(unittest.TestCase):
             self.store.save({'kind': 'publications', 'slug': 'sample-paper', 'revision': paper['revision'], 'data': {'title': 'Stale'}})
         with self.assertRaises(ValueError):
             self.store.save({'kind': 'data-sets', 'slug': 'bad-data', 'data': {'title': 'Bad', 'downloads': [{'label': 'Missing', 'url': '/downloads/missing.zip'}]}})
+
+    def test_publication_type_choices_persist_and_reject_unlisted_values(self):
+        self.store.save({'kind': 'publications', 'slug': 'paper', 'data': defaults('publications') | {
+            'title': 'Paper', 'authors': ['Jane Doe'], 'year': 2026, 'venue': 'Conference',
+            'external_url': 'https://example.org/paper'}})
+        field = next(field for field in self.store.schema('publications')['schema']['fields'] if field['key'] == 'publication_type')
+        choices = {choice['value'] for choice in field['choices']}
+        for publication_type in ['Journal Article', "Master's Thesis", 'Preprint', 'Software']:
+            with self.subTest(publication_type=publication_type):
+                self.assertIn(publication_type, choices)
+                record = self.store.get('paper', 'publications')
+                self.store.save({'kind': 'publications', 'slug': 'paper', 'revision': record['revision'],
+                                 'data': {'publication_type': publication_type}})
+                self.assertEqual(self.store.get('paper', 'publications')['data']['publication_type'], publication_type)
+        record = self.store.get('paper', 'publications')
+        for publication_type in ['Conference', 'conference paper', 'Other', '']:
+            with self.subTest(publication_type=publication_type), self.assertRaisesRegex(ValueError, 'publication_type:'):
+                self.store.save({'kind': 'publications', 'slug': 'paper', 'revision': record['revision'],
+                                 'data': {'publication_type': publication_type}})
+        self.assertEqual(self.store.get('paper', 'publications')['revision'], record['revision'])
+
+    def test_author_suggestions_group_variants_by_member_without_restricting_authors(self):
+        self.store.save({'slug': 'jane-doe', 'data': defaults('people') | {
+            'name': 'Jane Doe', 'slug': 'jane-doe', 'author_names': ['J. Doe', 'Jane Doe', ' J. Doe ']}})
+        authors = next(field for field in self.store.schema('publications')['schema']['fields'] if field['key'] == 'authors')
+        self.assertEqual(authors['suggestions'], [
+            {'value': 'Jane Doe', 'label': 'Jane Doe', 'aliases': ['J. Doe'], 'member': 'jane-doe'}])
+        self.assertNotIn('choices', authors)
+        self.store.save({'kind': 'publications', 'slug': 'paper', 'data': defaults('publications') | {
+            'title': 'Paper', 'authors': ['External Author', 'J. Doe'], 'year': 2026,
+            'venue': 'Conference', 'external_url': 'https://example.org/paper'}})
+        self.assertEqual(self.store.get('paper', 'publications')['data']['authors'], ['External Author', 'J. Doe'])
+        member = self.store.get('jane-doe')
+        self.store.save({'slug': 'jane-doe', 'revision': member['revision'], 'data': {'author_names': ['Jane A. Doe']}})
+        authors = next(field for field in self.store.schema('publications')['schema']['fields'] if field['key'] == 'authors')
+        self.assertEqual(authors['suggestions'], [
+            {'value': 'Jane Doe', 'label': 'Jane Doe', 'aliases': ['Jane A. Doe'], 'member': 'jane-doe'}])
+
+    def test_author_suggestions_keep_distinct_members_with_shared_name_variants(self):
+        for slug, name in [('jane-doe', 'Jane Doe'), ('john-doe', 'John Doe')]:
+            self.store.save({'slug': slug, 'data': defaults('people') | {
+                'name': name, 'slug': slug, 'author_names': ['J. Doe']}})
+        authors = next(field for field in self.store.schema('publications')['schema']['fields'] if field['key'] == 'authors')
+        self.assertEqual(authors['suggestions'], [
+            {'value': 'Jane Doe', 'label': 'Jane Doe', 'aliases': ['J. Doe'], 'member': 'jane-doe'},
+            {'value': 'John Doe', 'label': 'John Doe', 'aliases': ['J. Doe'], 'member': 'john-doe'}])
+
+    def test_saved_list_values_are_suggested_without_restricting_new_values(self):
+        self.store.save({'slug': 'jane-doe', 'data': defaults('people') | {
+            'name': 'Jane Doe', 'slug': 'jane-doe', 'interests': ['Quantum Computing', 'Distributed Systems']}})
+        self.store.save({'slug': 'john-doe', 'data': defaults('people') | {
+            'name': 'John Doe', 'slug': 'john-doe', 'interests': ['Quantum Computing']}})
+        fields = {field['key']: field for field in self.store.schema()['schema']['fields']}
+        self.assertEqual(fields['interests']['suggestions'], [
+            {'value': 'Distributed Systems', 'label': 'Distributed Systems'},
+            {'value': 'Quantum Computing', 'label': 'Quantum Computing'}])
+        self.assertNotIn('suggestions', fields['author_names'], 'Do not suggest other members names for this member')
+        self.store.save({'kind': 'publications', 'slug': 'paper', 'data': defaults('publications') | {
+            'title': 'Paper', 'authors': ['Jane Doe'], 'year': 2026, 'venue': 'Conference',
+            'external_url': 'https://example.org/paper', 'tags': ['systems', 'quantum']}})
+        tags = next(field for field in self.store.schema('publications')['schema']['fields'] if field['key'] == 'tags')
+        self.assertEqual([item['value'] for item in tags['suggestions']], ['quantum', 'systems'])
 
     def test_personal_templates_edit_structured_sections_and_upload_assets(self):
         with self.assertRaises(ValueError):
@@ -163,10 +225,19 @@ class WebsiteEditorTests(unittest.TestCase):
                          'data': {'title': 'An updated Fledge title', 'abstract': ''},
                          'body': '\nCompanion material remains available.\n'})
         self.assertEqual(self.store.get('fledge', 'publications')['preview'], existing['preview'])
+        self.assertIn('/publications/an-updated-fledge-title/', self.store.get('fledge', 'publications', include_preview=False)['data']['aliases'])
+        # The legacy URL is occupied even though its filename is only "fledge.md".
+        duplicate = self.store.save({'kind': 'publications', 'data': defaults('publications') | {
+            'title': existing['data']['title'], 'authors': ['Jane Doe'], 'year': 2026,
+            'venue': 'Conference', 'external_url': 'https://example.org/duplicate'}})
+        self.assertEqual(duplicate['slug'], existing['preview'].strip('/').split('/')[-1] + '-2')
         self.store.save({'kind': 'personal', 'slug': 'jane-doe', 'data': defaults('personal') | {'layout': 'structured',
             'primary_link': {'label': 'A paper', 'url': '/publications/sample-paper/'}, 'highlights': [{'title': 'Editor-created highlight', 'description': 'Works'}]}, 'body': '\n## Editor-created page\nHello.\n'})
         result = subprocess.run(['hugo', '--source', str(self.root), '--destination', str(self.root / 'public'), '--cacheDir', str(self.root / 'cache'), '--panicOnWarning'], capture_output=True, text=True)
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        redirect = (self.root / 'public/publications/an-updated-fledge-title/index.html').read_text()
+        self.assertIn('http-equiv="refresh"', redirect)
+        self.assertIn(existing['preview'], redirect)
         self.assertIn('Editor-created highlight', (self.root / 'public/~jane-doe/index.html').read_text())
         self.assertIn('/downloads/', (self.root / 'public/data-sets/sample-data/index.html').read_text())
         paper_html = (self.root / 'public/publications/sample-paper/index.html').read_text()

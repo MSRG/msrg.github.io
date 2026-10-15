@@ -41,7 +41,8 @@ pixi run editor
 ```
 
 Open **http://127.0.0.1:1314** and choose what to edit using the selector at the
-top. The editor starts the local website preview automatically; **Ctrl+C** stops both.
+top. The editor starts the local website preview automatically and prints its link
+in the terminal (usually **http://127.0.0.1:1313/**); **Ctrl+C** stops both.
 
 <img src="docs/editor-dashboard.png" alt="Website editor showing the content selector and editing form" width="600">
 
@@ -52,15 +53,20 @@ top. The editor starts the local website preview automatically; **Ctrl+C** stops
 | Personal Pages | Build a page from a template or preview your custom website. |
 | Datasets and downloads | Add descriptions, related papers, download links, and files. |
 
-Use **Save changes**, then **Open preview in new tab** to see saved edits.
+Use **Create** for a new entry or **Save changes** for an existing entry, then
+**Open preview in new tab** to see saved edits.
 Saving stays local; [submit a pull request](#check-and-submit-your-pull-request)
 to publish. Uploads support up to **20 MB per file** and preserve existing files.
 
 ### Edit your member profile
 
-Choose **Member profiles**, select your name or **Create an entry**, and fill in
+Choose **Member profiles**, select your name or **New entry**, and fill in
 the form. Use **Upload a portrait** for a JPEG, PNG, or WebP photo, and adjust
 the crop alignment if needed.
+
+For specialities and name variants, type an item and press **Enter** or choose
+**Add**. Remove an item with its **×** button. Under **Your name as it appears on
+publications**, add versions of your own name exactly as credited on your papers.
 
 Avoid giving away your personal email address, as bots regularly scrape the web
 for email addresses. Prefer using your university or work email address.
@@ -78,9 +84,21 @@ to share that.
 
 ### Add or edit publications
 
-Choose **Publications**, select a paper or **Create an entry**, and fill in
-the title, year, authors (one per line), venue, paper URL, and publication type.
+Choose **Publications**, select a paper or **New entry**, and fill in
+the title, year, authors, venue, paper URL, and publication type.
+Use **Year** for the paper's publication year.
+Choose **Publication type** from the dropdown. If the correct type is missing,
+contact the site owner to have it added.
+For authors, search website members and their published name variants, or type
+another author's name. Press **Enter** or choose **Add** for each author, in the
+order shown on the paper. Tags and other item lists work the same way; you can
+also paste a list with line breaks.
 Add research areas and related datasets where relevant.
+
+The page identifier is assigned automatically from the original title and cannot
+be edited. If it is already in use, a number is added (for example, `paper-2`).
+Changing the title later keeps the original URL and adds a redirect from a URL
+based on the new title, also numbered if needed. Existing links remain valid.
 
 Use the published paper URL when available. Include full papers, not abstract-only
 conference, poster, or demo entries.
@@ -96,7 +114,8 @@ Use `*text*` for italics, not `\textit{text}` outside an equation.
 Full LaTeX documents and custom packages are not supported.
 Put extra details in **Additional notes**.
 
-The archive shows 100 papers per page; search covers the entire archive.
+The archive shows 100 papers per page. Use the research area buttons to narrow
+the results, or combine them with text search; both cover the entire archive.
 
 ### Create or edit a personal page
 
@@ -136,7 +155,7 @@ template folder or `static/~jane-doe/` custom site; having both fails the build.
 
 ### Add or edit datasets and downloads
 
-Choose **Datasets and downloads**, select an entry or **Create an entry**,
+Choose **Datasets and downloads**, select an entry or **New entry**,
 and add a title, summary, source / creator, and related publication if available.
 Under **Downloads**, add a label and link, or use **Upload a file** beside the
 link field. Save, preview the page, and check each download link.

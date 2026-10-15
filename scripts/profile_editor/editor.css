@@ -26,6 +26,12 @@ fieldset { min-width: 0; border: 1px solid #d4dce8; border-radius: .7rem; paddin
 .template-field { padding: 0; border: 0; background: transparent; }
 .row-actions { display: flex; gap: .5rem; flex-wrap: wrap; }
 .row-actions button:disabled { cursor: default; }
+.item-entry { display: flex; gap: .5rem; align-items: start; }
+.item-entry input { min-width: 0; flex: 1; }
+.items { display: flex; flex-wrap: wrap; gap: .5rem; padding: 0; margin: 0 0 .6rem; list-style: none; }
+.item { display: flex; align-items: center; gap: .25rem; max-width: 100%; margin: 0; padding-left: .7rem; border: 1px solid #c6d2e5; border-radius: .4rem; background: #eaf0f9; }
+.item span { min-width: 0; overflow-wrap: anywhere; }
+.item button { flex-shrink: 0; min-width: 44px; padding: .3rem; border: 0; background: transparent; }
 .help, .note { color: #475569; font-size: .92rem; }
 .help { margin: .3rem 0 .6rem; }
 .checkbox { display: flex; align-items: center; gap: .6rem; min-height: 44px; font-weight: 400; }
@@ -46,6 +52,8 @@ a[aria-disabled=true] { color: #586578; text-decoration: none; cursor: default; 
 .personal-page-status { margin-top: 1rem; padding: .7rem; border: 1px solid #d4dce8; border-radius: .4rem; background: #f3f6fb; }
 .personal-page-status output { display: block; }
 #preview-error-text { white-space: pre-wrap; overflow-wrap: anywhere; }
+#record-aliases h2 { font-size: 1rem; margin: 0 0 .3rem; }
+#record-alias-list { padding-left: 1.4rem; margin: .3rem 0 0; }
 .personal-options { padding: 1rem; background: #eaf0f9; border: 1px solid #c6d2e5; border-radius: .7rem; }
 .personal-options summary { cursor: pointer; font-weight: 600; min-height: 44px; }
 .personal-options details[open] summary { margin-bottom: .6rem; }
