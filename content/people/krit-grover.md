@@ -11,5 +11,8 @@ email = ""
 interests = ["Quantum Optimization", "Quantum Networks"]
 author_names = []
 portrait = "/images/people/krit-grover.jpg"
+homepage="https://kritgrover.netlify.app/"
+github="https://github.com/kritgrover"
+scholar="https://scholar.google.ca/citations?user=Rikg0R0AAAAJ&hl=en&oi=ao"
 linkedin = "https://www.linkedin.com/in/kritgrover/"
 +++
