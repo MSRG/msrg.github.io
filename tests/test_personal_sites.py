@@ -95,6 +95,7 @@ class PersonalSiteTests(unittest.TestCase):
                 self.assertIn("<h1>Thomas Trenty</h1>", html)
                 self.assertIn("<title>Thomas Trenty |", html)
                 self.assertIn("My research.", html)
+                self.assertRegex(html, r'href="?/people/"? aria-label="Back to the MSRG main site"')
                 self.assert_both_websites((self.output / "people/index.html").read_text())
                 if not alumni:
                     self.assert_both_websites((self.output / "research/quantum-computing-systems/index.html").read_text())
