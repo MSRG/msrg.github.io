@@ -33,6 +33,10 @@ Our distributed graph systems target graphs containing billions of vertices
 and edges. We also optimize the training and inference stages of graph neural
 networks.
 
+Our [Root Cause Analysis & AIOps](/research/rca-aiops/) research connects these
+interests with learning-based anomaly detection, LLM agents for failure
+diagnosis, and the reliability of agent executions.
+
 ## Current directions
 
 - Resource allocation and scheduling for distributed training and inference
