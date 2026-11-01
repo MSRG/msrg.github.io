@@ -3,42 +3,29 @@ title = "Distributed Machine Learning"
 layout = "area"
 weight = 20
 accent = "sage"
-question = "How can distributed learning systems become more efficient and scalable?"
-blurb = """At MSRG, we tackle core challenges in distributed deep learning systems. Our research focuses on optimizing training and inference across distributed infrastructure, developing novel approaches for **resource allocation** and **scheduling of training jobs**, and creating **system-level improvements** for **deep learning** and **graph learning** frameworks. We are advancing federated learning for resource-constrained and embedded devices, optimizing performance and communication efficiency in edge computing environments. Through our work, we aim to make distributed deep learning more efficient and accessible, enabling faster training and better resource utilization."""
-# Description aligned with https://msrg.org/research/distributed-machine-learning/
+question = "How can AI help diagnose failures and improve the reliability of distributed systems?"
+blurb = """MSRG develops **AI for IT operations (AIOps)** to help engineers detect anomalies, identify root causes, and respond to incidents in distributed systems. We combine **metrics, logs, and traces**, service dependency graphs, and LLM agents to ground diagnosis and repair in operational evidence. Our research includes the reliability of agentic systems and realistic benchmarks for evaluating diagnosis and incident response. These efforts build on our broader work in distributed AI and machine learning, including scalable training, federated learning, and graph processing."""
 +++
 
-MSRG studies performance optimization, privacy-preserving and federated
-learning, and graph processing as connected challenges in distributed machine
-learning.
+Our [Root Cause Analysis & AIOps](/research/rca-aiops/) research investigates how
+learning-based methods can help operate complex distributed systems reliably.
 
-## Distributed Deep Learning
+## AIOps and incident response
 
-Large training and inference workloads need substantial computing resources
-and distributed infrastructure. We investigate how resource allocation, job
-scheduling, and optimizations within learning systems can improve performance
-and reduce costs.
+We study anomaly detection, graph-guided root cause analysis, and
+telemetry-grounded repair. By connecting operational signals to service
+dependencies, we aim to produce diagnoses and response recommendations that
+engineers can inspect and act on.
 
-Our federated learning research also addresses embedded devices with limited
-resources. We work across hardware-level optimizations and distributed learning
-algorithms to improve efficiency in edge deployments.
-
-## Graph Processing & Learning
-
-Graph workloads combine irregular memory access, interdependent computations,
-and large datasets. We develop partitioning and sampling methods alongside
-system optimizations to make these workloads faster.
-
-Our distributed graph systems target graphs containing billions of vertices
-and edges. We also optimize the training and inference stages of graph neural
-networks.
-
-Our [Root Cause Analysis & AIOps](/research/rca-aiops/) research connects these
-interests with learning-based anomaly detection, LLM agents for failure
-diagnosis, and the reliability of agent executions.
+AI agents also introduce new operational failure modes. Our benchmarks study
+fault detection and localization in agent executions, as well as diagnosis and
+repair in live cloud-native environments.
 
 ## Current directions
 
-- Resource allocation and scheduling for distributed training and inference
-- Privacy-preserving and federated learning on embedded and edge devices
-- Graph partitioning, sampling, and scalable graph neural network execution
+- Anomaly detection from metrics, logs, and traces
+- Graph-guided diagnosis and telemetry-grounded repair
+- Reliable AI agents and realistic incident-response benchmarks
+
+We also continue research in distributed AI and machine learning, including
+efficient training and inference, federated learning, and scalable graph processing.

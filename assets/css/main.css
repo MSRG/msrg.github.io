@@ -1222,6 +1222,13 @@ button:disabled { cursor: default; opacity: 0.6; }
   font-size: 1.9rem;
 }
 
+.research-support-logos { display: flex; flex-wrap: wrap; align-items: center; gap: 2rem; margin-block: 1rem; }
+.research-support-logos img { display: block; object-fit: contain; }
+.research-diagrams { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr)); gap: 2rem; margin-block: 2rem; }
+.research-diagrams figure { margin: 0 auto; max-width: 25rem; }
+.research-diagrams img { display: block; width: 100%; height: auto; }
+.research-diagrams figcaption { color: var(--muted); font-size: 0.9rem; margin-top: 0.75rem; }
+
 /* Long display equations scroll within their panel, including on phones. */
 .math-block {
   max-width: 100%;

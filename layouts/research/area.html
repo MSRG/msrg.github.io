@@ -12,11 +12,22 @@
         <h1>{{ .Title }}</h1>
         {{ with .Params.question }}<p class="page-question">{{ . }}</p>{{ end }}
         <div class="page-intro">{{ .Params.blurb | markdownify }}</div>
+        {{ with .Params.acknowledgement }}
+          <p>{{ . }}</p>
+          <div class="research-support-logos">
+            {{ range $.Params.supporters }}
+              <a href="{{ .url }}" target="_blank" rel="noopener noreferrer"><img src="{{ .logo | relURL }}" alt="{{ .name }}" width="{{ .width }}" height="{{ .height }}"></a>
+            {{ end }}
+          </div>
+        {{ end }}
         <p class="page-summary">
           {{ len $people }} {{ if eq (len $people) 1 }}researcher{{ else }}researchers{{ end }}
           · {{ len $publications }} {{ if eq (len $publications) 1 }}publication{{ else }}publications{{ end }}
           · {{ len $datasets }} {{ if eq (len $datasets) 1 }}data set{{ else }}data sets{{ end }}
         </p>
+        {{ if .Params.list_all_publications }}
+          <p><a href="#outcomes">Outcomes</a> · <a href="#people">People</a> · <a href="#publications">Publications</a></p>
+        {{ end }}
       </div>
     </section>
 
@@ -28,26 +39,37 @@
       </div>
     </section>
 
-    <section class="page-section page-section-alt research-team">
+    <section id="people" class="page-section page-section-alt research-team">
       <div class="site-shell">
-
+        {{ if .Params.list_all_publications }}<div class="section-heading"><h2>People</h2></div>{{ end }}
         {{ partial "people/group-cards.html" $people }}
 
       </div>
     </section>
 
-    <section class="page-section scroll-section">
+    <section id="publications" class="page-section scroll-section">
       <div class="site-shell">
         <div class="section-heading">
           <h2>Publications</h2>
         </div>
         <div class="stack">
           {{ if $publications }}
-            {{ range first 6 (sort $publications "Params.year" "desc") }}
+            {{ $listed := first 6 (sort $publications "Params.year" "desc") }}
+            {{ if .Params.list_all_publications }}{{ $listed = sort $publications "Params.year" "desc" }}{{ end }}
+            {{ range $listed }}
+              {{ if $.Params.list_all_publications }}
+              <article class="list-link-card">
+                <strong><a href="{{ .RelPermalink }}">{{ .Title }}</a></strong>
+                <span>{{ partial "publication-authors.html" (dict "authors" .Params.authors) }}</span>
+                <span>{{ .Params.venue }}, {{ .Params.year }}</span>
+                {{ with .Params.external_url }}<span><a href="{{ . }}" target="_blank" rel="noopener noreferrer">Read paper</a></span>{{ end }}
+              </article>
+              {{ else }}
               <a class="list-link-card" href="{{ .RelPermalink }}">
                 <strong>{{ .Title }}</strong>
                 <span>{{ .Params.venue }}, {{ .Params.year }}</span>
               </a>
+              {{ end }}
             {{ end }}
           {{ else }}
             <p class="muted">No publications are listed for this research area yet.</p>
