@@ -99,7 +99,7 @@ This research connects our work in
 
 - **[AgentChaosBench](https://github.com/kevinzck8k/agentic-fault-diagnosis):** benchmark and diagnosis tools for faults in agentic executions.
 - **[FAME](https://github.com/HuanchiW95/FAME-Failure-Aware-Mixture-of-Experts):** implementation for message-level log anomaly detection.
-- **[GALA evaluation materials](https://github.com/EvanTian233/GALA-for-RCA):** evaluation resources; the core implementation is not currently public.
+- **[GALA evaluation materials](https://github.com/EvanTian233/GALA-for-RCA):** human-annotated evaluation data, sample incident summaries and remediation recommendations, and third-party baselines for microservice root cause analysis.
 - **[GF-Bench](https://github.com/cuiboyuan/nccl_log_rca_bench):** fault injection and log data for distributed GPU workloads.
 - **[SREGym](https://github.com/SREGym/SREGym):** live environments and fault scenarios for evaluating SRE agents.
 - **[SRE-Marathon](https://bigbigbai.github.io/sre-marathon-leaderboard/):** project website and leaderboard, with [website source on GitHub](https://github.com/bigbigbai/sre-marathon-leaderboard).
