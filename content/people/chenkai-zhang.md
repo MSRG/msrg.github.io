@@ -9,6 +9,6 @@ email = "zhangchenkai.zhang@mail.utoronto.ca"
 interests = ["AI Agent Reliability", "Fault Diagnosis"]
 author_names = ["Chenkai Zhang"]
 portrait = ""
-research = ["distributed-machine-learning"]
+research = ["distributed-machine-learning", "rca-aiops"]
 linkedin = "https://www.linkedin.com/in/chenkaizhang1/"
 +++

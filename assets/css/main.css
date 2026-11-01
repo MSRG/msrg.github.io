@@ -12,6 +12,7 @@
   --accent: #86a7d8;
   --copper: #9e6339;
   --sage: #54724b;
+  --teal: #23746e;
   --shadow: 0 18px 42px rgba(13, 31, 60, 0.08);
   --shadow-soft: 0 10px 24px rgba(13, 31, 60, 0.06);
   --radius: 1.35rem;
@@ -1031,7 +1032,7 @@ a.chip {
 }
 
 .card-grid-wide {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .accent-copper {
@@ -1044,6 +1045,10 @@ a.chip {
 
 .accent-navy {
   border-top: 4px solid var(--primary);
+}
+
+.accent-teal {
+  border-top: 4px solid var(--teal);
 }
 
 .person-card {
@@ -1216,6 +1221,13 @@ button:disabled { cursor: default; opacity: 0.6; }
   margin-top: 1.9rem;
   font-size: 1.9rem;
 }
+
+.research-support-logos { display: flex; flex-wrap: wrap; align-items: center; gap: 2rem; margin-block: 1rem; }
+.research-support-logos img { display: block; object-fit: contain; }
+.research-diagrams { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr)); gap: 2rem; margin-block: 2rem; }
+.research-diagrams figure { margin: 0 auto; max-width: 25rem; }
+.research-diagrams img { display: block; width: 100%; height: auto; }
+.research-diagrams figcaption { color: var(--muted); font-size: 0.9rem; margin-top: 0.75rem; }
 
 /* Long display equations scroll within their panel, including on phones. */
 .math-block {

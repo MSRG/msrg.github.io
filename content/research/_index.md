@@ -1,5 +1,5 @@
 +++
 title = "Research"
 layout = "overview"
-summary = "Three active research themes connect MSRG's work in systems, AI infrastructure, and quantum computing."
+summary = "Four active research themes connect MSRG's work in data management, distributed machine learning, quantum computing, and reliable systems."
 +++

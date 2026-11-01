@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 616" role="img" aria-labelledby="title desc">
+<title id="title">GALA+: technical workflow</title><desc id="desc">Telemetry and service dependencies seed hypotheses. Graph-guided LLM investigation gathers local evidence and refines the diagnosis. Outputs are assessed with SURE-Score.</desc>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#426875"/></marker></defs>
+<rect width="100%" height="100%" rx="16" fill="#f5f8fa"/>
+<text x="200" y="32" text-anchor="middle" font-family="Arial,sans-serif" font-size="21" font-weight="700" fill="#1e3765">GALA+: technical workflow</text>
+<rect x="20" y="52" width="360" height="88" rx="10" fill="white" stroke="#b9cbd1"/>
+<text x="200" y="79" text-anchor="middle" font-family="Arial,sans-serif" font-size="20" font-weight="700" fill="#183443">Operational evidence</text>
+<text x="200" y="103" text-anchor="middle" font-family="Arial,sans-serif" font-size="18" font-weight="400" fill="#183443">Metrics, logs, and traces</text>
+<text x="200" y="126" text-anchor="middle" font-family="Arial,sans-serif" font-size="18" font-weight="400" fill="#183443">plus service dependencies</text>
+<path d="M200 141V162" stroke="#426875" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="20" y="164" width="360" height="88" rx="10" fill="white" stroke="#b9cbd1"/>
+<text x="200" y="191" text-anchor="middle" font-family="Arial,sans-serif" font-size="20" font-weight="700" fill="#183443">Initial hypotheses</text>
+<text x="200" y="215" text-anchor="middle" font-family="Arial,sans-serif" font-size="18" font-weight="400" fill="#183443">Combine telemetry signals</text>
+<text x="200" y="238" text-anchor="middle" font-family="Arial,sans-serif" font-size="18" font-weight="400" fill="#183443">with STRIX structural scoring</text>
+<path d="M200 253V274" stroke="#426875" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="20" y="276" width="360" height="88" rx="10" fill="white" stroke="#b9cbd1"/>
+<text x="200" y="303" text-anchor="middle" font-family="Arial,sans-serif" font-size="20" font-weight="700" fill="#183443">Graph-guided investigation</text>
+<text x="200" y="327" text-anchor="middle" font-family="Arial,sans-serif" font-size="18" font-weight="400" fill="#183443">Gather local evidence</text>
+<text x="200" y="350" text-anchor="middle" font-family="Arial,sans-serif" font-size="18" font-weight="400" fill="#183443">Refine hypotheses with LLM agents</text>
+<path d="M200 365V386" stroke="#426875" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="20" y="388" width="360" height="88" rx="10" fill="white" stroke="#b9cbd1"/>
+<text x="200" y="415" text-anchor="middle" font-family="Arial,sans-serif" font-size="20" font-weight="700" fill="#183443">Incident response outputs</text>
+<text x="200" y="439" text-anchor="middle" font-family="Arial,sans-serif" font-size="18" font-weight="400" fill="#183443">Ranked causes and summaries</text>
+<text x="200" y="462" text-anchor="middle" font-family="Arial,sans-serif" font-size="18" font-weight="400" fill="#183443">Stratified action recommendations</text>
+<path d="M200 477V498" stroke="#426875" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="20" y="500" width="360" height="88" rx="10" fill="white" stroke="#b9cbd1"/>
+<text x="200" y="527" text-anchor="middle" font-family="Arial,sans-serif" font-size="20" font-weight="700" fill="#183443">Quality assessment</text>
+<text x="200" y="551" text-anchor="middle" font-family="Arial,sans-serif" font-size="18" font-weight="400" fill="#183443">SURE-Score and human review</text>
+<text x="200" y="574" text-anchor="middle" font-family="Arial,sans-serif" font-size="18" font-weight="400" fill="#183443">Beyond text similarity</text>
+</svg>
