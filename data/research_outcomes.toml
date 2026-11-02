@@ -1,0 +1,58 @@
+# Public artifacts are attributed by the linked papers or official author pages.
+# Keep citation metadata in content/publications; these entries describe outputs.
+
+[[items]]
+id = "sregym"
+title = "SREGym"
+url = "https://github.com/SREGym/SREGym"
+summary = "A live cloud-native benchmark for evaluating how SRE agents diagnose and mitigate injected operational failures."
+research = ["distributed-machine-learning"]
+publication = "sregym-a-live-benchmark-for-ai-sre-agents-with-high-fidelity-failure-scenarios"
+# Attribution: https://arxiv.org/abs/2605.07161 and https://tianyin.github.io/pub.html
+
+[[items]]
+id = "agentchaosbench"
+title = "AgentChaosBench"
+url = "https://github.com/kevinzck8k/agentic-fault-diagnosis"
+summary = "Fault-detection and localization evaluation tools with 275 execution traces from five agentic applications."
+research = ["distributed-machine-learning"]
+publication = "when-agentic-executions-fail-detecting-and-localizing-runtime-faults-from-telemetry"
+# Attribution: https://arxiv.org/abs/2608.14680 and the authors' project links.
+
+[[items]]
+id = "fame"
+title = "FAME"
+url = "https://github.com/HuanchiW95/FAME-Failure-Aware-Mixture-of-Experts"
+summary = "Message-level log anomaly detection using offline failure-domain grouping and a lightweight router with specialized experts."
+research = ["distributed-machine-learning"]
+publication = "fame-failure-aware-mixture-of-experts-for-message-level-log-anomaly-detection"
+# Attribution: repository URL in the paper, https://arxiv.org/abs/2605.22779
+
+[[items]]
+id = "gala-evaluation"
+title = "GALA evaluation artifacts"
+url = "https://github.com/EvanTian233/GALA-for-RCA"
+summary = "Annotated incident reports, example outputs, a supplementary technical report, and third-party baseline frameworks. The core GALA implementation is not publicly released."
+research = ["distributed-machine-learning"]
+publication = "gala-graph-augmented-llm-agents-for-root-cause-analysis-and-incident-response-in-microservices"
+# Attribution: https://arxiv.org/abs/2608.08968; repository README describes release scope.
+
+[[items]]
+id = "gf-bench"
+title = "GF-Bench artifacts"
+url = "https://github.com/cuiboyuan/nccl_log_rca_bench"
+summary = "Tools for generating multi-GPU failures, collecting NCCL logs, and evaluating anomaly detection, with sample data and scripts to reproduce the experiments."
+research = ["distributed-machine-learning"]
+publication = "when-log-parsing-removes-what-matters-detecting-failures-in-distributed-gpu-workloads"
+# Attribution: data availability statement, https://arxiv.org/abs/2610.14009
+# No top-level repository license was present when checked on 2026-10-22.
+
+[[items]]
+id = "sre-marathon"
+title = "SRE-Marathon project website and leaderboard"
+url = "https://bigbigbai.github.io/sre-marathon-leaderboard/"
+summary = "Project website and paper-reported leaderboard for continuous, change-driven SRE evaluation. Its GitHub repository contains the website source, not the benchmark implementation."
+research = ["distributed-machine-learning"]
+publication = "sre-marathon-a-continuous-change-driven-benchmark-for-autonomous-site-reliability-agents"
+# Attribution: https://arxiv.org/abs/2609.33023
+# Website source and scope: https://github.com/bigbigbai/sre-marathon-leaderboard/blob/main/README.md

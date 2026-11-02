@@ -73,6 +73,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const emptyState = document.querySelector("[data-publication-empty]");
     const controls = document.querySelector("[data-publication-controls]");
     const researchButtons = [...document.querySelectorAll("[data-publication-research]")];
+    const researchAliases = new Map(researchButtons.flatMap((button) =>
+      (button.dataset.publicationResearchAliases || "").split(",").filter(Boolean)
+        .map((alias) => [alias, button.dataset.publicationResearch])));
     const resultCount = document.querySelector("[data-publication-count]");
     const clearButton = document.querySelector("[data-publication-clear]");
     const normalize = (text) => text.normalize("NFD").replace(/\p{M}/gu, "").replace(/[‘’]/g, "'").toLowerCase();
@@ -197,8 +200,13 @@ document.addEventListener("DOMContentLoaded", () => {
       const url = new URL(location.href);
       const params = url.searchParams;
       searchInput.value = params.get("q") || params.get("author") || "";
-      const area = params.get("research");
+      const requestedArea = params.get("research");
+      const area = researchAliases.get(requestedArea) || requestedArea;
       activeResearch = researchButtons.some((button) => button.dataset.publicationResearch === area) ? area : "all";
+      if (requestedArea !== area) {
+        url.searchParams.set("research", area);
+        history.replaceState(null, "", url);
+      }
       const page = params.get("page") || url.pathname.match(/\/page\/(\d+)\//)?.[1] || "1";
       currentPage = /^[1-9]\d*$/.test(page) && Number.isSafeInteger(Number(page)) ? Number(page) : 1;
       const filtered = searchInput.value || activeResearch !== "all";

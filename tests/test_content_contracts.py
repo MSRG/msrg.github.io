@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import re
 import sys
+import tomllib
 import unittest
 from pathlib import Path
 from urllib.parse import urlsplit
@@ -74,6 +75,8 @@ class ContentContractTests(unittest.TestCase):
             with self.subTest(path=path):
                 for area in data.get("research", []):
                     self.assertIn(area, areas)
+                self.assertEqual(len(data.get("research", [])), len(set(data.get("research", []))),
+                                 "A record must not repeat the consolidated research area")
                 for dataset in data.get("related_datasets", []):
                     self.assertIn(dataset, datasets)
                 if data.get("related_publication"):
@@ -89,6 +92,26 @@ class ContentContractTests(unittest.TestCase):
                     else:
                         self.assertIn(parsed.scheme, {"http", "https"})
                         self.assertTrue(parsed.netloc)
+
+    def test_research_outcomes_reference_master_records(self) -> None:
+        areas = {path.parent.name: load_toml_front_matter(path)
+                 for path in (ROOT / "content/research").glob("*/_index.md")}
+        publications = {path.stem for path, _ in iter_publication_pages()}
+        legacy_ids = [alias for data in areas.values() for alias in data.get("legacy_research_ids", [])]
+        self.assertEqual(len(legacy_ids), len(set(legacy_ids)))
+        self.assertFalse(set(legacy_ids).intersection(areas), "A legacy filter must not be a separate research area")
+        outcomes = tomllib.loads((ROOT / "data/research_outcomes.toml").read_text())["items"]
+        self.assertEqual(len({item["id"] for item in outcomes}), len(outcomes))
+        for item in outcomes:
+            with self.subTest(outcome=item["id"]):
+                self.assertTrue(item["title"].strip())
+                self.assertTrue(item["summary"].strip())
+                self.assertTrue(item["research"])
+                self.assertTrue(set(item["research"]).issubset(areas))
+                self.assertIn(item["publication"], publications)
+                parsed = urlsplit(item["url"])
+                self.assertEqual(parsed.scheme, "https")
+                self.assertTrue(parsed.netloc)
 
 
 if __name__ == "__main__":

@@ -173,11 +173,20 @@ let browser;
   await search.fill('Grier 2025'); await waitForSearch(); assert.equal(await visible.count(), 1);
   await search.fill('Woisetschlager'); await waitForSearch(); assert(await visible.count() > 0);
   await search.fill('Michael Dang’ana'); await waitForSearch(); assert(await visible.count() > 0);
+  for (const [formerTitle, slug] of [
+    ['When Agentic Executions Fail: Detecting and Localizing Runtime Faults from Telemetry', 'when-agentic-executions-fail-detecting-and-localizing-runtime-faults-from-telemetry'],
+    ['GALA: Can Graph-Augmented Large Language Model Agentic Workflows Elevate Root Cause Analysis?', 'gala-graph-augmented-llm-agents-for-root-cause-analysis-and-incident-response-in-microservices'],
+  ]) {
+    await search.fill(formerTitle); await waitForSearch();
+    assert.equal(await visible.count(), 1, 'The full former title must find its consolidated publication');
+    assert.equal(await visible.locator('h2 a').getAttribute('href'), '/publications/' + slug + '/');
+  }
   await search.fill('no-result-xyz'); await waitForSearch(); assert.equal(await visible.count(), 0);
   assert(await page.locator('[data-publication-empty]').isVisible());
   await page.locator('[data-publication-clear]').click(); await waitForSearch(); assert.equal(await visible.count(), pageCount);
   const publicationIndex = JSON.parse(fs.readFileSync(path.join(root, 'publications/index.json'), 'utf8'));
   const researchButtons = page.getByRole('group', { name: 'Research area', exact: true }).getByRole('button');
+  assert.equal(await researchButtons.count(), 4, 'One All button and exactly three research areas');
   assert.equal(await page.locator('select[data-publication-research], [data-publication-tag]').count(), 0);
   for (const button of await researchButtons.all()) {
     await button.click();
@@ -213,6 +222,65 @@ let browser;
   await page.getByRole('link', { name: 'Browse all publications in this area' }).click();
   await waitForSearch();
   assert.equal(await visible.count(), quantumCount);
+  const aiopsRoute = '/research/distributed-machine-learning/';
+  const aiopsPublications = publicationIndex.filter(record => record.research.includes('distributed-machine-learning'));
+  for (const route of ['/', '/research/']) {
+    await page.goto(base + route);
+    const themeLinks = page.locator('.card-grid-wide .card-readmore');
+    assert.equal(await themeLinks.count(), 3, 'Exactly three research areas');
+    const areaURLs = await themeLinks.evaluateAll(links => links.map(link => link.getAttribute('href')).sort());
+    const menuURLs = await page.locator('#site-nav .nav-submenu a[href^="/research/"]').evaluateAll(links => links.map(link => link.getAttribute('href')).sort());
+    assert.deepEqual(menuURLs, areaURLs, 'Every research area must be reachable from the header');
+    assert.deepEqual(await page.locator('.site-footer .footer-list').first().locator('a').evaluateAll(links => links.map(link => link.getAttribute('href')).sort()), areaURLs);
+  }
+  for (const width of [1440, 390, 320]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto(base + aiopsRoute);
+    assert.equal(await page.locator('h1').textContent(), 'Root Cause Analysis & AIOps');
+    assert.deepEqual(await page.locator('.research-area > section .section-heading h2').allTextContents(),
+      ['Research outcomes', 'Publications', 'Researchers in this area']);
+    assert.deepEqual(await page.locator('#publications .list-card h3 a').evaluateAll(links => links.map(link => link.getAttribute('href'))),
+      aiopsPublications.map(record => record.url), 'The unified page must show all matching master references exactly once');
+    assert.equal(await page.locator('#outcomes .card').count(), 6);
+    assert.equal(await page.locator('.research-support-logos img').count(), 2);
+    assert.equal(await page.locator('.research-diagrams img').count(), 2);
+    assert(await page.locator('.page-hero').textContent().then(text => text.includes('grant ALLRP614128-25')));
+    assert(await page.getByRole('link', { name: 'View the full MSRG team', exact: true }).isVisible());
+    assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1), false);
+    if (width !== 320) {
+      await page.screenshot({ path: path.join(output, 'aiops-' + width + '.png') });
+      for (const section of ['.research-diagrams', '#outcomes']) {
+        await page.locator(section).screenshot({ path: path.join(output, 'aiops-' + section.replace(/^[.#]/, '') + '-' + width + '.png'),
+          style: '.site-header { visibility: hidden !important; }' });
+      }
+    }
+  }
+  // Hugo aliases can use the production origin. Local previews use a relative baseURL.
+  const alias = fs.readFileSync(path.join(root, 'research/rca-aiops/index.html'), 'utf8');
+  assert.match(alias, /http-equiv=["']?refresh/i);
+  const aliasTarget = alias.match(/content=["']?[^>]*?url=([^"' >]+)/i)?.[1];
+  assert.equal(new URL(aliasTarget, base).pathname, aiopsRoute, 'The old RCA page must redirect to the single area');
+  if (new URL(aliasTarget, base).origin === new URL(base).origin) {
+    await page.goto(base + '/research/rca-aiops/');
+    await page.waitForURL(base + aiopsRoute);
+  }
+  for (const research of ['rca-aiops', 'distributed-machine-learning']) {
+    await page.goto(base + '/publications/?research=' + research); await waitForSearch();
+    assert.equal(new URL(page.url()).searchParams.get('research'), 'distributed-machine-learning');
+    assert.deepEqual(await visible.locator('h2 a').evaluateAll(links => links.map(link => link.getAttribute('href'))),
+      aiopsPublications.map(record => record.url), 'Old and new archive links must select the same combined area');
+  }
+  await page.goto(base + '/publications/?research=rca-aiops&q=GALA&page=1'); await waitForSearch();
+  assert.equal(new URL(page.url()).searchParams.get('q'), 'GALA');
+  assert.equal(new URL(page.url()).searchParams.get('page'), '1');
+  const oldQueryMatches = await visible.locator('h2 a').allTextContents();
+  assert(oldQueryMatches.length > 0);
+  await page.goto(base + '/publications/?research=quantum-computing-systems'); await waitForSearch();
+  await page.goBack(); await waitForSearch();
+  assert.deepEqual(await visible.locator('h2 a').allTextContents(), oldQueryMatches, 'Back must restore the canonicalized legacy query');
+  await page.reload(); await waitForSearch();
+  assert.deepEqual(await visible.locator('h2 a').allTextContents(), oldQueryMatches);
+  await page.setViewportSize({ width: 390, height: 667 });
   await page.goto(base + '/people/');
   assert.equal(await page.locator('.person-card h3 a, .alumni-list li > span:first-child a').count(), 0, 'Member names must be plain text');
   // Snap at group starts; oversized groups must not create bottom-edge stops.
@@ -315,7 +383,7 @@ let browser;
   await page.keyboard.type('msrg', { delay: 90 });
   assert.equal(await page.locator('[data-msrg-rounds]').textContent(), '2', 'Hardware keyboard must complete a round');
 
-  for (const route of ['/', '/people/', '/publications/', '/research/quantum-computing-systems/', '/data-sets/begen/', '/~thomas-trenty/', '/data-sets/']) {
+  for (const route of ['/', '/people/', '/publications/', '/research/quantum-computing-systems/', '/research/distributed-machine-learning/', '/data-sets/begen/', '/~thomas-trenty/', '/data-sets/']) {
     await page.goto(base + route);
     await page.addScriptTag({ path: require.resolve('axe-core/axe.min.js') });
     const results = await page.evaluate(async () => axe.run(document, { runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21aa', 'best-practice'] } }));

@@ -4,8 +4,11 @@ Checked 2026-11-01. People and portraits come from `content/people/` through
 the same roster and card partials as Quantum Computing Systems. Publications
 come from `content/publications/`; the AIOps page displays all matching records.
 The acknowledgement text and grant number were supplied by the project team.
-The page retains the shared research layout, with People before Publications,
-as requested by the maintainer.
+The consolidated page uses the shared research layout, with Outcomes followed
+by Publications and then People, as requested in Arno's email. The former RCA
+page redirects to the refocused Distributed Machine Learning area. Existing
+RCA research tags were folded into its stable `distributed-machine-learning`
+identifier without adding unrelated members or papers.
 
 ## Yuanchen Gao
 

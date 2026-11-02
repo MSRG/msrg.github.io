@@ -4,7 +4,7 @@ year = 2026
 authors = ["Yifang Tian", "Yingjian Bai", "Yifeng He", "Zichun Chong", "Yuanchen Gao", "Yiran Li", "Hans-Arno Jacobsen"]
 venue = "arXiv"
 publication_type = "ArXiv Preprint"
-research = ["distributed-machine-learning", "rca-aiops"]
+research = ["distributed-machine-learning"]
 external_url = "https://arxiv.org/abs/2609.33023"
 +++
 

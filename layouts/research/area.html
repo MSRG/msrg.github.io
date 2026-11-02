@@ -3,7 +3,10 @@
   {{ $roster := partialCached "people/roster.html" site }}
   {{ $people := where $roster.current "Params.research" "intersect" (slice $slug) }}
   {{ $publications := where (site.GetPage "/publications").RegularPages "Params.research" "intersect" (slice $slug) }}
+  {{ $listedPublications := sort $publications "Params.year" "desc" }}
+  {{ if not .Params.list_all_publications }}{{ $listedPublications = first 6 $listedPublications }}{{ end }}
   {{ $datasets := where (site.GetPage "/data-sets").RegularPages "Params.research" "intersect" (slice $slug) }}
+  {{ $outcomes := where (hugo.Data.research_outcomes.items | default slice) "research" "intersect" (slice $slug) }}
 
   <article class="research-area">
     <section class="page-hero scroll-section">
@@ -21,12 +24,12 @@
           </div>
         {{ end }}
         <p class="page-summary">
-          {{ len $people }} {{ if eq (len $people) 1 }}researcher{{ else }}researchers{{ end }}
+          {{ len $people }} {{ if eq (len $people) 1 }}researcher{{ else }}researchers{{ end }} in this area
           · {{ len $publications }} {{ if eq (len $publications) 1 }}publication{{ else }}publications{{ end }}
           · {{ len $datasets }} {{ if eq (len $datasets) 1 }}data set{{ else }}data sets{{ end }}
         </p>
         {{ if .Params.list_all_publications }}
-          <p><a href="#outcomes">Outcomes</a> · <a href="#people">People</a> · <a href="#publications">Publications</a></p>
+          <p><a href="#outcomes">Outcomes</a> · <a href="#publications">Publications</a> · <a href="#people">People</a></p>
         {{ end }}
       </div>
     </section>
@@ -39,53 +42,22 @@
       </div>
     </section>
 
-    <section id="people" class="page-section page-section-alt research-team">
-      <div class="site-shell">
-        {{ if .Params.list_all_publications }}<div class="section-heading"><h2>People</h2></div>{{ end }}
-        {{ partial "people/group-cards.html" $people }}
-
-      </div>
-    </section>
-
-    <section id="publications" class="page-section scroll-section">
+    {{ if or $outcomes $datasets }}
+    <section id="outcomes" class="page-section page-section-alt scroll-section">
       <div class="site-shell">
         <div class="section-heading">
-          <h2>Publications</h2>
-        </div>
-        <div class="stack">
-          {{ if $publications }}
-            {{ $listed := first 6 (sort $publications "Params.year" "desc") }}
-            {{ if .Params.list_all_publications }}{{ $listed = sort $publications "Params.year" "desc" }}{{ end }}
-            {{ range $listed }}
-              {{ if $.Params.list_all_publications }}
-              <article class="list-link-card">
-                <strong><a href="{{ .RelPermalink }}">{{ .Title }}</a></strong>
-                <span>{{ partial "publication-authors.html" (dict "authors" .Params.authors) }}</span>
-                <span>{{ .Params.venue }}, {{ .Params.year }}</span>
-                {{ with .Params.external_url }}<span><a href="{{ . }}" target="_blank" rel="noopener noreferrer">Read paper</a></span>{{ end }}
-              </article>
-              {{ else }}
-              <a class="list-link-card" href="{{ .RelPermalink }}">
-                <strong>{{ .Title }}</strong>
-                <span>{{ .Params.venue }}, {{ .Params.year }}</span>
-              </a>
-              {{ end }}
-            {{ end }}
-          {{ else }}
-            <p class="muted">No publications are listed for this research area yet.</p>
-          {{ end }}
-        </div>
-        <p class="content-actions"><a class="button" href="{{ printf "%s?%s" ("/publications/" | relURL) (querify "research" $slug) }}">Browse all publications in this area</a></p>
-      </div>
-    </section>
-
-    {{ if $datasets }}
-    <section class="page-section page-section-alt scroll-section">
-      <div class="site-shell">
-        <div class="section-heading">
-          <h2>Data sets</h2>
+          <h2>Research outcomes</h2>
         </div>
         <div class="card-grid">
+          {{ range $outcomes }}
+            <article class="card">
+              <h3><a href="{{ .url }}">{{ .title }}</a></h3>
+              <p>{{ .summary }}</p>
+              {{ with site.GetPage (printf "/publications/%s" .publication) }}
+                <p class="content-actions"><a href="{{ .RelPermalink }}">Related publication</a></p>
+              {{ end }}
+            </article>
+          {{ end }}
           {{ range sort $datasets "Title" }}
             <article class="card">
               <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
@@ -96,5 +68,44 @@
       </div>
     </section>
     {{ end }}
+
+    <section id="publications" class="page-section scroll-section">
+      <div class="site-shell">
+        <div class="section-heading">
+          <h2>{{ if lt (len $listedPublications) (len $publications) }}Recent publications{{ else }}Publications{{ end }}</h2>
+          {{ with .Params.publication_blurb }}<p>{{ . }}</p>{{ end }}
+        </div>
+        <div class="stack">
+          {{ if $publications }}
+            {{ range $listedPublications }}
+              <article class="list-card">
+                <p class="muted">{{ partial "publication-authors.html" (dict "authors" .Params.authors) }}</p>
+                <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+                <p>{{ .Params.venue }}, {{ .Params.year }}</p>
+                {{ with .Params.external_url }}
+                  <p class="content-actions"><a href="{{ . }}" target="_blank" rel="noopener noreferrer">Read paper</a></p>
+                {{ end }}
+              </article>
+            {{ end }}
+          {{ else }}
+            <p class="muted">No publications are listed for this research area yet.</p>
+          {{ end }}
+        </div>
+        <p class="content-actions"><a class="button" href="{{ printf "%s?%s" ("/publications/" | relURL) (querify "research" $slug) }}">Browse all publications in this area</a></p>
+      </div>
+    </section>
+
+    <section id="people" class="page-section page-section-alt research-team">
+      <div class="site-shell">
+        <div class="section-heading">
+          <h2>Researchers in this area</h2>
+          <p>{{ with .Params.team_blurb }}{{ . }}{{ else }}Current and visiting MSRG members associated with {{ .Title }} are shown below.{{ end }}
+            <a href="{{ "/people/" | relURL }}">View the full MSRG team</a>.</p>
+        </div>
+
+        {{ partial "people/group-cards.html" $people }}
+
+      </div>
+    </section>
   </article>
 {{ end }}

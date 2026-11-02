@@ -168,9 +168,27 @@ Link to an external repository for datasets larger than **20 MB**.
 | --- | --- |
 | Homepage text | `content/_index.md` |
 | Research themes | `content/research/` |
+| Research software and benchmark outcomes | `data/research_outcomes.toml` |
 | Navigation and site settings | `hugo.yaml` |
 
 Use GitHub's file editor on a branch or fork, then submit a PR.
+
+The **Root Cause Analysis & AIOps** area refocuses the existing Distributed
+Machine Learning area. Its stable content identifier and URL remain
+`distributed-machine-learning`; `/research/rca-aiops/` redirects there. Use
+`distributed-machine-learning` in member, publication, dataset, and outcome
+research tags. The old `rca-aiops` publication-archive query is supported through
+the area's `legacy_research_ids` setting. It is not a separate research choice.
+All three research areas appear in the header, homepage, and research overview.
+
+The combined page includes AIOps/RCA work and earlier distributed AI/ML work.
+It reads people and publication references from the master collections, with
+research outcomes before publications and the associated people. Add outcomes
+only after verifying their public project or repository against a paper or an
+official author page. Each `data/research_outcomes.toml` item has a stable `id`,
+`title`, HTTPS `url`, short `summary`, `research` tags, and a master `publication`
+slug. Record attribution in a comment and describe the actual release scope.
+Alumni career outcomes remain separate member-profile data.
 
 Edit source files; `public/` is generated. Everything in `content/` and `static/`
 may be published. Keep unfinished work on a branch until ready to merge.

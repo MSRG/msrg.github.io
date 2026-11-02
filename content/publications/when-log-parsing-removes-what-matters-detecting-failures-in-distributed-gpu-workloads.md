@@ -2,10 +2,11 @@
 title = "When Log Parsing Removes What Matters: Detecting Failures in Distributed GPU Workloads"
 year = 2026
 authors = ["Boyuan Cui", "Yuyang Zeng", "Yifang Tian", "Hans-Arno Jacobsen"]
-venue = "1st International Workshop on Reliable and trustworthy Automated Software Engineering (RASE), pp. 60–63"
+venue = "Proceedings of the 1st International Workshop on Reliable and trustworthy Automated Software Engineering (RASE '26), pp. 60–63"
 publication_type = "Workshop Paper"
-research = ["distributed-machine-learning", "rca-aiops"]
+research = ["distributed-machine-learning"]
 external_url = "https://arxiv.org/abs/2610.14009"
+# ACM publisher metadata: https://api.crossref.org/works/10.1145/3820756.3844919
 +++
 
 [Published version](https://doi.org/10.1145/3820756.3844919).
