@@ -261,8 +261,25 @@ let browser;
   const aliasTarget = alias.match(/content=["']?[^>]*?url=([^"' >]+)/i)?.[1];
   assert.equal(new URL(aliasTarget, base).pathname, aiopsRoute, 'The old RCA page must redirect to the single area');
   if (new URL(aliasTarget, base).origin === new URL(base).origin) {
-    await page.goto(base + '/research/rca-aiops/');
-    await page.waitForURL(base + aiopsRoute);
+    for (const hash of ['', '#outcomes', '#publications', '#people']) {
+      await page.goto(base + '/research/rca-aiops/' + hash);
+      await page.waitForURL(base + aiopsRoute + hash);
+      if (hash) {
+        await page.waitForFunction(hash => {
+          const section = document.querySelector(hash);
+          const top = section.getBoundingClientRect().top;
+          return scrollY > 0 && top >= 0 && top < innerHeight;
+        }, hash);
+      }
+    }
+    await page.goto(base + '/research/rca-aiops/?source=bookmark#people');
+    await page.waitForURL(base + aiopsRoute + '?source=bookmark#people');
+    const aliasNoJSContext = await createContext({ javaScriptEnabled: false });
+    const aliasNoJSPage = await aliasNoJSContext.newPage();
+    await aliasNoJSPage.goto(base + '/research/rca-aiops/');
+    await aliasNoJSPage.waitForURL(base + aiopsRoute);
+    assert.equal(await aliasNoJSPage.locator('h1').textContent(), 'Root Cause Analysis & AIOps');
+    await aliasNoJSContext.close();
   }
   for (const research of ['rca-aiops', 'distributed-machine-learning']) {
     await page.goto(base + '/publications/?research=' + research); await waitForSearch();

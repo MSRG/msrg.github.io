@@ -1,0 +1,25 @@
+{{- if and .Page .Page.Params.legacy_research_ids -}}
+<!doctype html>
+<html lang="{{ site.Language.Locale }}">
+  <head>
+    <meta charset="utf-8">
+    <title>{{ .Page.Title }}</title>
+    <link rel="canonical" href="{{ .Permalink }}">
+    <script>
+      window.location.replace({{ .Permalink }} + window.location.search + window.location.hash);
+    </script>
+    <noscript><meta http-equiv="refresh" content="0; url={{ .Permalink }}"></noscript>
+  </head>
+  <body><p><a href="{{ .Permalink }}">Continue to {{ .Page.Title }}</a></p></body>
+</html>
+{{- else -}}
+<!doctype html>
+<html lang="{{ site.Language.Locale }}">
+  <head>
+    <title>{{ .Permalink }}</title>
+    <link rel="canonical" href="{{ .Permalink }}">
+    <meta charset="utf-8">
+    <meta http-equiv="refresh" content="0; url={{ .Permalink }}">
+  </head>
+</html>
+{{- end -}}
