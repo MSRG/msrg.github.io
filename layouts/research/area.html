@@ -3,8 +3,7 @@
   {{ $roster := partialCached "people/roster.html" site }}
   {{ $people := where $roster.current "Params.research" "intersect" (slice $slug) }}
   {{ $publications := where (site.GetPage "/publications").RegularPages "Params.research" "intersect" (slice $slug) }}
-  {{ $listedPublications := sort $publications "Params.year" "desc" }}
-  {{ if not .Params.list_all_publications }}{{ $listedPublications = first 6 $listedPublications }}{{ end }}
+  {{ $listedPublications := first 6 (sort $publications "Params.year" "desc") }}
   {{ $datasets := where (site.GetPage "/data-sets").RegularPages "Params.research" "intersect" (slice $slug) }}
   {{ $outcomes := where (hugo.Data.research_outcomes.items | default slice) "research" "intersect" (slice $slug) }}
 
@@ -28,7 +27,7 @@
           · {{ len $publications }} {{ if eq (len $publications) 1 }}publication{{ else }}publications{{ end }}
           · {{ len $datasets }} {{ if eq (len $datasets) 1 }}data set{{ else }}data sets{{ end }}
         </p>
-        {{ if .Params.list_all_publications }}
+        {{ if .Params.show_section_links }}
           <p><a href="#outcomes">Outcomes</a> · <a href="#publications">Publications</a> · <a href="#people">People</a></p>
         {{ end }}
       </div>

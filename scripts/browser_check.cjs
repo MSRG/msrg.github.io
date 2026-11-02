@@ -222,25 +222,38 @@ let browser;
   await page.getByRole('link', { name: 'Browse all publications in this area' }).click();
   await waitForSearch();
   assert.equal(await visible.count(), quantumCount);
-  const aiopsRoute = '/research/distributed-machine-learning/';
+  const aiopsRoute = '/research/rca-aiops/';
+  const previousAiopsRoute = '/research/distributed-machine-learning/';
   const aiopsPublications = publicationIndex.filter(record => record.research.includes('distributed-machine-learning'));
   for (const route of ['/', '/research/']) {
     await page.goto(base + route);
     const themeLinks = page.locator('.card-grid-wide .card-readmore');
     assert.equal(await themeLinks.count(), 3, 'Exactly three research areas');
     const areaURLs = await themeLinks.evaluateAll(links => links.map(link => link.getAttribute('href')).sort());
+    assert(areaURLs.includes(aiopsRoute) && !areaURLs.includes(previousAiopsRoute), 'Research links must use the new canonical RCA URL');
     const menuURLs = await page.locator('#site-nav .nav-submenu a[href^="/research/"]').evaluateAll(links => links.map(link => link.getAttribute('href')).sort());
     assert.deepEqual(menuURLs, areaURLs, 'Every research area must be reachable from the header');
     assert.deepEqual(await page.locator('.site-footer .footer-list').first().locator('a').evaluateAll(links => links.map(link => link.getAttribute('href')).sort()), areaURLs);
+  }
+  for (const [area, route] of [
+    ['quantum-computing-systems', '/research/quantum-computing-systems/'],
+    ['distributed-machine-learning', aiopsRoute],
+    ['data-management', '/research/data-management/'],
+  ]) {
+    await page.goto(base + route);
+    const expected = publicationIndex.filter(record => record.research.includes(area)).slice(0, 6).map(record => record.url);
+    assert.deepEqual(await page.locator('#publications .list-card h3 a').evaluateAll(links => links.map(link => link.getAttribute('href'))),
+      expected, 'Every research area must use the same six-publication limit');
   }
   for (const width of [1440, 390, 320]) {
     await page.setViewportSize({ width, height: 900 });
     await page.goto(base + aiopsRoute);
     assert.equal(await page.locator('h1').textContent(), 'Root Cause Analysis & AIOps');
+    assert.equal(new URL(await page.locator('link[rel="canonical"]').getAttribute('href'), base).pathname, aiopsRoute);
     assert.deepEqual(await page.locator('.research-area > section .section-heading h2').allTextContents(),
-      ['Research outcomes', 'Publications', 'Researchers in this area']);
+      ['Research outcomes', 'Recent publications', 'Researchers in this area']);
     assert.deepEqual(await page.locator('#publications .list-card h3 a').evaluateAll(links => links.map(link => link.getAttribute('href'))),
-      aiopsPublications.map(record => record.url), 'The unified page must show all matching master references exactly once');
+      aiopsPublications.slice(0, 6).map(record => record.url), 'The research page must show only its six most recent master references');
     assert.equal(await page.locator('#outcomes .card').count(), 6);
     assert.equal(await page.locator('.research-support-logos img').count(), 2);
     assert.equal(await page.locator('.research-diagrams img').count(), 2);
@@ -256,13 +269,13 @@ let browser;
     }
   }
   // Hugo aliases can use the production origin. Local previews use a relative baseURL.
-  const alias = fs.readFileSync(path.join(root, 'research/rca-aiops/index.html'), 'utf8');
+  const alias = fs.readFileSync(path.join(root, 'research/distributed-machine-learning/index.html'), 'utf8');
   assert.match(alias, /http-equiv=["']?refresh/i);
   const aliasTarget = alias.match(/content=["']?[^>]*?url=([^"' >]+)/i)?.[1];
-  assert.equal(new URL(aliasTarget, base).pathname, aiopsRoute, 'The old RCA page must redirect to the single area');
+  assert.equal(new URL(aliasTarget, base).pathname, aiopsRoute, 'The former Distributed Machine Learning URL must redirect to the RCA page');
   if (new URL(aliasTarget, base).origin === new URL(base).origin) {
     for (const hash of ['', '#outcomes', '#publications', '#people']) {
-      await page.goto(base + '/research/rca-aiops/' + hash);
+      await page.goto(base + previousAiopsRoute + hash);
       await page.waitForURL(base + aiopsRoute + hash);
       if (hash) {
         await page.waitForFunction(hash => {
@@ -272,11 +285,11 @@ let browser;
         }, hash);
       }
     }
-    await page.goto(base + '/research/rca-aiops/?source=bookmark#people');
+    await page.goto(base + previousAiopsRoute + '?source=bookmark#people');
     await page.waitForURL(base + aiopsRoute + '?source=bookmark#people');
     const aliasNoJSContext = await createContext({ javaScriptEnabled: false });
     const aliasNoJSPage = await aliasNoJSContext.newPage();
-    await aliasNoJSPage.goto(base + '/research/rca-aiops/');
+    await aliasNoJSPage.goto(base + previousAiopsRoute);
     await aliasNoJSPage.waitForURL(base + aiopsRoute);
     assert.equal(await aliasNoJSPage.locator('h1').textContent(), 'Root Cause Analysis & AIOps');
     await aliasNoJSContext.close();
@@ -304,7 +317,7 @@ let browser;
   const snapContext = await createContext();
   const snapPage = await snapContext.newPage();
   await snapPage.bringToFront();
-  const rosterRoutes = ['/people/', '/research/quantum-computing-systems/', '/research/distributed-machine-learning/', '/research/data-management/'];
+  const rosterRoutes = ['/people/', '/research/quantum-computing-systems/', '/research/rca-aiops/', '/research/data-management/'];
   for (const width of [1440, 390]) {
     await snapPage.setViewportSize({ width, height: 900 });
     for (const route of rosterRoutes) {
@@ -400,7 +413,7 @@ let browser;
   await page.keyboard.type('msrg', { delay: 90 });
   assert.equal(await page.locator('[data-msrg-rounds]').textContent(), '2', 'Hardware keyboard must complete a round');
 
-  for (const route of ['/', '/people/', '/publications/', '/research/quantum-computing-systems/', '/research/distributed-machine-learning/', '/data-sets/begen/', '/~thomas-trenty/', '/data-sets/']) {
+  for (const route of ['/', '/people/', '/publications/', '/research/quantum-computing-systems/', '/research/rca-aiops/', '/data-sets/begen/', '/~thomas-trenty/', '/data-sets/']) {
     await page.goto(base + route);
     await page.addScriptTag({ path: require.resolve('axe-core/axe.min.js') });
     const results = await page.evaluate(async () => axe.run(document, { runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21aa', 'best-practice'] } }));

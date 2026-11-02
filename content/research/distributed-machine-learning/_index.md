@@ -1,15 +1,15 @@
 +++
 title = "Root Cause Analysis & AIOps"
-slug = "distributed-machine-learning"
-aliases = ["/research/rca-aiops/"]
+slug = "rca-aiops"
+aliases = ["/research/distributed-machine-learning/"]
 legacy_research_ids = ["rca-aiops"]
 layout = "area"
-list_all_publications = true
+show_section_links = true
 weight = 20
 accent = "teal"
 question = "How can we turn operational telemetry into reliable diagnosis and actionable incident response?"
 summary = "Root cause analysis, anomaly detection, and telemetry-grounded repair for reliable microservices and AI agents, alongside distributed AI and machine learning."
-publication_blurb = "Publications in root cause analysis, AIOps, and our broader distributed AI and machine learning research."
+publication_blurb = "Recent publications in root cause analysis, AIOps, and our broader distributed AI and machine learning research."
 team_blurb = "Current and visiting MSRG members associated with our AIOps and distributed AI/ML research are shown below."
 blurb = """MSRG develops methods for **root cause analysis** and **AI for IT operations (AIOps)** in distributed systems. We combine **metrics, logs, and traces** with service dependency graphs and LLM agents to investigate failures and produce actionable diagnoses. Our work connects anomaly detection, incident response, automated repair, and realistic evaluation, with a focus on microservices and the reliability of AI agent executions."""
 # Research descriptions are based on the publication abstracts linked below.
