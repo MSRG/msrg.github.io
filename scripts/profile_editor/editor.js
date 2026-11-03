@@ -149,7 +149,8 @@ function fieldControl(field, value, prefix = '') {
   if (field.type === 'objects' || field.type === 'object') {
     label.removeAttribute('for');
     const rows = node('div');
-    const add = node('button', 'Add ' + field.label.toLowerCase(), 'secondary'); add.type = 'button';
+    const add = node('button', field.add_label || 'Add ' + field.label.toLowerCase(), 'secondary'); add.type = 'button';
+    if (helpText) add.setAttribute('aria-describedby', help.id);
     function updateOrderControls() {
       Array.from(rows.children).forEach((row, index) => {
         if (!field.reorderable) return;
@@ -182,12 +183,18 @@ function fieldControl(field, value, prefix = '') {
         }
       }
       const remove = node('button', 'Remove item', 'secondary'); remove.type = 'button';
-      remove.addEventListener('click', () => { row.remove(); add.hidden = false; updateOrderControls(); markDirty(); });
+      remove.addEventListener('click', () => {
+        row.remove(); add.hidden = false; updateOrderControls(); markDirty(); add.focus();
+      });
       actions.append(remove); row.append(actions); rows.append(row); updateOrderControls();
       if (field.type === 'object') add.hidden = true;
+      return row;
     }
     (field.type === 'object' ? (value && Object.keys(value).length ? [value] : []) : value || []).forEach(addRow);
-    add.addEventListener('click', () => { addRow({}); markDirty(); });
+    add.addEventListener('click', () => {
+      const row = addRow({}); markDirty();
+      row.querySelector('input:not([type="hidden"]):enabled, select:enabled, textarea:enabled, button:enabled:not([hidden])')?.focus();
+    });
     wrapper.append(rows, add);
     read = () => field.type === 'object' ? (rows.firstElementChild?.readValue() || {}) : Array.from(rows.children, row => row.readValue());
   } else if (field.type === 'strings' && field.choices) {

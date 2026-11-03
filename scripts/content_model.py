@@ -120,7 +120,12 @@ def validate_fields(fields: list[dict], data: dict, kind: str, root: Path = ROOT
                 parsed = urlsplit(value)
                 schemes = {"https"} if field.get("https_only") else {"http", "https"}
                 host = parsed.hostname or ""
-                if parsed.scheme not in schemes or not host or any(c.isspace() for c in value):
+                if (parsed.scheme not in schemes or not host or
+                        any(c.isspace() or ord(c) < 32 or ord(c) == 127 for c in value) or "\\" in value):
+                    raise ValueError
+                # urlsplit leaves invalid ports and escaped hostnames unchecked.
+                parsed.port
+                if parsed.username is not None or parsed.password is not None or "%" in host:
                     raise ValueError
                 if field.get("host") and not (host == field["host"] or host.endswith("." + field["host"])):
                     raise ValueError

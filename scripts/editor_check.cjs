@@ -44,7 +44,9 @@ let browser;
   assert.equal(await page.locator('#slug').inputValue(), 'jane-doe');
   await page.getByLabel('Upload a portrait').setInputFiles({ name: 'portrait.png', mimeType: 'image/png', buffer: Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+ip1sAAAAASUVORK5CYII=', 'base64') });
   await page.waitForFunction(() => document.querySelector('#message').textContent.startsWith('Uploaded '));
-  await page.getByRole('button', { name: 'Add awards and funding', exact: true }).click();
+  await page.getByRole('button', { name: 'Add awards and funding', exact: true }).focus();
+  await page.keyboard.press('Enter');
+  assert.equal(await page.getByLabel('Award name').evaluate(input => input === document.activeElement), true);
   await page.getByLabel('Award name').fill('Example award');
   await page.getByLabel('Award page *', { exact: true }).fill('https://example.org/award');
   async function addItem(key, value) {
@@ -71,10 +73,12 @@ let browser;
   assert.deepEqual(await items('interests'), ['Quantum Computing']);
   assert.equal(fs.existsSync(path.join(fixture, 'content/people/jane-doe.md')), false, 'Enter adds an item without submitting the form');
   async function save() {
-    await page.locator('#save').click();
-    await page.waitForFunction(() => document.querySelector('#message').textContent.startsWith('Saved ') || document.querySelector('#message').classList.contains('error'));
-    assert.match(await page.locator('#message').textContent(), /^Saved /);
+    await Promise.all([
+      page.waitForResponse(response => response.url() === base + '/api/records' && response.request().method() === 'POST'),
+      page.locator('#save').click(),
+    ]);
     await page.waitForFunction(() => !document.querySelector('#save').disabled);
+    assert.match(await page.locator('#message').textContent(), /^Saved /);
   }
   async function choose(kind) {
     await page.locator('#kind').selectOption(kind);
@@ -110,6 +114,7 @@ let browser;
   await page.getByRole('button', { name: 'Add highlights', exact: true }).click();
   await page.getByLabel('Title *', { exact: true }).fill('Research highlight');
   await page.getByRole('button', { name: 'Add primary link', exact: true }).click();
+  assert.equal(await page.getByLabel('Label *', { exact: true }).evaluate(input => input === document.activeElement), true);
   await page.getByLabel('Label *', { exact: true }).fill('MSRG');
   await page.getByLabel('Link *', { exact: true }).fill('https://msrg.github.io/');
   await save();
@@ -174,6 +179,7 @@ let browser;
   await page.setViewportSize({ width: 1440, height: 900 });
   console.log('Template fields, hidden-field preservation, and timeline reordering passed');
   await page.getByRole('button', { name: 'Remove item', exact: true }).first().click();
+  assert.equal(await page.getByRole('button', { name: 'Add primary link', exact: true }).evaluate(button => button === document.activeElement), true);
   await save();
 
   await choose('publications');
@@ -222,7 +228,66 @@ let browser;
   const abstract = await page.locator('#abstract').inputValue();
   assert.match(abstract, /\$\$\n\\sum_\{i=1\}\^\{n\} x_i\n\$\$/);
   await page.getByLabel('Additional notes', { exact: true }).fill('Companion notes. [Member](/people/#member-jane-doe)');
+  const outcomeField = page.locator('#field-research_outcomes');
+  const outcomeRows = outcomeField.locator('.award');
+  const addOutcome = outcomeField.getByRole('button', { name: 'Add research outcome', exact: true });
+  let expectedOutcomes = [
+    { title: 'Public benchmark', url: 'https://example.org/benchmark', summary: 'Sample data and evaluation scripts.\nTwo public examples.' },
+    { title: 'Project website', url: 'https://example.org/project', summary: 'Project overview and leaderboard.' },
+  ];
+  async function outcomeValues() {
+    return outcomeRows.evaluateAll(rows => rows.map(row => Object.fromEntries(
+      ['title', 'url', 'summary'].map(key => [key, row.querySelector(`[id$="-${key}"]`).value]))));
+  }
+  async function addOutcomeWithKeyboard(outcome) {
+    await addOutcome.focus(); await page.keyboard.press('Enter');
+    const row = outcomeRows.last();
+    const title = row.getByLabel('Outcome name *', { exact: true });
+    const url = row.getByLabel('Project or repository URL *', { exact: true });
+    const summary = row.getByLabel('Description *', { exact: true });
+    assert.equal(await title.evaluate(input => input === document.activeElement), true, 'Add focuses the first new field');
+    assert.equal(await title.evaluate(input => input.checkValidity()), false, 'An added outcome requires a name');
+    await page.keyboard.insertText(outcome.title);
+    await page.keyboard.press('Tab');
+    assert.equal(await url.evaluate(input => input === document.activeElement), true);
+    await page.keyboard.insertText(outcome.url);
+    await page.keyboard.press('Tab');
+    assert.equal(await summary.evaluate(input => input === document.activeElement), true);
+    assert.equal(await summary.evaluate(input => input.tagName), 'TEXTAREA');
+    await page.keyboard.insertText(outcome.summary);
+    return row;
+  }
+  async function removeOutcomeWithKeyboard(row) {
+    await row.getByRole('button', { name: 'Remove item', exact: true }).focus();
+    await page.keyboard.press('Enter');
+    assert.equal(await addOutcome.evaluate(button => button === document.activeElement), true, 'Remove returns focus to Add');
+  }
+  assert.equal(await outcomeRows.count(), 0, 'Outcomes are optional and initially empty');
+  assert.equal(await addOutcome.getAttribute('aria-describedby'), 'research_outcomes-help');
+  assert.match(await page.locator('#research_outcomes-help').textContent(), /automatically.*publication.*research areas/);
+  await page.evaluate(() => {
+    window.outcomeFocusEvents = [];
+    document.addEventListener('focusin', event => {
+      if (event.target.closest('#field-research_outcomes')) window.outcomeFocusEvents.push(event.target.id || event.target.textContent);
+    });
+  });
+  await addOutcomeWithKeyboard(expectedOutcomes[0]);
+  await addOutcomeWithKeyboard({ title: 'Temporary outcome', url: 'https://example.org/temp', summary: 'Remove this before creating the paper.' });
+  await removeOutcomeWithKeyboard(outcomeRows.last());
+  assert.deepEqual(await outcomeValues(), expectedOutcomes.slice(0, 1));
+  await addOutcomeWithKeyboard(expectedOutcomes[1]);
+  const outcomeUrl = outcomeRows.first().getByLabel('Project or repository URL *', { exact: true });
+  await outcomeUrl.fill('http://example.org/benchmark');
+  await page.locator('#save').click();
+  await page.waitForFunction(() => document.querySelector('#message').classList.contains('error') && !document.querySelector('#save').disabled);
+  assert.match(await page.locator('#message').textContent(), /research_outcomes\[0\]\.url: use a valid HTTPS URL/);
+  assert.equal(fs.existsSync(path.join(fixture, 'content/publications/example-paper.md')), false);
+  await outcomeUrl.fill(expectedOutcomes[0].url);
+  await page.evaluate(() => { window.outcomeFocusEvents = []; });
   await save();
+  assert.deepEqual(await page.evaluate(() => window.outcomeFocusEvents), [], 'Rendering saved outcomes must not steal focus');
+  assert.deepEqual(await outcomeValues(), expectedOutcomes);
+  assert.deepEqual((await (await page.request.get(base + '/api/records/publications/example-paper')).json()).data.research_outcomes, expectedOutcomes);
   assert.equal(await page.locator('#save').textContent(), 'Save changes');
   assert.equal(await publicationType.inputValue(), 'Journal Article');
   assert.deepEqual(await items('authors'), ['J. Doe', 'John Doe', 'Doe, Alex', 'External Author'], 'Saving includes unfinished input');
@@ -230,6 +295,7 @@ let browser;
   assert.equal(await page.locator('#record-slug').inputValue(), 'example-paper');
   await page.locator('#profile').selectOption('');
   await page.waitForFunction(() => !document.querySelector('#save').disabled && document.querySelector('#save').textContent === 'Create');
+  assert.equal(await outcomeRows.count(), 0, 'A new publication starts with no outcomes');
   assert.deepEqual(await items('authors'), [], 'New entry resets the list controls');
   assert.deepEqual(await page.locator('#tags-suggestions option').evaluateAll(options => options.map(option => option.value)),
     ['quantum', 'systems'], 'Newly saved tags are immediately available for the next entry');
@@ -239,6 +305,7 @@ let browser;
   await page.locator('#external_url').fill('https://example.org/another-paper');
   await save();
   assert.equal(await page.locator('#record-slug').inputValue(), 'example-paper-2');
+  assert.equal(await outcomeRows.count(), 0, 'Publications can be created without outcomes or research areas');
   assert.equal(await page.locator('#profile').inputValue(), 'example-paper-2');
   assert.match(await page.locator('#preview').getAttribute('href'), /\/publications\/example-paper-2\/$/);
   assert.equal(await page.locator('#record-slug').evaluate(input => input.readOnly), true);
@@ -261,24 +328,51 @@ let browser;
   await choose('publications');
   console.log('Publication form loaded');
   assert.deepEqual(await page.locator('#tags-suggestions option').evaluateAll(options => options.map(option => option.value)), ['quantum', 'systems']);
+  await page.evaluate(() => { window.outcomeFocusEvents = []; });
   await page.locator('#profile').selectOption('example-paper');
   await page.waitForFunction(() => !document.querySelector('#save').disabled && document.querySelector('#title').value === 'Example Paper');
+  assert.deepEqual(await page.evaluate(() => window.outcomeFocusEvents), [], 'Loading an existing publication must not focus its outcomes');
+  assert.deepEqual(await outcomeValues(), expectedOutcomes);
+  await page.setViewportSize({ width: 390, height: 900 });
+  const editedName = outcomeRows.first().getByLabel('Outcome name *', { exact: true });
+  await editedName.focus(); await page.keyboard.press('ControlOrMeta+A'); await page.keyboard.insertText('Updated public benchmark');
+  expectedOutcomes[0].title = 'Updated public benchmark';
+  await removeOutcomeWithKeyboard(outcomeRows.last());
+  expectedOutcomes = expectedOutcomes.slice(0, 1);
+  await save();
+  assert.deepEqual(await outcomeValues(), expectedOutcomes);
+  const thirdOutcome = { title: 'New evaluation tools', url: 'https://example.org/evaluation', summary: 'Evaluation tools added to an existing publication.' };
+  await addOutcomeWithKeyboard(thirdOutcome);
+  expectedOutcomes.push(thirdOutcome);
+  await save();
+  await page.locator('#reload').focus();
+  await page.evaluate(() => { window.outcomeFocusEvents = []; });
+  await page.keyboard.press('Enter');
+  await page.waitForFunction(() => !document.querySelector('#save').disabled && document.querySelector('#message').textContent.startsWith('Edit the form'));
+  assert.deepEqual(await page.evaluate(() => window.outcomeFocusEvents), [], 'Reload must not focus the populated outcome rows');
+  assert.deepEqual(await outcomeValues(), expectedOutcomes);
+  await page.setViewportSize({ width: 1440, height: 900 });
+  console.log('Optional publication outcomes: keyboard create/edit/remove/reload, HTTPS validation, and focus preservation passed');
   assert.equal(await publicationType.inputValue(), 'Journal Article', 'Publication type survives reopening');
   assert.equal(await page.locator('#abstract').inputValue(), abstract, 'LaTeX survives saving and reopening');
   assert.deepEqual(await items('authors'), ['J. Doe', 'John Doe', 'Doe, Alex', 'External Author']);
   assert.equal(await page.locator('#save').textContent(), 'Save changes');
   await page.getByLabel('Example Dataset', { exact: true }).check();
   await save();
+  assert.deepEqual(await outcomeValues(), expectedOutcomes, 'Unrelated changes preserve research outcomes');
   const publication = path.join(fixture, 'content/publications/example-paper.md');
   fs.appendFileSync(publication, '\nChanged outside the editor.\n');
+  const externalPublication = fs.readFileSync(publication, 'utf8');
+  await removeOutcomeWithKeyboard(outcomeRows.last());
   await page.locator('#title').fill('Changed title');
   await page.locator('#save').click();
   await page.waitForFunction(() => document.querySelector('#message').classList.contains('error'));
   assert.match(await page.locator('#message').textContent(), /changed since you opened/);
-  assert.match(fs.readFileSync(publication, 'utf8'), /title = "Example Paper"/);
+  assert.equal(fs.readFileSync(publication, 'utf8'), externalPublication, 'A stale removal must not discard saved outcomes');
   page.once('dialog', dialog => dialog.accept());
   await page.getByRole('button', { name: 'Reload saved entry' }).click();
   await page.waitForFunction(() => !document.querySelector('#save').disabled && !document.querySelector('#message').classList.contains('error'));
+  assert.deepEqual(await outcomeValues(), expectedOutcomes, 'Reload restores the saved outcomes after a conflict');
   const originalPreview = await page.locator('#preview').getAttribute('href');
   await page.locator('#title').fill('Revised Paper');
   await save();
@@ -337,7 +431,7 @@ let browser;
   assert.equal(await page.locator('#preview').getAttribute('href'), null);
   assert.equal(await page.locator('#preview-start').isVisible(), true);
   assert.deepEqual(errors, []);
-  console.log(`${engine}: profile photo, awards, personal templates, publications, dataset uploads, conflicts, accessibility and desktop/mobile layouts passed.`);
+  console.log(`${engine}: profile photo, awards, personal templates, publications and outcomes, dataset uploads, conflicts, accessibility and desktop/mobile layouts passed.`);
 })().catch(error => { console.error(error); process.exitCode = 1; }).finally(async () => {
   if (browser) await browser.close();
   if (server.exitCode === null) { const stopped = new Promise(resolve => server.once('exit', resolve)); server.kill(); await stopped; }

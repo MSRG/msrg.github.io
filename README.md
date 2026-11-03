@@ -49,7 +49,7 @@ in the terminal (usually **http://127.0.0.1:1313/**); **Ctrl+C** stops both.
 | Choose | What you can do |
 | --- | --- |
 | Member profiles | Update your details, research areas, links, awards, and portrait. |
-| Publications | Add papers, abstracts, authors, tags, and related datasets. |
+| Publications | Add papers, abstracts, authors, research outcomes, tags, and related datasets. |
 | Personal Pages | Build a page from a template or preview your custom website. |
 | Datasets and downloads | Add descriptions, related papers, download links, and files. |
 
@@ -94,6 +94,13 @@ another author's name. Press **Enter** or choose **Add** for each author, in the
 order shown on the paper. Tags and other item lists work the same way; you can
 also paste a list with line breaks.
 Add research areas and related datasets where relevant.
+
+If the paper has public code, a benchmark, data, or a project website, choose
+**Add research outcome**. Fill in its name, HTTPS link, and a short plain-text
+description of what is available. You can add more than one outcome or leave
+the section empty. Save and preview the publication to check the links and text.
+Outcomes appear on the publication page and in its selected research areas;
+changing those selections also updates where its outcomes appear.
 
 The page identifier is assigned automatically from the original title and cannot
 be edited. If it is already in use, a number is added (for example, `paper-2`).
@@ -168,29 +175,10 @@ Link to an external repository for datasets larger than **20 MB**.
 | --- | --- |
 | Homepage text | `content/_index.md` |
 | Research themes | `content/research/` |
-| Research software and benchmark outcomes | `data/research_outcomes.toml` |
+| Research software and benchmark outcomes | Publication editor, saved in `content/publications/` |
 | Navigation and site settings | `hugo.yaml` |
 
 Use GitHub's file editor on a branch or fork, then submit a PR.
-
-The **Root Cause Analysis & AIOps** area refocuses the existing Distributed
-Machine Learning area. Its canonical URL is `/research/rca-aiops/`;
-`/research/distributed-machine-learning/` redirects there, preserving section
-bookmarks. Its stable content identifier remains `distributed-machine-learning`.
-Use `distributed-machine-learning` in member, publication, dataset, and outcome
-research tags. The old `rca-aiops` publication-archive query is supported through
-the area's `legacy_research_ids` setting. It is not a separate research choice.
-All three research areas appear in the header, homepage, and research overview.
-
-The combined page includes AIOps/RCA work and earlier distributed AI/ML work.
-It reads people and publication references from the master collections, with
-research outcomes before publications and the associated people. Every research
-page shows up to six recent publications, with a link to its complete archive.
-Add outcomes only after verifying their public project or repository against a paper or an
-official author page. Each `data/research_outcomes.toml` item has a stable `id`,
-`title`, HTTPS `url`, short `summary`, `research` tags, and a master `publication`
-slug. Record attribution in a comment and describe the actual release scope.
-Alumni career outcomes remain separate member-profile data.
 
 Edit source files; `public/` is generated. Everything in `content/` and `static/`
 may be published. Keep unfinished work on a branch until ready to merge.

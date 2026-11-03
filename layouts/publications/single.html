@@ -28,6 +28,16 @@
           {{ else }}
             <p>The abstract has not been added yet.</p>
           {{ end }}
+          {{ with .Params.research_outcomes }}
+            <section id="research-outcomes">
+              <h2>Research outcomes</h2>
+              <div class="stack">
+                {{ range . }}
+                  {{ partial "research-outcome.html" (dict "outcome" .) }}
+                {{ end }}
+              </div>
+            </section>
+          {{ end }}
           {{ with .Content }}
             <h2>Additional notes</h2>
             {{ . }}

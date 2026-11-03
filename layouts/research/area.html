@@ -5,7 +5,15 @@
   {{ $publications := where (site.GetPage "/publications").RegularPages "Params.research" "intersect" (slice $slug) }}
   {{ $listedPublications := first 6 (sort $publications "Params.year" "desc") }}
   {{ $datasets := where (site.GetPage "/data-sets").RegularPages "Params.research" "intersect" (slice $slug) }}
-  {{ $outcomes := where (hugo.Data.research_outcomes.items | default slice) "research" "intersect" (slice $slug) }}
+  {{ $outcomes := slice }}
+  {{ range $publications.GroupByParam "year" "desc" }}
+    {{ range .Pages.ByTitle }}
+      {{ $publication := . }}
+      {{ range .Params.research_outcomes }}
+        {{ $outcomes = $outcomes | append (dict "outcome" . "publication" $publication) }}
+      {{ end }}
+    {{ end }}
+  {{ end }}
 
   <article class="research-area">
     <section class="page-hero scroll-section">
@@ -49,13 +57,7 @@
         </div>
         <div class="card-grid">
           {{ range $outcomes }}
-            <article class="card">
-              <h3><a href="{{ .url }}">{{ .title }}</a></h3>
-              <p>{{ .summary }}</p>
-              {{ with site.GetPage (printf "/publications/%s" .publication) }}
-                <p class="content-actions"><a href="{{ .RelPermalink }}">Related publication</a></p>
-              {{ end }}
-            </article>
+            {{ partial "research-outcome.html" . }}
           {{ end }}
           {{ range sort $datasets "Title" }}
             <article class="card">

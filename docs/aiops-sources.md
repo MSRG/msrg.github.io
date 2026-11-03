@@ -11,6 +11,13 @@ page is `/research/rca-aiops/`; the former Distributed Machine Learning URL
 redirects there. Existing RCA research tags were folded into its stable
 `distributed-machine-learning` identifier without adding unrelated members or papers.
 
+Research outcomes are stored with their owning records in `content/publications/`
+and can be maintained in the publication editor. They inherit the publication's
+research areas; for example, GALA's evaluation artifacts also appear under Data
+Management. Outcomes are collected from all matching publications, independently
+of the six-reference preview. Source comments beside the outcome fields preserve
+the attribution and release-scope evidence.
+
 ## Yuanchen Gao
 
 Added to the shared roster at the maintainer's request, with the PhD role

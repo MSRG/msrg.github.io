@@ -7,6 +7,12 @@ publication_type = "Workshop Paper"
 research = ["distributed-machine-learning"]
 external_url = "https://arxiv.org/abs/2610.14009"
 # ACM publisher metadata: https://api.crossref.org/works/10.1145/3820756.3844919
+
+# Attribution: data availability statement, https://arxiv.org/abs/2610.14009
+# No top-level repository license was present when checked on 2026-10-22.
+research_outcomes = [
+  { title = "GF-Bench artifacts", url = "https://github.com/cuiboyuan/nccl_log_rca_bench", summary = "Tools for generating multi-GPU failures, collecting NCCL logs, and evaluating anomaly detection, with sample data and scripts to reproduce the experiments." },
+]
 +++
 
 [Published version](https://doi.org/10.1145/3820756.3844919).
