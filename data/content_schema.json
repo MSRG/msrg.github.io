@@ -350,7 +350,8 @@
           "type": "string",
           "default": "",
           "required": true,
-          "format": "url"
+          "format": "url",
+          "help": "Use the published version's DOI or publisher URL when available. Use arXiv or another preprint link only until a published version is available; optional preprint links can go in Additional notes."
         },
         {
           "key": "publication_type",

@@ -6,7 +6,7 @@ authors = ["Yifang Tian", "Yaming Liu", "Zichun Chong", "Zihang Huang", "Yiran L
 venue = "Proceedings of the 41st IEEE/ACM International Conference on Automated Software Engineering (ASE '26), pp. 55–67"
 publication_type = "Conference Paper"
 research = ["distributed-machine-learning", "data-management"]
-external_url = "https://arxiv.org/abs/2608.08968"
+external_url = "https://doi.org/10.1145/3832783.3834335"
 tags = ["GALA", "GALA: Can Graph-Augmented Large Language Model Agentic Workflows Elevate Root Cause Analysis?"]
 # Keep the consolidated earlier manuscript title searchable.
 # ACM publisher metadata: https://api.crossref.org/works/10.1145/3832783.3834335
@@ -18,8 +18,7 @@ research_outcomes = [
 ]
 +++
 
-[Published version](https://doi.org/10.1145/3832783.3834335).
-The full-text link points to the arXiv version, which describes the GALA+ framework.
+The [arXiv version](https://arxiv.org/abs/2608.08968) describes the GALA+ framework.
 
 This record consolidates the GALA work and its updated GALA+ framework.
 The [earlier preprint](https://arxiv.org/abs/2508.12472) circulated under the title

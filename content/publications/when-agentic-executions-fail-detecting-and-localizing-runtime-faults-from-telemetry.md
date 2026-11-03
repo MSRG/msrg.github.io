@@ -6,7 +6,7 @@ authors = ["Chenkai Zhang", "Yiran Li", "Yifang Tian", "Michail Bachras", "Hans-
 venue = "Proceedings of the 1st International Workshop on Trustworthy and Responsible aUtonomous SysTems (TRUST '26), pp. 75–82"
 publication_type = "Workshop Paper"
 research = ["distributed-machine-learning"]
-external_url = "https://arxiv.org/abs/2608.14680"
+external_url = "https://doi.org/10.1145/3843782.3844662"
 tags = ["AgentChaosBench", "When Agentic Executions Fail: Detecting and Localizing Runtime Faults from Telemetry"]
 # Keep the earlier manuscript title searchable after updating the citation.
 # ACM publisher metadata: https://api.crossref.org/works/10.1145/3843782.3844662
@@ -18,6 +18,5 @@ research_outcomes = [
 ]
 +++
 
-[Published version](https://doi.org/10.1145/3843782.3844662).
-The linked arXiv version uses the earlier title *When Agentic Executions Fail:
+The [arXiv preprint](https://arxiv.org/abs/2608.14680) uses the earlier title *When Agentic Executions Fail:
 Detecting and Localizing Runtime Faults from Telemetry*.

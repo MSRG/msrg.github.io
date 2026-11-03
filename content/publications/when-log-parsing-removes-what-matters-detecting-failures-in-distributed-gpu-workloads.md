@@ -5,7 +5,7 @@ authors = ["Boyuan Cui", "Yuyang Zeng", "Yifang Tian", "Hans-Arno Jacobsen"]
 venue = "Proceedings of the 1st International Workshop on Reliable and trustworthy Automated Software Engineering (RASE '26), pp. 60–63"
 publication_type = "Workshop Paper"
 research = ["distributed-machine-learning"]
-external_url = "https://arxiv.org/abs/2610.14009"
+external_url = "https://doi.org/10.1145/3820756.3844919"
 # ACM publisher metadata: https://api.crossref.org/works/10.1145/3820756.3844919
 
 # Attribution: data availability statement, https://arxiv.org/abs/2610.14009
@@ -15,8 +15,8 @@ research_outcomes = [
 ]
 +++
 
-[Published version](https://doi.org/10.1145/3820756.3844919).
-The arXiv version was revised after publication and differs from the RASE 2026 paper.
+The [arXiv version](https://arxiv.org/abs/2610.14009) was revised after publication
+and differs from the RASE 2026 paper linked above.
 
 The paper introduces [GF-Bench](https://github.com/cuiboyuan/nccl_log_rca_bench)
 for generating controlled faults in distributed GPU workloads and examines how
