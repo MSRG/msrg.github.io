@@ -91,14 +91,11 @@ Use **Published / official URL** for the published version's DOI, publisher page
 or official publication record. Use **Preprint URL** for the corresponding arXiv
 or other preprint repository page. Provide at least one; both are welcome.
 The published version takes priority, with a less prominent preprint link beside
-it. If only a preprint is available, leave the published URL blank: the website
-will show the same understated **Preprint** button (**Preprint (arXiv)** for arXiv
-links), including for accepted papers whose proceedings version is not yet
-available. Explain significant title or version differences in **Additional
+it. If only a preprint is available, leave the published URL blank. 
+Explain significant title or version differences in **Additional
 notes**. When a paper is published, add its
 published URL and update the venue, year, and publication type; keep its preprint
-URL as a secondary link. In the Markdown record these fields are `external_url`
-and `preprint_url`, respectively.
+URL as a secondary link.
 Choose **Publication type** from the dropdown. If the correct type is missing,
 contact the site owner to have it added.
 For authors, search website members and their published name variants, or type
