@@ -18,7 +18,7 @@
   {{/* Official workshop copies may be non-archival; publisher/DOI links keep their label. */}}
   {{ $publishedLabel = "Workshop version" }}
 {{ end }}
-{{ $preprintLabel := cond (not $published) "Read preprint" "Preprint" }}
+{{ $preprintLabel := "Preprint" }}
 {{ with $preprint }}
   {{ $host := lower (urls.Parse .).Hostname }}
   {{ if or (eq $host "arxiv.org") (strings.HasSuffix $host ".arxiv.org") }}
@@ -31,7 +31,7 @@
       <a{{ if not $compact }} class="button"{{ end }} href="{{ . }}" target="_blank" rel="noopener noreferrer">{{ $publishedLabel }}</a>
     {{ end }}
     {{ with $preprint }}
-      <a class="{{ if not $compact }}button{{ if $published }} button-secondary{{ end }}{{ end }}{{ if $published }} publication-preprint{{ end }}" href="{{ . }}" target="_blank" rel="noopener noreferrer">{{ $preprintLabel }}</a>
+      <a class="{{ if not $compact }}button button-secondary {{ end }}publication-preprint" href="{{ . }}" target="_blank" rel="noopener noreferrer">{{ $preprintLabel }}</a>
     {{ end }}
   </p>
 {{ end }}

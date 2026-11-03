@@ -135,12 +135,12 @@ class PublicationVersionRenderingTests(unittest.TestCase):
                  [(PUBLISHED, "Published version"), (PREPRINT, "Preprint (arXiv)")]),
                 ("Published only", {"external_url": "https://openreview.net/forum?id=conference"},
                  [("https://openreview.net/forum?id=conference", "Published version")]),
-                ("Accepted preprint only", {"preprint_url": PREPRINT}, [(PREPRINT, "Read preprint (arXiv)")]),
+                ("Accepted preprint only", {"preprint_url": PREPRINT}, [(PREPRINT, "Preprint (arXiv)")]),
                 ("Official workshop copy", {"external_url": "https://openreview.net/forum?id=workshop",
                                             "publication_type": "Workshop Paper"},
                  [("https://openreview.net/forum?id=workshop", "Workshop version")]),
                 ("Similar hostname", {"preprint_url": "https://arxiv.org.example.com/paper"},
-                 [("https://arxiv.org.example.com/paper", "Read preprint")]),
+                 [("https://arxiv.org.example.com/paper", "Preprint")]),
                 ("Official record", {"external_url": "https://dblp.org/rec/example"},
                  [("https://dblp.org/rec/example", "Publication record")]),
             ]
@@ -164,13 +164,17 @@ class PublicationVersionRenderingTests(unittest.TestCase):
                 self.assertEqual([(link["url"], link["text"]) for link in rendered], labels)
                 for url, label in labels:
                     self.assertTrue(any(link["url"] == url and link["text"] == label for link in research_links))
+                if links.get("preprint_url"):
+                    self.assertIn("button-secondary", rendered[-1]["classes"])
+                    self.assertIn("publication-preprint", rendered[-1]["classes"])
+                    for link in research_links:
+                        if link["url"] == links["preprint_url"]:
+                            self.assertIn("publication-preprint", link["classes"])
                 if links.get("external_url") and links.get("preprint_url"):
                     self.assertNotIn("button-secondary", rendered[0]["classes"])
-                    self.assertIn("button-secondary", rendered[1]["classes"])
                 if not links.get("external_url"):
                     self.assertIn("Read the abstract and full preprint at the source.", html)
                     self.assertNotIn("Read the abstract and full publication at the source.", html)
-                    self.assertNotIn("button-secondary", rendered[0]["classes"])
 
 
 if __name__ == "__main__":

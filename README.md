@@ -92,9 +92,10 @@ or official publication record. Use **Preprint URL** for the corresponding arXiv
 or other preprint repository page. Provide at least one; both are welcome.
 The published version takes priority, with a less prominent preprint link beside
 it. If only a preprint is available, leave the published URL blank: the website
-will explicitly label the action **Read preprint**, including for accepted papers
-whose proceedings version is not yet available. Explain significant title or
-version differences in **Additional notes**. When a paper is published, add its
+will show the same understated **Preprint** button (**Preprint (arXiv)** for arXiv
+links), including for accepted papers whose proceedings version is not yet
+available. Explain significant title or version differences in **Additional
+notes**. When a paper is published, add its
 published URL and update the venue, year, and publication type; keep its preprint
 URL as a secondary link. In the Markdown record these fields are `external_url`
 and `preprint_url`, respectively.
