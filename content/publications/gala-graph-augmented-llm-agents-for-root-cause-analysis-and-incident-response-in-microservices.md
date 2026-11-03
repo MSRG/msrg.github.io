@@ -5,7 +5,7 @@ year = 2026
 authors = ["Yifang Tian", "Yaming Liu", "Zichun Chong", "Zihang Huang", "Yiran Li", "Hans-Arno Jacobsen"]
 venue = "Proceedings of the 41st IEEE/ACM International Conference on Automated Software Engineering (ASE '26), pp. 55–67"
 publication_type = "Conference Paper"
-research = ["distributed-machine-learning", "data-management"]
+research = ["rca-aiops", "data-management"]
 external_url = "https://doi.org/10.1145/3832783.3834335"
 tags = ["GALA", "GALA: Can Graph-Augmented Large Language Model Agentic Workflows Elevate Root Cause Analysis?"]
 # Keep the consolidated earlier manuscript title searchable.

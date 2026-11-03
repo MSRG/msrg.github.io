@@ -17,7 +17,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 from edit_profiles import ProfileStore
 
 HUGO = os.environ.get("HUGO_BIN") or shutil.which("hugo")
-AIOPS = "distributed-machine-learning"
+AIOPS = "rca-aiops"
 QUANTUM = "quantum-computing-systems"
 
 

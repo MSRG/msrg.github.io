@@ -149,7 +149,7 @@ class PublicationVersionRenderingTests(unittest.TestCase):
                 saved = store.save({"kind": "publications", "data": {
                     "title": title, "authors": ["Example Author"], "year": 2030,
                     "venue": "Example Conference (accepted)", "publication_type": "Conference Paper",
-                    "research": ["distributed-machine-learning"], **links}})
+                    "research": ["rca-aiops"], **links}})
                 expected.append((saved["slug"], links, labels))
             build = subprocess.run([HUGO, "--source", str(root), "--destination", str(root / "public"),
                                     "--cacheDir", str(root / "cache"), "--panicOnWarning"],

@@ -8,8 +8,11 @@ The acknowledgement text and grant number were supplied by the project team.
 The consolidated page uses the shared research layout, with Outcomes followed
 by Publications and then People, as requested in Arno's email. The canonical
 page is `/research/rca-aiops/`; the former Distributed Machine Learning URL
-redirects there. Existing RCA research tags were folded into its stable
-`distributed-machine-learning` identifier without adding unrelated members or papers.
+redirects there. The research identifier is `rca-aiops` in member, publication,
+and dataset records. It covers RCA, AIOps, and the page's broader distributed
+AI/ML work. Renaming the former `distributed-machine-learning` identifier
+preserves the same members and papers; old publication-filter links remain
+supported as aliases.
 
 Research outcomes are stored with their owning records in `content/publications/`
 and can be maintained in the publication editor. They inherit the publication's

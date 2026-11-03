@@ -73,7 +73,7 @@ menu:
       weight: 21
     - name: Root Cause Analysis & AIOps
       parent: research
-      pageRef: /research/distributed-machine-learning
+      pageRef: /research/rca-aiops
       weight: 22
     - name: Data Management
       parent: research

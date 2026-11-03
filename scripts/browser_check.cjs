@@ -224,7 +224,7 @@ let browser;
   assert.equal(await visible.count(), quantumCount);
   const aiopsRoute = '/research/rca-aiops/';
   const previousAiopsRoute = '/research/distributed-machine-learning/';
-  const aiopsPublications = publicationIndex.filter(record => record.research.includes('distributed-machine-learning'));
+  const aiopsPublications = publicationIndex.filter(record => record.research.includes('rca-aiops'));
   for (const route of ['/', '/research/']) {
     await page.goto(base + route);
     const themeLinks = page.locator('.card-grid-wide .card-readmore');
@@ -237,7 +237,7 @@ let browser;
   }
   for (const [area, route] of [
     ['quantum-computing-systems', '/research/quantum-computing-systems/'],
-    ['distributed-machine-learning', aiopsRoute],
+    ['rca-aiops', aiopsRoute],
     ['data-management', '/research/data-management/'],
   ]) {
     await page.goto(base + route);
@@ -296,11 +296,12 @@ let browser;
   }
   for (const research of ['rca-aiops', 'distributed-machine-learning']) {
     await page.goto(base + '/publications/?research=' + research); await waitForSearch();
-    assert.equal(new URL(page.url()).searchParams.get('research'), 'distributed-machine-learning');
+    assert.equal(new URL(page.url()).searchParams.get('research'), 'rca-aiops');
     assert.deepEqual(await visible.locator('h2 a').evaluateAll(links => links.map(link => link.getAttribute('href'))),
       aiopsPublications.map(record => record.url), 'Old and new archive links must select the same combined area');
   }
-  await page.goto(base + '/publications/?research=rca-aiops&q=GALA&page=1'); await waitForSearch();
+  await page.goto(base + '/publications/?research=distributed-machine-learning&q=GALA&page=1'); await waitForSearch();
+  assert.equal(new URL(page.url()).searchParams.get('research'), 'rca-aiops');
   assert.equal(new URL(page.url()).searchParams.get('q'), 'GALA');
   assert.equal(new URL(page.url()).searchParams.get('page'), '1');
   const oldQueryMatches = await visible.locator('h2 a').allTextContents();

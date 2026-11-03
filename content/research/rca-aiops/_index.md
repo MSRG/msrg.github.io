@@ -2,7 +2,7 @@
 title = "Root Cause Analysis & AIOps"
 slug = "rca-aiops"
 aliases = ["/research/distributed-machine-learning/"]
-legacy_research_ids = ["rca-aiops"]
+legacy_research_ids = ["distributed-machine-learning"]
 layout = "area"
 show_section_links = true
 weight = 20

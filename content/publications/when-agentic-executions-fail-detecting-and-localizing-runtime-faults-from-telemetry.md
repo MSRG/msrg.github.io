@@ -5,7 +5,7 @@ year = 2026
 authors = ["Chenkai Zhang", "Yiran Li", "Yifang Tian", "Michail Bachras", "Hans-Arno Jacobsen"]
 venue = "Proceedings of the 1st International Workshop on Trustworthy and Responsible aUtonomous SysTems (TRUST '26), pp. 75–82"
 publication_type = "Workshop Paper"
-research = ["distributed-machine-learning"]
+research = ["rca-aiops"]
 external_url = "https://doi.org/10.1145/3843782.3844662"
 tags = ["AgentChaosBench", "When Agentic Executions Fail: Detecting and Localizing Runtime Faults from Telemetry"]
 # Keep the earlier manuscript title searchable after updating the citation.

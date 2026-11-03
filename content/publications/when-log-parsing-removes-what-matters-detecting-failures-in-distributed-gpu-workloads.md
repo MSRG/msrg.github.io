@@ -4,7 +4,7 @@ year = 2026
 authors = ["Boyuan Cui", "Yuyang Zeng", "Yifang Tian", "Hans-Arno Jacobsen"]
 venue = "Proceedings of the 1st International Workshop on Reliable and trustworthy Automated Software Engineering (RASE '26), pp. 60–63"
 publication_type = "Workshop Paper"
-research = ["distributed-machine-learning"]
+research = ["rca-aiops"]
 external_url = "https://doi.org/10.1145/3820756.3844919"
 # ACM publisher metadata: https://api.crossref.org/works/10.1145/3820756.3844919
 
