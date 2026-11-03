@@ -9,6 +9,10 @@ blurb = """MSRG works on foundational challenges of quantum computing including 
 # QSC funding: https://www.qscc.ca/
 # QSC leadership: https://www.qscc.ca/people/
 # Leadership: https://cqiqc.physics.utoronto.ca/news/recent-news/cqiqc-researchers-receive-5-million-for-quantum-software-consortium-initiative/
+acknowledgement = "We acknowledge the support of the Natural Sciences and Engineering Research Council of Canada (NSERC) for the Quantum Software Consortium (QSC) through Alliance Consortia Quantum grant ALLRP587590-23."
+supporters = [
+  { name = "Natural Sciences and Engineering Research Council of Canada (NSERC)", url = "https://nserc-crsng.canada.ca/", logo = "/images/support/nserc.png", width = 145, height = 70 }
+]
 +++
 
 MSRG investigates distributed quantum algorithms and quantum machine learning
@@ -23,9 +27,7 @@ chemical problems.
 
 Prof. Hans-Arno Jacobsen leads the interdisciplinary
 [Quantum Software Consortium (QSC)](https://www.qscc.ca/) as its scientific
-director. We acknowledge the support of the Natural Sciences and Engineering
-Research Council of Canada (NSERC) for QSC through Alliance Consortia Quantum
-grant **ALLRP587590-23**.
+director.
 
 We also participate in the University of Toronto's Centre for Quantum
 Information and Quantum Control. These collaborations bring our distributed
