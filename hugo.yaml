@@ -42,7 +42,7 @@ permalinks:
   data-sets: /data-sets/:slug/
 
 params:
-  description: Systems research at the University of Toronto spanning data management, distributed machine learning, and quantum computing systems.
+  description: Systems research at the University of Toronto spanning data management, root cause analysis and AIOps, and quantum computing, with continuing work in distributed AI and machine learning.
   # Public contact: https://www.qscc.ca/open-positions/
   contact_email: jacobsen@eecg.utoronto.ca
   contact_phone: "+1 416 946 7586"
@@ -71,9 +71,9 @@ menu:
       parent: research
       pageRef: /research/quantum-computing-systems
       weight: 21
-    - name: Distributed Machine Learning
+    - name: Root Cause Analysis & AIOps
       parent: research
-      pageRef: /research/distributed-machine-learning
+      pageRef: /research/rca-aiops
       weight: 22
     - name: Data Management
       parent: research

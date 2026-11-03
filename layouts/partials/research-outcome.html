@@ -1,0 +1,7 @@
+<article class="card">
+  <h3><a href="{{ .outcome.url }}">{{ .outcome.title }}</a></h3>
+  <p>{{ .outcome.summary }}</p>
+  {{ with .publication }}
+    <p class="content-actions"><a href="{{ .RelPermalink }}">Related publication</a></p>
+  {{ end }}
+</article>

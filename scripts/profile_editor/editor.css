@@ -8,7 +8,18 @@ h2, legend { font-size: 1.2rem; font-weight: 700; }
 .eyebrow { font-size: .8rem; text-transform: uppercase; letter-spacing: .1em; }
 main { padding: 1.5rem 0 3rem; }
 .picker, .actions { display: flex; gap: 1rem; align-items: end; flex-wrap: wrap; }
+.picker { align-items: start; }
 .picker > div { flex: 1; min-width: min(16rem, 100%); }
+.entry-picker { position: relative; }
+.entry-control { display: flex; }
+.entry-control input { min-width: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; }
+.entry-control button { flex: 0 0 44px; padding: .6rem; border-color: #8a98ac; border-left: 0; border-top-left-radius: 0; border-bottom-left-radius: 0; }
+.entry-menu { position: absolute; left: 0; right: 0; z-index: 10; display: flex; flex-direction: column; max-height: min(20rem, 45vh); overflow: hidden; background: white; border: 1px solid #8a98ac; border-radius: .4rem; box-shadow: 0 .4rem 1.2rem #14284b26; }
+#entry-options { list-style: none; margin: 0; padding: .25rem; min-height: 0; overflow: auto; overscroll-behavior: contain; }
+#entry-options [role=option] { min-height: 44px; margin: 0; padding: .6rem; overflow-wrap: anywhere; white-space: normal; border-radius: .25rem; cursor: pointer; }
+#entry-options [aria-selected=true] { font-weight: 700; }
+#entry-options .active { background: #eaf0f9; outline: 2px solid #3274c9; outline-offset: -2px; }
+#entry-empty { margin: 0; padding: .75rem; }
 label { display: block; font-weight: 600; margin-bottom: .3rem; }
 input, select, textarea, button { font: inherit; }
 input:not([type=checkbox]), select, textarea { width: 100%; border: 1px solid #8a98ac; border-radius: .4rem; padding: .6rem; background: white; color: #14284b; min-height: 44px; }

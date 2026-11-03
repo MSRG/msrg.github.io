@@ -74,6 +74,8 @@ class ContentContractTests(unittest.TestCase):
             with self.subTest(path=path):
                 for area in data.get("research", []):
                     self.assertIn(area, areas)
+                self.assertEqual(len(data.get("research", [])), len(set(data.get("research", []))),
+                                 "A record must not repeat the consolidated research area")
                 for dataset in data.get("related_datasets", []):
                     self.assertIn(dataset, datasets)
                 if data.get("related_publication"):
@@ -89,6 +91,13 @@ class ContentContractTests(unittest.TestCase):
                     else:
                         self.assertIn(parsed.scheme, {"http", "https"})
                         self.assertTrue(parsed.netloc)
+
+    def test_legacy_research_filters_are_unique_and_not_separate_areas(self) -> None:
+        areas = {path.parent.name: load_toml_front_matter(path)
+                 for path in (ROOT / "content/research").glob("*/_index.md")}
+        legacy_ids = [alias for data in areas.values() for alias in data.get("legacy_research_ids", [])]
+        self.assertEqual(len(legacy_ids), len(set(legacy_ids)))
+        self.assertFalse(set(legacy_ids).intersection(areas), "A legacy filter must not be a separate research area")
 
 
 if __name__ == "__main__":

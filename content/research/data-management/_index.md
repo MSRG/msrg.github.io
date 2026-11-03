@@ -20,6 +20,11 @@ can repeat computations and produce the same intermediate data. Our approach
 detects these overlaps online and coordinates execution so queries can share
 work and improve throughput.
 
+Our [Root Cause Analysis & AIOps](/research/rca-aiops/) research examines the
+operational reliability of cloud-native systems, using metrics, logs, traces,
+and service dependencies to support fault diagnosis, incident response, and
+automated repair.
+
 ## Blockchain, Distributed Ledger Technology & Consensus
 
 We develop consensus algorithms, fault-tolerance mechanisms, and consistency

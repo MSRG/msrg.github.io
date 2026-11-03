@@ -5,6 +5,7 @@ role = "MSc Student"
 status = "current"
 start_date = "2025-09"
 location = "Toronto, Canada"
+research = ["rca-aiops"]
 email = "yifeng.he@mail.utoronto.ca"
 interests = []
 author_names = ["Yifeng He", "Yifeng (Jason) He"]

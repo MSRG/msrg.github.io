@@ -49,7 +49,7 @@ in the terminal (usually **http://127.0.0.1:1313/**); **Ctrl+C** stops both.
 | Choose | What you can do |
 | --- | --- |
 | Member profiles | Update your details, research areas, links, awards, and portrait. |
-| Publications | Add papers, abstracts, authors, tags, and related datasets. |
+| Publications | Add papers, abstracts, authors, research outcomes, tags, and related datasets. |
 | Personal Pages | Build a page from a template or preview your custom website. |
 | Datasets and downloads | Add descriptions, related papers, download links, and files. |
 
@@ -85,8 +85,17 @@ to share that.
 ### Add or edit publications
 
 Choose **Publications**, select a paper or **New entry**, and fill in
-the title, year, authors, venue, paper URL, and publication type.
+the title, year, authors, venue, paper links, and publication type.
 Use **Year** for the paper's publication year.
+Use **Published / official URL** for the published version's DOI, publisher page,
+or official publication record. Use **Preprint URL** for the corresponding arXiv
+or other preprint repository page. Provide at least one; both are welcome.
+The published version takes priority, with a less prominent preprint link beside
+it. If only a preprint is available, leave the published URL blank. 
+Explain significant title or version differences in **Additional
+notes**. When a paper is published, add its
+published URL and update the venue, year, and publication type; keep its preprint
+URL as a secondary link.
 Choose **Publication type** from the dropdown. If the correct type is missing,
 contact the site owner to have it added.
 For authors, search website members and their published name variants, or type
@@ -94,6 +103,13 @@ another author's name. Press **Enter** or choose **Add** for each author, in the
 order shown on the paper. Tags and other item lists work the same way; you can
 also paste a list with line breaks.
 Add research areas and related datasets where relevant.
+
+If the paper has public code, a benchmark, data, or a project website, choose
+**Add research outcome**. Fill in its name, HTTPS link, and a short plain-text
+description of what is available. You can add more than one outcome or leave
+the section empty. Save and preview the publication to check the links and text.
+Outcomes appear on the publication page and in its selected research areas;
+changing those selections also updates where its outcomes appear.
 
 The page identifier is assigned automatically from the original title and cannot
 be edited. If it is already in use, a number is added (for example, `paper-2`).
@@ -168,6 +184,7 @@ Link to an external repository for datasets larger than **20 MB**.
 | --- | --- |
 | Homepage text | `content/_index.md` |
 | Research themes | `content/research/` |
+| Research software and benchmark outcomes | Publication editor, saved in `content/publications/` |
 | Navigation and site settings | `hugo.yaml` |
 
 Use GitHub's file editor on a branch or fork, then submit a PR.

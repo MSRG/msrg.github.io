@@ -8,4 +8,6 @@ research = ["quantum-computing-systems"]
 tags = ["quantum-systems"]
 external_url = "https://doi.org/10.1007/978-3-032-11153-1_11"
 url = "/publications/adversarial-robustness-in-distributed-quantum-machine-learning/"
+# Preprint correspondence checked against the author-deposited manuscript and published citation.
+preprint_url = "https://arxiv.org/abs/2508.11848"
 +++

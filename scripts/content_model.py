@@ -120,7 +120,12 @@ def validate_fields(fields: list[dict], data: dict, kind: str, root: Path = ROOT
                 parsed = urlsplit(value)
                 schemes = {"https"} if field.get("https_only") else {"http", "https"}
                 host = parsed.hostname or ""
-                if parsed.scheme not in schemes or not host or any(c.isspace() for c in value):
+                if (parsed.scheme not in schemes or not host or
+                        any(c.isspace() or ord(c) < 32 or ord(c) == 127 for c in value) or "\\" in value):
+                    raise ValueError
+                # urlsplit leaves invalid ports and escaped hostnames unchecked.
+                parsed.port
+                if parsed.username is not None or parsed.password is not None or "%" in host:
                     raise ValueError
                 if field.get("host") and not (host == field["host"] or host.endswith("." + field["host"])):
                     raise ValueError
@@ -145,6 +150,21 @@ def validate_record(kind: str, data: dict, slug: str | None = None, root: Path =
         errors.append("slug: must match the profile filename")
     if kind == "personal" and slug is not None and data.get("url", f"/~{slug}/") != f"/~{slug}/":
         errors.append(f"url: expected /~{slug}/")
+    if kind == "publications":
+        published, preprint = data.get("external_url"), data.get("preprint_url")
+        if not any(isinstance(url, str) and url.strip() for url in (published, preprint)):
+            errors.append("external_url / preprint_url: provide a published / official URL, a preprint URL, or both")
+        if isinstance(published, str) and published:
+            try:
+                parsed = urlsplit(published)
+                host = (parsed.hostname or "").lower()
+                if (host == "arxiv.org" or host.endswith(".arxiv.org") or
+                        host in {"doi.org", "dx.doi.org"} and parsed.path.lower().startswith("/10.48550/arxiv.")):
+                    errors.append("external_url: put arXiv links in Preprint URL; leave Published / official URL blank until available")
+            except ValueError:
+                pass  # The URL field validation above reports malformed URLs.
+        if isinstance(published, str) and published and published == preprint:
+            errors.append("preprint_url: use a distinct preprint link, not the published / official URL")
     return errors
 
 

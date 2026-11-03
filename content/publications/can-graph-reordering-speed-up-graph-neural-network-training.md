@@ -4,8 +4,10 @@ year = 2024
 authors = ["Nikolai Merkel", "Pierre Toussing", "Ruben Mayer", "Hans-Arno Jacobsen"]
 venue = "Proceedings of the VLDB Endowment"
 publication_type = "Journal Article"
-research = ["distributed-machine-learning"]
+research = ["rca-aiops"]
 tags = ["graph-systems", "performance", "distributed-training"]
 external_url = "https://doi.org/10.14778/3705829.3705846"
 abstract = "Graph neural networks (GNNs) are a type of neural network capable of learning on graph-structured data. However, training GNNs on large-scale graphs is challenging due to iterative aggregations of high-dimensional features from neighboring vertices within sparse graph structures combined with neural network operations. The sparsity of graphs frequently results in suboptimal memory access patterns and longer training time. Graph reordering is an optimization strategy aiming to improve the graph data layout. It has shown to be effective to speed up graph analytics workloads, but its effect on the performance of GNN training has not been investigated yet. The generalization of reordering to GNN performance is nontrivial, as multiple aspects must be considered: GNN hyper-parameters such as the number of layers, the number of hidden dimensions, and the feature size used in the GNN model, neural network operations, large intermediate vertex states, and GPU acceleration. In our work, we close this gap by performing an empirical evaluation of 12 reordering strategies in two state-of-the-art GNN systems, PyTorch Geometric and Deep Graph Library. Our results show that graph reordering is effective in reducing training time for CPU- and GPU-based training, respectively. Further, we find that GNN hyper-parameters influence the effectiveness of reordering, that reordering metrics play an important role in selecting a reordering strategy, that lightweight reordering performs better for GPU-based than for CPU-based training, and that invested reordering time can in many cases be amortized."
+# Preprint correspondence checked against the author-deposited manuscript and published citation.
+preprint_url = "https://arxiv.org/abs/2409.11129"
 +++

@@ -346,11 +346,19 @@
         },
         {
           "key": "external_url",
-          "label": "Paper URL",
+          "label": "Published / official URL",
           "type": "string",
           "default": "",
-          "required": true,
-          "format": "url"
+          "format": "url",
+          "help": "Link to the published version's DOI, publisher page, or official publication record. Leave blank if only a preprint is available, even if the paper is accepted. Provide this link, a preprint link, or both."
+        },
+        {
+          "key": "preprint_url",
+          "label": "Preprint URL",
+          "type": "string",
+          "default": "",
+          "format": "url",
+          "help": "Link to this paper's preprint on arXiv or another repository. It appears beside the published version with less emphasis, or as an explicitly labeled preprint link when no published link is available. Explain significant version differences in Additional notes."
         },
         {
           "key": "publication_type",
@@ -381,6 +389,42 @@
           "type": "strings",
           "default": [],
           "options_source": "research"
+        },
+        {
+          "key": "research_outcomes",
+          "label": "Research outcomes",
+          "add_label": "Add research outcome",
+          "type": "objects",
+          "default": [],
+          "help": "Optional public code, benchmarks, datasets, or project websites. Each outcome is linked automatically to this publication and its selected research areas.",
+          "fields": [
+            {
+              "key": "title",
+              "label": "Outcome name",
+              "type": "string",
+              "default": "",
+              "required": true
+            },
+            {
+              "key": "url",
+              "label": "Project or repository URL",
+              "type": "string",
+              "default": "",
+              "format": "url",
+              "https_only": true,
+              "required": true,
+              "help": "Use a public HTTPS link."
+            },
+            {
+              "key": "summary",
+              "label": "Description",
+              "type": "string",
+              "default": "",
+              "multiline": true,
+              "required": true,
+              "help": "Briefly describe what is publicly available, using plain text."
+            }
+          ]
         },
         {
           "key": "abstract",

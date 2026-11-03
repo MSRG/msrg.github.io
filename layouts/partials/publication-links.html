@@ -1,0 +1,37 @@
+{{/* The two URLs describe versions, independently of venue/type or acceptance. */}}
+{{ $page := .page }}
+{{ $compact := .compact | default false }}
+{{ $published := $page.Params.external_url }}
+{{ $preprint := $page.Params.preprint_url }}
+{{ $publishedHost := "" }}
+{{ with $published }}{{ $publishedHost = lower (urls.Parse .).Hostname }}{{ end }}
+{{ $publishedLabel := "Published version" }}
+{{ if eq $page.Params.publication_type "Technical Report" }}
+  {{ $publishedLabel = "Technical report" }}
+{{ else if eq $page.Params.publication_type "Dataset" }}
+  {{ $publishedLabel = "View dataset" }}
+{{ else if eq $page.Params.publication_type "Software" }}
+  {{ $publishedLabel = "View software" }}
+{{ else if in (slice "dblp.org" "www.dblp.org") $publishedHost }}
+  {{ $publishedLabel = "Publication record" }}
+{{ else if and (eq $page.Params.publication_type "Workshop Paper") (in (slice "blog.genlaw.org" "openreview.net" "neurips.cc") $publishedHost) }}
+  {{/* Official workshop copies may be non-archival; publisher/DOI links keep their label. */}}
+  {{ $publishedLabel = "Workshop version" }}
+{{ end }}
+{{ $preprintLabel := "Preprint" }}
+{{ with $preprint }}
+  {{ $host := lower (urls.Parse .).Hostname }}
+  {{ if or (eq $host "arxiv.org") (strings.HasSuffix $host ".arxiv.org") }}
+    {{ $preprintLabel = printf "%s (arXiv)" $preprintLabel }}
+  {{ end }}
+{{ end }}
+{{ if or $published $preprint }}
+  <p class="content-actions publication-links{{ if $compact }} publication-links-compact{{ end }}">
+    {{ with $published }}
+      <a{{ if not $compact }} class="button"{{ end }} href="{{ . }}" target="_blank" rel="noopener noreferrer">{{ $publishedLabel }}</a>
+    {{ end }}
+    {{ with $preprint }}
+      <a class="{{ if not $compact }}button button-secondary {{ end }}publication-preprint" href="{{ . }}" target="_blank" rel="noopener noreferrer">{{ $preprintLabel }}</a>
+    {{ end }}
+  </p>
+{{ end }}
