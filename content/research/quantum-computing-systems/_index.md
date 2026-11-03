@@ -6,6 +6,9 @@ accent = "copper"
 question = "Can quantum computers deliver reliable and scalable performance to tackle real-world challenges?"
 blurb = """MSRG works on foundational challenges of quantum computing including NISQ-era quantum algorithms, quantum error correction, and qubit noise reduction. We develop distributed quantum algorithms to accelerate electronic structure calculations, enabling more accurate modelling of molecular systems. Simultaneously, we use quantum machine learning techniques to efficiently explore chemical compound space, contributing to material discovery research. This interdisciplinary approach bridges quantum computing, machine learning, and computational chemistry to tackle fundamental challenges in molecular simulation and materials discovery."""
 # Description aligned with https://msrg.org/research/quantum-computing-systems/
+# QSC funding: https://www.qscc.ca/
+# QSC leadership: https://www.qscc.ca/people/
+# Leadership: https://cqiqc.physics.utoronto.ca/news/recent-news/cqiqc-researchers-receive-5-million-for-quantum-software-consortium-initiative/
 +++
 
 MSRG investigates distributed quantum algorithms and quantum machine learning
@@ -18,11 +21,16 @@ catalysts that could help reduce greenhouse gases. We work with specialists
 such as synthetic inorganic chemists to connect computing research with
 chemical problems.
 
-The group participates in Canada's interdisciplinary Quantum Software
-Consortium, where Prof. Jacobsen serves as scientific director, and the
-University of Toronto's Centre for Quantum Information and Quantum Control.
-These collaborations bring our distributed algorithms and machine learning
-expertise together with university researchers and industry partners.
+Prof. Hans-Arno Jacobsen leads the interdisciplinary
+[Quantum Software Consortium (QSC)](https://www.qscc.ca/) as its scientific
+director. We acknowledge the support of the Natural Sciences and Engineering
+Research Council of Canada (NSERC) for QSC through Alliance Consortia Quantum
+grant **ALLRP587590-23**.
+
+We also participate in the University of Toronto's Centre for Quantum
+Information and Quantum Control. These collaborations bring our distributed
+algorithms and machine learning expertise together with university researchers
+and industry partners.
 
 ## Current directions
 
