@@ -84,6 +84,10 @@ let browser;
     await page.locator('#kind').selectOption(kind);
     await page.waitForFunction(expected => !document.querySelector('#save').disabled && document.querySelector('#kind').value === expected, kind);
   }
+  async function chooseEntry(slug) {
+    await page.locator('#entry-toggle').click();
+    await page.locator('#entry-options [data-value=' + JSON.stringify(slug) + ']').click();
+  }
   await save();
   console.log('Profile saved');
   assert.equal(await page.locator('#save').textContent(), 'Save changes');
@@ -293,7 +297,7 @@ let browser;
   assert.deepEqual(await items('authors'), ['J. Doe', 'John Doe', 'Doe, Alex', 'External Author'], 'Saving includes unfinished input');
   assert.deepEqual(await items('tags'), ['quantum', 'systems']);
   assert.equal(await page.locator('#record-slug').inputValue(), 'example-paper');
-  await page.locator('#profile').selectOption('');
+  await chooseEntry('');
   await page.waitForFunction(() => !document.querySelector('#save').disabled && document.querySelector('#save').textContent === 'Create');
   assert.equal(await outcomeRows.count(), 0, 'A new publication starts with no outcomes');
   assert.deepEqual(await items('authors'), [], 'New entry resets the list controls');
@@ -306,7 +310,7 @@ let browser;
   await save();
   assert.equal(await page.locator('#record-slug').inputValue(), 'example-paper-2');
   assert.equal(await outcomeRows.count(), 0, 'Publications can be created without outcomes or research areas');
-  assert.equal(await page.locator('#profile').inputValue(), 'example-paper-2');
+  assert.equal(await page.locator('#profile').inputValue(), 'Example Paper');
   assert.match(await page.locator('#preview').getAttribute('href'), /\/publications\/example-paper-2\/$/);
   assert.equal(await page.locator('#record-slug').evaluate(input => input.readOnly), true);
 
@@ -329,7 +333,7 @@ let browser;
   console.log('Publication form loaded');
   assert.deepEqual(await page.locator('#tags-suggestions option').evaluateAll(options => options.map(option => option.value)), ['quantum', 'systems']);
   await page.evaluate(() => { window.outcomeFocusEvents = []; });
-  await page.locator('#profile').selectOption('example-paper');
+  await chooseEntry('example-paper');
   await page.waitForFunction(() => !document.querySelector('#save').disabled && document.querySelector('#title').value === 'Example Paper');
   assert.deepEqual(await page.evaluate(() => window.outcomeFocusEvents), [], 'Loading an existing publication must not focus its outcomes');
   assert.deepEqual(await outcomeValues(), expectedOutcomes);
@@ -381,7 +385,7 @@ let browser;
   assert.match(fs.readFileSync(publication, 'utf8'), /aliases = \["\/publications\/revised-paper\/"\]/);
 
   await choose('people');
-  await page.locator('#profile').selectOption('jane-doe');
+  await chooseEntry('jane-doe');
   await page.waitForFunction(() => !document.querySelector('#save').disabled && document.querySelector('#slug').value === 'jane-doe');
   assert.equal(await page.locator('#personal-page-status').textContent(), 'Enabled — template page');
   assert.equal(await page.locator('#personal-page-status').evaluate(element => element.tagName), 'OUTPUT');
@@ -407,7 +411,7 @@ let browser;
       await choose(kind);
       if (kind !== 'personal') {
         const slug = { people: 'jane-smith', publications: 'example-paper', 'data-sets': 'example-dataset' }[kind];
-        await page.locator('#profile').selectOption(slug);
+        await chooseEntry(slug);
         await page.waitForFunction(() => !document.querySelector('#save').disabled && document.querySelector('#save').textContent === 'Save changes');
       }
       assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1), false, `Overflow at ${width}px: ${kind}`);
@@ -430,6 +434,202 @@ let browser;
   await page.waitForFunction(() => document.querySelector('#preview').getAttribute('aria-disabled') === 'true');
   assert.equal(await page.locator('#preview').getAttribute('href'), null);
   assert.equal(await page.locator('#preview-start').isVisible(), true);
+
+  // Native select popups can expand to their longest option. Exercise the
+  // replacement with a large collection and a single option taller than it.
+  const longTitle = 'Extremely long publication title: ' + 'Full title text must stay readable. '.repeat(30) + 'Unbroken'.repeat(60);
+  function pickerFixture(slug, title) {
+    fs.writeFileSync(path.join(fixture, 'content/publications', slug + '.md'),
+      '+++\ntitle = ' + JSON.stringify(title) + '\nyear = 2026\nauthors = ["Example Author"]\nvenue = "Example"\npublication_type = "Conference Paper"\nexternal_url = "https://example.org/paper"\n+++\n');
+  }
+  pickerFixture('picker-long', longTitle);
+  pickerFixture('picker-duplicate-a', 'Repeated publication title');
+  pickerFixture('picker-duplicate-b', 'Repeated publication title');
+  for (let i = 0; i < 80; i++) pickerFixture('picker-' + i, 'Picker sample ' + String(i).padStart(3, '0'));
+  await choose('publications');
+  const entry = page.locator('#profile'), entryMenu = page.locator('#entry-menu');
+  const entryOptions = page.locator('#entry-options [role="option"]');
+  const menuScreenshots = fs.mkdtempSync(path.join(os.tmpdir(), `msrg-entry-${engine}-`));
+  for (const [width, height] of [[1440, 900], [800, 600], [390, 844], [320, 568]]) {
+    await page.setViewportSize({ width, height });
+    await entry.scrollIntoViewIfNeeded();
+    await entry.fill('Extremely long');
+    assert.equal(await entryOptions.count(), 1);
+    assert.equal(await entryOptions.first().textContent(), longTitle, 'Retain the full option label');
+    assert.equal(await entryOptions.first().getAttribute('aria-selected'), 'true', 'Filtered active suggestion is selected for assistive technology');
+    const bounds = await page.evaluate(() => {
+      const menu = document.querySelector('#entry-menu'), list = document.querySelector('#entry-options'), control = document.querySelector('.entry-control');
+      const rect = menu.getBoundingClientRect(), field = control.getBoundingClientRect();
+      const row = menu.querySelector('[role=option]').getBoundingClientRect();
+      return { left: rect.left, right: rect.right, top: rect.top, bottom: rect.bottom,
+        width: rect.width, fieldWidth: field.width, height: rect.height, rowHeight: row.height,
+        rowTop: row.top, scrolling: list.scrollHeight > list.clientHeight,
+        overflow: document.documentElement.scrollWidth > innerWidth + 1,
+        menuOverflow: list.scrollWidth > list.clientWidth + 1 };
+    });
+    assert(bounds.left >= 0 && bounds.right <= width + 1 && bounds.top >= 0 && bounds.bottom <= height + 1, 'Menu must stay within viewport');
+    assert(bounds.width <= bounds.fieldWidth + 1 && bounds.height <= Math.min(320, height * .45) + 1);
+    assert(bounds.scrolling && bounds.rowHeight > bounds.height, 'Exercise an option taller than the menu');
+    assert(Math.abs(bounds.rowTop - bounds.top) < 8, 'A tall option initially shows the start of its title');
+    assert.equal(bounds.overflow || bounds.menuOverflow, false);
+    const beforeScroll = await page.evaluate(() => scrollY);
+    await entry.press('PageDown');
+    assert(await page.locator('#entry-options').evaluate(list => list.scrollTop > 50), 'Keyboard users can read the rest of a tall option');
+    assert.equal(await page.evaluate(() => scrollY), beforeScroll);
+    await entry.press('PageUp');
+    assert(await page.locator('#entry-options').evaluate(list => list.scrollTop < 10));
+    const menuBox = await entryMenu.boundingBox();
+    await page.mouse.move(menuBox.x + 20, menuBox.y + menuBox.height / 2);
+    await page.mouse.wheel(0, 150);
+    await page.waitForFunction(() => document.querySelector('#entry-options').scrollTop > 50);
+    assert.equal(await page.evaluate(() => scrollY), beforeScroll, 'Wheel scrolling stays inside the menu');
+    await entry.press('Escape');
+    assert.equal(await entry.inputValue(), 'New entry');
+    assert.equal(await page.locator('#title').inputValue(), '');
+    await page.locator('#entry-toggle').click();
+    assert.equal(await entryOptions.count(), 86);
+    await page.screenshot({ path: path.join(menuScreenshots, `entries-${width}.png`) });
+    await page.addScriptTag({ path: require.resolve('axe-core/axe.min.js') });
+    assert.deepEqual(await page.evaluate(async () => (await axe.run()).violations.map(v => v.id)), [], 'Open entry menu accessibility');
+    await entry.press('Escape');
+  }
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.evaluate(() => scrollTo(0, 0));
+  await entry.press('ArrowDown');
+  assert.equal(await entryMenu.isVisible(), true);
+  await page.mouse.move(20, 250); await page.mouse.wheel(0, 500);
+  await page.waitForFunction(() => document.querySelector('#entry-menu').hidden);
+  assert.equal(await entry.getAttribute('aria-expanded'), 'false', 'Dismiss when document scrolling hides the control');
+  assert.equal(await entry.getAttribute('aria-activedescendant'), null);
+  assert.equal(await entry.inputValue(), 'New entry');
+  assert.equal(await page.locator('#record-slug').inputValue(), '');
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.evaluate(() => scrollTo(0, 0));
+  await entry.press('ArrowDown');
+  assert.equal(await entryMenu.isVisible(), true);
+  await page.setViewportSize({ width: 390, height: 360 });
+  await page.evaluate(() => scrollTo(0, 0));
+  await page.waitForFunction(() => document.querySelector('#entry-menu').hidden);
+  assert.equal(await entry.getAttribute('aria-expanded'), 'false', 'Dismiss when resizing hides the control');
+  assert.equal(await entry.getAttribute('aria-activedescendant'), null);
+  assert.equal(await entry.inputValue(), 'New entry');
+  assert.equal(await page.locator('#record-slug').inputValue(), '');
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.evaluate(() => scrollTo(0, 0));
+  await entry.fill('No matching entry xyz');
+  assert.equal(await entryOptions.count(), 0);
+  assert.equal(await page.locator('#entry-empty').isVisible(), true);
+  assert.equal(await entry.getAttribute('aria-activedescendant'), null);
+  await entry.press('Escape');
+  assert.equal(await entry.inputValue(), 'New entry');
+  await entry.press('ArrowDown');
+  await page.mouse.move(0, 0);
+  const beforeKeys = await page.evaluate(() => scrollY);
+  for (let i = 0; i < 45; i++) await entry.press('ArrowDown');
+  assert.equal(await page.locator('#entry-options [aria-selected="true"]').count(), 1);
+  assert.equal(await page.locator('#' + await entry.getAttribute('aria-activedescendant')).getAttribute('aria-selected'), 'true');
+  assert.equal(await page.evaluate(() => scrollY), beforeKeys, 'Keyboard navigation scrolls only the menu');
+  assert.equal(await page.locator('#record-slug').inputValue(), '', 'Highlighting does not select a record');
+  await entry.press('Escape');
+  await entry.fill('Picker sample 037');
+  await entry.press('Enter');
+  await page.waitForFunction(() => !document.querySelector('#save').disabled && document.querySelector('#record-slug').value === 'picker-37');
+  assert.equal(await entry.evaluate(input => input === document.activeElement), true, 'Focus returns after loading the chosen record');
+  assert.equal(await entryMenu.isVisible(), false);
+  await entry.fill('Uncommitted search');
+  await entry.press('Tab');
+  assert.equal(await entry.inputValue(), 'Picker sample 037');
+  assert.equal(await entryMenu.isVisible(), false);
+  await entry.fill('Picker sample 038');
+  await page.locator('h1').click();
+  assert.equal(await entry.inputValue(), 'Picker sample 037', 'Outside clicks dismiss without changing the record');
+  assert.equal(await page.locator('#record-slug').inputValue(), 'picker-37');
+  await entry.fill('Repeated publication title');
+  assert.equal(await entryOptions.count(), 2);
+  await page.locator('#entry-options [data-value="picker-duplicate-b"]').click();
+  await page.waitForFunction(() => !document.querySelector('#save').disabled && document.querySelector('#record-slug').value === 'picker-duplicate-b');
+  assert.equal(await entry.inputValue(), 'Repeated publication title');
+
+  await chooseEntry('example-paper');
+  await page.waitForFunction(() => !document.querySelector('#save').disabled && document.querySelector('#record-slug').value === 'example-paper');
+  const unsavedOutcome = page.locator('#field-research_outcomes input[id$="-title"]').first();
+  await unsavedOutcome.fill('Keep this unsaved outcome');
+  await entry.fill('Picker sample 037');
+  let discardPrompted = false;
+  page.once('dialog', dialog => { discardPrompted = true; dialog.dismiss(); });
+  await entry.press('Enter');
+  assert.equal(discardPrompted, true, 'Selecting another entry must prompt before discarding edits');
+  assert.equal(await entry.inputValue(), 'Revised Paper');
+  assert.equal(await page.locator('#record-slug').inputValue(), 'example-paper');
+  assert.equal(await unsavedOutcome.inputValue(), 'Keep this unsaved outcome');
+  await entry.fill('Picker sample 037');
+  discardPrompted = false;
+  page.once('dialog', dialog => { discardPrompted = true; dialog.accept(); });
+  await entry.press('Enter');
+  assert.equal(discardPrompted, true);
+  await page.waitForFunction(() => !document.querySelector('#save').disabled && document.querySelector('#record-slug').value === 'picker-37');
+
+  const failedRecordURL = base + '/api/records/publications/picker-38';
+  await page.route(failedRecordURL, route => route.fulfill({ status: 500, json: { error: 'Could not load test entry' } }));
+  await entry.fill('Picker sample 038'); await entry.press('Enter');
+  await page.waitForFunction(() => !document.querySelector('#save').disabled && document.querySelector('#message').classList.contains('error'));
+  assert.equal(await entry.inputValue(), 'Picker sample 037', 'A failed load restores the current selection');
+  assert.equal(await page.locator('#record-slug').inputValue(), 'picker-37');
+  await page.unroute(failedRecordURL);
+  let releaseLoad;
+  const pausedLoad = new Promise(resolve => { releaseLoad = resolve; });
+  const delayedRecordURL = base + '/api/records/publications/picker-39';
+  await page.route(delayedRecordURL, async route => { await pausedLoad; await route.continue(); });
+  await entry.fill('Picker sample 039'); await entry.press('Enter');
+  try {
+    await page.waitForFunction(() => document.querySelector('#profile').disabled);
+    assert.equal(await page.locator('#entry-toggle').isDisabled(), true);
+    assert.equal(await entryMenu.isVisible(), false);
+  } finally { releaseLoad(); }
+  await page.waitForFunction(() => !document.querySelector('#save').disabled && document.querySelector('#record-slug').value === 'picker-39');
+  await page.unroute(delayedRecordURL);
+  if (engine === 'chromium') {
+    // Use the real visual viewport at mobile pinch zoom, not a mocked object.
+    const mobile = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
+    try {
+      const phone = await mobile.newPage();
+      phone.on('pageerror', error => errors.push(error.message));
+      await phone.route(base + '/api/preview', route => route.fulfill({ json: previewState }));
+      await phone.goto(base);
+      await phone.waitForFunction(() => !document.querySelector('#save').disabled);
+      await phone.locator('#kind').selectOption('publications');
+      await phone.waitForFunction(() => !document.querySelector('#save').disabled && document.querySelector('#title'));
+      const input = phone.locator('#profile');
+      await input.fill('Picker sample');
+      const cdp = await mobile.newCDPSession(phone);
+      await cdp.send('Emulation.setPageScaleFactor', { pageScaleFactor: 2 });
+      await phone.waitForFunction(() => visualViewport.scale === 2);
+      await phone.evaluate(() => scrollTo(0, document.querySelector('.entry-control').getBoundingClientRect().top + scrollY - 50));
+      await input.fill('Picker sample 037');
+      assert.equal(await input.inputValue(), 'Picker sample 037', 'Zoom must not discard the typed query');
+      assert.equal(await phone.locator('#entry-menu').isVisible(), true);
+      const zoomBounds = await phone.evaluate(() => {
+        const menu = document.querySelector('#entry-menu').getBoundingClientRect();
+        const control = document.querySelector('.entry-control').getBoundingClientRect();
+        const viewport = visualViewport;
+        return { left: menu.left, right: menu.right, top: menu.top, bottom: menu.bottom,
+          visibleLeft: viewport.offsetLeft, visibleTop: viewport.offsetTop,
+          visibleRight: viewport.offsetLeft + viewport.width, visibleBottom: viewport.offsetTop + viewport.height,
+          controlWidth: control.width, visibleWidth: viewport.width };
+      });
+      assert(zoomBounds.controlWidth > zoomBounds.visibleWidth, 'Exercise a partly visible control at 2× zoom');
+      assert(zoomBounds.left >= zoomBounds.visibleLeft && zoomBounds.right <= zoomBounds.visibleRight + 1 &&
+        zoomBounds.top >= zoomBounds.visibleTop && zoomBounds.bottom <= zoomBounds.visibleBottom + 1, 'Zoomed menu stays inside the visual viewport');
+      assert.equal(await phone.locator('#record-slug').inputValue(), '', 'Zoomed search does not commit by itself');
+      await phone.screenshot({ path: path.join(menuScreenshots, 'entries-mobile-2x.png') });
+      await input.press('Enter');
+      await phone.waitForFunction(() => !document.querySelector('#save').disabled && document.querySelector('#record-slug').value === 'picker-37');
+      assert.equal(await input.inputValue(), 'Picker sample 037');
+      assert.equal(await phone.locator('#title').inputValue(), 'Picker sample 037');
+      console.log('chromium: mobile 2× zoom preserves search, bounds the popup, and selects the intended record');
+    } finally { await mobile.close(); }
+  }
+  console.log(`${engine}: bounded long-title entry picker, search, keyboard, dismissal, duplicate titles, dirty cancellation, and failed/busy loads passed. Screenshots: ${menuScreenshots}`);
   assert.deepEqual(errors, []);
   console.log(`${engine}: profile photo, awards, personal templates, publications and outcomes, dataset uploads, conflicts, accessibility and desktop/mobile layouts passed.`);
 })().catch(error => { console.error(error); process.exitCode = 1; }).finally(async () => {

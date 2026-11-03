@@ -1,6 +1,9 @@
 'use strict';
 const form = document.querySelector('#editor');
-const picker = document.querySelector('#profile');
+const picker = createEntryPicker(async value => {
+  if (canLeave()) await run(() => loadRecord(value));
+  else picker.value = current.slug;
+});
 const kindPicker = document.querySelector('#kind');
 const message = document.querySelector('#message');
 const saveButton = document.querySelector('#save');
@@ -18,6 +21,145 @@ function node(tag, text, className) {
   if (text !== undefined) element.textContent = text;
   if (className) element.className = className;
   return element;
+}
+function createEntryPicker(select) {
+  const input = document.querySelector('#profile');
+  const toggle = document.querySelector('#entry-toggle');
+  const wrapper = input.closest('.entry-picker');
+  const control = wrapper.querySelector('.entry-control');
+  const menu = document.querySelector('#entry-menu');
+  const list = document.querySelector('#entry-options');
+  const empty = document.querySelector('#entry-empty');
+  let options = [], matches = [], value = '', active = -1;
+  const normalize = text => text.normalize('NFKC').toLocaleLowerCase().trim();
+  function resetText() {
+    input.value = options.find(option => option.value === value)?.label || '';
+    input.title = input.value;
+  }
+  function close() {
+    menu.hidden = true;
+    input.setAttribute('aria-expanded', 'false'); toggle.setAttribute('aria-expanded', 'false');
+    toggle.setAttribute('aria-label', 'Show entries');
+    input.removeAttribute('aria-activedescendant');
+    resetText();
+  }
+  function position() {
+    if (menu.hidden) return;
+    const rect = control.getBoundingClientRect();
+    const parent = wrapper.getBoundingClientRect();
+    const viewport = window.visualViewport;
+    const top = viewport?.offsetTop || 0;
+    const height = viewport?.height || window.innerHeight;
+    const left = viewport?.offsetLeft || 0;
+    const width = viewport?.width || window.innerWidth;
+    if (rect.bottom <= top || rect.top >= top + height || rect.right <= left || rect.left >= left + width) {
+      close(); return;
+    }
+    // Pinch zoom can make the visible viewport narrower than the control.
+    // Keep the popup inside it while the control is at least partly visible.
+    const menuWidth = Math.min(rect.width, Math.max(0, width - 16));
+    const menuLeft = Math.max(left + 8, Math.min(rect.left, left + width - 8 - menuWidth));
+    menu.style.left = menuLeft - parent.left + 'px';
+    menu.style.right = 'auto';
+    menu.style.width = menuWidth + 'px';
+    const below = top + height - rect.bottom - 8;
+    const above = rect.top - top - 8;
+    const limit = Math.min(320, height * .45);
+    const upward = below < limit && above > below;
+    menu.style.maxHeight = Math.max(0, Math.min(limit, upward ? above : below)) + 'px';
+    menu.style.top = upward ? 'auto' : rect.bottom - parent.top + 4 + 'px';
+    menu.style.bottom = upward ? parent.bottom - rect.top + 4 + 'px' : 'auto';
+  }
+  function activate(index, scroll = true) {
+    active = index;
+    for (const [i, row] of Array.from(list.children).entries()) {
+      row.classList.toggle('active', i === active);
+      row.setAttribute('aria-selected', String(i === active));
+    }
+    const row = list.children[active];
+    if (!row) { input.removeAttribute('aria-activedescendant'); return; }
+    input.setAttribute('aria-activedescendant', row.id);
+    if (!scroll) return;
+    const bounds = list.getBoundingClientRect(), item = row.getBoundingClientRect();
+    // Scroll the list only; selecting an option must not jump the whole page.
+    if (item.height > bounds.height || item.top < bounds.top) list.scrollTop += item.top - bounds.top;
+    else if (item.bottom > bounds.bottom) list.scrollTop += item.bottom - bounds.bottom;
+  }
+  async function choose(index) {
+    const option = matches[index];
+    if (!option || input.disabled) return;
+    close(); input.focus();
+    if (option.value !== value) await select(option.value);
+    if (document.activeElement === document.body) input.focus();
+  }
+  function open(query = '') {
+    if (input.disabled) return;
+    const words = normalize(query).split(/\s+/).filter(Boolean);
+    matches = options.filter(option => words.every(word => normalize(option.label).includes(word)));
+    list.replaceChildren();
+    matches.forEach((option, index) => {
+      const row = node('li', option.label); row.id = 'entry-option-' + index;
+      row.setAttribute('role', 'option'); row.setAttribute('aria-selected', 'false');
+      row.dataset.value = option.value;
+      row.addEventListener('pointerdown', event => { if (event.button === 0) event.preventDefault(); });
+      row.addEventListener('click', () => choose(index));
+      row.addEventListener('pointerenter', () => activate(index, false));
+      list.append(row);
+    });
+    empty.hidden = matches.length !== 0;
+    menu.hidden = false; list.scrollTop = 0;
+    input.setAttribute('aria-expanded', 'true'); toggle.setAttribute('aria-expanded', 'true');
+    toggle.setAttribute('aria-label', 'Hide entries');
+    position();
+    if (menu.hidden) return;
+    const selected = query ? 0 : matches.findIndex(option => option.value === value);
+    activate(matches.length ? Math.max(0, selected) : -1);
+  }
+  input.addEventListener('focus', () => input.select());
+  input.addEventListener('click', () => { if (menu.hidden) { open(); input.select(); } });
+  input.addEventListener('input', () => {
+    input.title = '';
+    // Focus scrolling may finish after input in Firefox; anchor typed results
+    // before positioning them, especially when returning from a long form.
+    control.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+    open(input.value);
+  });
+  input.addEventListener('keydown', event => {
+    if (event.isComposing) return;
+    if (event.key === 'Escape') {
+      if (!menu.hidden) { event.preventDefault(); event.stopPropagation(); }
+      close();
+    } else if (event.key === 'Tab') close();
+    else if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+      event.preventDefault();
+      if (event.altKey && event.key === 'ArrowUp') close();
+      else if (menu.hidden) open();
+      else if (matches.length) activate(Math.max(0, Math.min(matches.length - 1, active + (event.key === 'ArrowDown' ? 1 : -1))));
+    } else if ((event.key === 'PageDown' || event.key === 'PageUp') && !menu.hidden) {
+      event.preventDefault();
+      list.scrollTop += list.clientHeight * .8 * (event.key === 'PageDown' ? 1 : -1);
+      const top = list.getBoundingClientRect().top;
+      activate(Array.from(list.children).findIndex(row => row.getBoundingClientRect().bottom > top + 4), false);
+    } else if (event.key === 'Enter') {
+      event.preventDefault();
+      if (menu.hidden) open(); else choose(active);
+    }
+  });
+  toggle.addEventListener('pointerdown', event => { if (event.button === 0) event.preventDefault(); });
+  toggle.addEventListener('click', () => { input.focus(); if (menu.hidden) open(); else close(); });
+  wrapper.addEventListener('focusout', event => { if (!wrapper.contains(event.relatedTarget)) close(); });
+  document.addEventListener('pointerdown', event => { if (!wrapper.contains(event.target)) close(); });
+  window.addEventListener('resize', position);
+  window.addEventListener('scroll', position, { capture: true, passive: true });
+  window.visualViewport?.addEventListener('resize', position);
+  window.visualViewport?.addEventListener('scroll', position);
+  return {
+    get value() { return value; },
+    set value(next) { value = next; close(); },
+    get options() { return options; },
+    setOptions(next) { options = next; close(); },
+    set disabled(disabled) { input.disabled = disabled; toggle.disabled = disabled; if (disabled) close(); },
+  };
 }
 function notify(text, error = false) {
   message.textContent = text;
@@ -416,13 +558,11 @@ function render() {
 }
 async function refreshList() {
   const records = await api('/api/records/' + kind);
-  picker.replaceChildren();
   if (kind === 'personal') {
     const members = await api('/api/profiles');
-    members.forEach(member => picker.add(new Option(member.name + (records.some(record => record.slug === member.slug) ? '' : ' — create page'), member.slug)));
+    picker.setOptions(members.map(member => ({ label: member.name + (records.some(record => record.slug === member.slug) ? '' : ' — create page'), value: member.slug })));
   } else {
-    picker.add(new Option('New entry', ''));
-    records.forEach(record => picker.add(new Option(record.name, record.slug)));
+    picker.setOptions([{ label: 'New entry', value: '' }, ...records.map(record => ({ label: record.name, value: record.slug }))]);
   }
   picker.value = current.slug;
 }
@@ -453,7 +593,6 @@ async function run(action) {
   try { await action(); } catch (error) { notify(error.message, true); }
   finally { setBusy(false); kindPicker.value = kind; picker.value = current.slug; }
 }
-picker.addEventListener('change', () => { if (canLeave()) run(() => loadRecord(picker.value)); else picker.value = current.slug; });
 kindPicker.addEventListener('change', () => { if (canLeave()) run(() => changeKind(kindPicker.value)); else kindPicker.value = kind; });
 document.querySelector('#reload').addEventListener('click', () => { if (canLeave()) run(() => loadRecord(current.slug)); });
 document.querySelector('#preview-start').addEventListener('click', async event => {

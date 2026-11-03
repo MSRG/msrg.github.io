@@ -13,7 +13,18 @@
   <main class="shell">
     <section class="picker" aria-label="Choose content">
       <div><label for="kind">What would you like to edit?</label><select id="kind"></select></div>
-      <div><label for="profile">Entry</label><select id="profile"></select></div>
+      <div class="entry-picker">
+        <label for="profile">Entry</label>
+        <div class="entry-control">
+          <input id="profile" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="entry-options" aria-describedby="entry-help" autocomplete="off" spellcheck="false" placeholder="Search entries…" disabled>
+          <button id="entry-toggle" type="button" class="secondary" aria-label="Show entries" aria-controls="entry-options" aria-expanded="false" tabindex="-1" disabled><span aria-hidden="true">▾</span></button>
+        </div>
+        <p id="entry-help" class="help">Type to search. Use the arrow keys and Enter to choose.</p>
+        <div id="entry-menu" class="entry-menu" hidden>
+          <ul id="entry-options" role="listbox" aria-label="Entries"></ul>
+          <p id="entry-empty" role="status" hidden>No matching entries.</p>
+        </div>
+      </div>
     </section>
     <p class="note">Changes save locally. They appear online after your pull request is reviewed and merged. Fields marked * are required.</p>
     <p id="message" role="status" aria-live="polite"></p>
