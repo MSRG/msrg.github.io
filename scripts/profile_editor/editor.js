@@ -530,6 +530,27 @@ function render() {
     document.querySelector('#layout').addEventListener('change', updateTemplateFields);
     updateTemplateFields();
   }
+  if (kind === 'publications') {
+    const published = document.querySelector('#external_url');
+    const preprint = document.querySelector('#preprint_url');
+    function validatePaperLinks() {
+      let error = !published.value.trim() && !preprint.value.trim()
+        ? 'Provide a published / official URL, a preprint URL, or both.' : '';
+      try {
+        const url = new URL(published.value);
+        if (url.hostname === 'arxiv.org' || url.hostname.endsWith('.arxiv.org') ||
+            (['doi.org', 'dx.doi.org'].includes(url.hostname) && url.pathname.toLowerCase().startsWith('/10.48550/arxiv.'))) {
+          error = 'Put arXiv links in Preprint URL. Leave Published / official URL blank until available.';
+        }
+      } catch { /* The URL input checks malformed links. */ }
+      published.setCustomValidity(error);
+      preprint.setCustomValidity(published.value && preprint.value === published.value
+        ? 'Use a distinct preprint link, not the published / official URL.' : '');
+    }
+    published.addEventListener('input', validatePaperLinks);
+    preprint.addEventListener('input', validatePaperLinks);
+    validatePaperLinks();
+  }
   if (kind === 'people' || kind === 'publications' || kind === 'data-sets') {
     const slug = kind === 'people' ? document.querySelector('#slug') : document.querySelector('#record-slug');
     slug.readOnly = kind === 'publications' || (kind !== 'people' && Boolean(current.slug));

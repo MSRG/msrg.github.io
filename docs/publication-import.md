@@ -15,8 +15,10 @@ the current or alumni roster. Existing entries outside that scope were retained.
   were excluded from the paper backfill.
 - Compared 567 [OpenAlex records](https://openalex.org/authors/A5072791865)
   to find gaps, then checked additions against publisher, conference, arXiv,
-  or institutional records. Each paper uses `external_url` as its single paper
-  link. Import sources are recorded separately in
+  or institutional records. Each paper uses `external_url` for its published /
+  official version and the optional `preprint_url` for its corresponding preprint.
+  At least one link is required. Published links take priority; preprint-only
+  records are explicitly labeled. Import sources are recorded separately in
   [publication provenance](publication-provenance.json).
 - Preserved ordered author lists and existing page paths, notes, and dataset
   associations. Added verified author-name variants to nine member profiles.

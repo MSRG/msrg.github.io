@@ -346,12 +346,19 @@
         },
         {
           "key": "external_url",
-          "label": "Paper URL",
+          "label": "Published / official URL",
           "type": "string",
           "default": "",
-          "required": true,
           "format": "url",
-          "help": "Use the published version's DOI or publisher URL when available. Use arXiv or another preprint link only until a published version is available; optional preprint links can go in Additional notes."
+          "help": "Link to the published version's DOI, publisher page, or official publication record. Leave blank if only a preprint is available, even if the paper is accepted. Provide this link, a preprint link, or both."
+        },
+        {
+          "key": "preprint_url",
+          "label": "Preprint URL",
+          "type": "string",
+          "default": "",
+          "format": "url",
+          "help": "Link to this paper's preprint on arXiv or another repository. It appears beside the published version with less emphasis, or as an explicitly labeled preprint link when no published link is available. Explain significant version differences in Additional notes."
         },
         {
           "key": "publication_type",

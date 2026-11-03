@@ -16,7 +16,8 @@ abstract = "Reliability in LLM-based agentic systems is a property of the whole 
 research_outcomes = [
   { title = "AgentChaosBench", url = "https://github.com/kevinzck8k/agentic-fault-diagnosis", summary = "Fault-detection and localization evaluation tools with 275 execution traces from five agentic applications." },
 ]
+preprint_url = "https://arxiv.org/abs/2608.14680"
 +++
 
-The [arXiv preprint](https://arxiv.org/abs/2608.14680) uses the earlier title *When Agentic Executions Fail:
+The preprint linked above uses the earlier title *When Agentic Executions Fail:
 Detecting and Localizing Runtime Faults from Telemetry*.

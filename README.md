@@ -85,13 +85,19 @@ to share that.
 ### Add or edit publications
 
 Choose **Publications**, select a paper or **New entry**, and fill in
-the title, year, authors, venue, paper URL, and publication type.
+the title, year, authors, venue, paper links, and publication type.
 Use **Year** for the paper's publication year.
-For **Paper URL**, use the published version's DOI or publisher URL whenever
-available. Use arXiv or another preprint link only while no published version is
-available. Keep optional preprint links in **Additional notes**, identifying any
-title or version differences, and update the venue, year, and publication type
-when the paper is published.
+Use **Published / official URL** for the published version's DOI, publisher page,
+or official publication record. Use **Preprint URL** for the corresponding arXiv
+or other preprint repository page. Provide at least one; both are welcome.
+The published version takes priority, with a less prominent preprint link beside
+it. If only a preprint is available, leave the published URL blank: the website
+will explicitly label the action **Read preprint**, including for accepted papers
+whose proceedings version is not yet available. Explain significant title or
+version differences in **Additional notes**. When a paper is published, add its
+published URL and update the venue, year, and publication type; keep its preprint
+URL as a secondary link. In the Markdown record these fields are `external_url`
+and `preprint_url`, respectively.
 Choose **Publication type** from the dropdown. If the correct type is missing,
 contact the site owner to have it added.
 For authors, search website members and their published name variants, or type

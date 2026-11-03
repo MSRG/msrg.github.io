@@ -31,10 +31,12 @@ were excluded.
 
 ## Publication updates
 
-The primary paper URL points to the published version's DOI or publisher page
-whenever available. Preprints remain secondary links in publication notes.
+The published / official URL (`external_url`) points to the published version's
+DOI or publisher page whenever available. The separate `preprint_url` appears
+beside it as a secondary link; explanatory version differences remain in notes.
 Acceptance or presentation alone does not establish an available proceedings
-version; retain the preprint URL until the published version can be verified.
+version; leave the published URL empty until it can be verified. With only a
+preprint URL the website explicitly labels the link as a preprint.
 
 - GALA: [ASE programme](https://conf.researchr.org/details/ase-2026/ase-2026-research-track/5/GALA-Graph-Augmented-LLM-Agents-for-Root-Cause-Analysis-and-Incident-Response-in-Mic), [published version](https://doi.org/10.1145/3832783.3834335). At the maintainer's request, consolidate the earlier GALA preprint and the updated GALA+ work into this single record. Keep the earlier arXiv link in its notes and redirect the old website URL through an alias.
 - AgentChaosBench: [TRUST programme](https://conf.researchr.org/details/ase-2026/trust-2026-papers/12/AgentChaosBench-Benchmarking-External-Fault-Detection-and-Localization-in-Agentic-Sy), [published version](https://doi.org/10.1145/3843782.3844662). Preserve the original page URL and identify the earlier arXiv title in the publication notes.

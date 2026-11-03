@@ -5,7 +5,7 @@ authors = ["Yifang Tian", "Yingjian Bai", "Yifeng He", "Zichun Chong", "Yuanchen
 venue = "arXiv"
 publication_type = "ArXiv Preprint"
 research = ["distributed-machine-learning"]
-external_url = "https://arxiv.org/abs/2609.33023"
+preprint_url = "https://arxiv.org/abs/2609.33023"
 
 # Attribution: https://arxiv.org/abs/2609.33023
 # Website source and scope: https://github.com/bigbigbai/sre-marathon-leaderboard/blob/main/README.md

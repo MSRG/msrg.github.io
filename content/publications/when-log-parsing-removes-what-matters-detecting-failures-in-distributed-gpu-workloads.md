@@ -13,9 +13,10 @@ external_url = "https://doi.org/10.1145/3820756.3844919"
 research_outcomes = [
   { title = "GF-Bench artifacts", url = "https://github.com/cuiboyuan/nccl_log_rca_bench", summary = "Tools for generating multi-GPU failures, collecting NCCL logs, and evaluating anomaly detection, with sample data and scripts to reproduce the experiments." },
 ]
+preprint_url = "https://arxiv.org/abs/2610.14009"
 +++
 
-The [arXiv version](https://arxiv.org/abs/2610.14009) was revised after publication
+The preprint linked above was revised after publication
 and differs from the RASE 2026 paper linked above.
 
 The paper introduces [GF-Bench](https://github.com/cuiboyuan/nccl_log_rca_bench)

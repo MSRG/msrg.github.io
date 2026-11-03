@@ -83,9 +83,7 @@
                 <p class="muted">{{ partial "publication-authors.html" (dict "authors" .Params.authors) }}</p>
                 <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
                 <p>{{ .Params.venue }}, {{ .Params.year }}</p>
-                {{ with .Params.external_url }}
-                  <p class="content-actions"><a href="{{ . }}" target="_blank" rel="noopener noreferrer">Read paper</a></p>
-                {{ end }}
+                {{ partial "publication-links.html" (dict "page" . "compact" true) }}
               </article>
             {{ end }}
           {{ else }}

@@ -8,4 +8,8 @@ research = ["distributed-machine-learning"]
 tags = ["federated-learning", "benchmarking", "edge-systems"]
 external_url = "https://doi.org/10.1145/3652892.3700751"
 abstract = "Federated Learning (FL) has become a viable technique for realizing privacy-enhancing distributed deep learning on the network edge. Heterogeneous hardware, unreliable client devices, and energy constraints often characterize edge computing systems. In this paper, we propose FLEdge, which complements existing FL benchmarks by enabling a systematic evaluation of client capabilities. We focus on computational and communication bottlenecks, client behavior, and data security implications. Our experiments with models varying from 14K to 80M trainable parameters are carried out on dedicated hardware with emulated network characteristics and client behavior. We find that state-of-the-art embedded hardware has significant memory bottlenecks, leading to 4× longer processing times than on modern data center GPUs."
+# Preprint correspondence checked against the author-deposited manuscript and published citation.
+preprint_url = "https://arxiv.org/abs/2306.05172"
 +++
+
+The preprint title includes “Federated Machine Learning Applications”; the published title uses “Federated Learning Applications”.

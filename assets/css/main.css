@@ -731,6 +731,20 @@ ul {
   color: var(--primary);
 }
 
+.publication-links {
+  align-items: center;
+}
+
+.publication-links .button-secondary:hover {
+  background: var(--bg-alt);
+  color: var(--primary-deep);
+}
+
+.publication-links-compact .publication-preprint {
+  color: var(--muted);
+  font-size: 0.95em;
+}
+
 .hero-card .button {
   background: var(--success);
 }

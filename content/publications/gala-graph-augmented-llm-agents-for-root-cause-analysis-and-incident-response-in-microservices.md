@@ -16,9 +16,10 @@ abstract = "Microservice root cause analysis (RCA) requires correlating failures
 research_outcomes = [
   { title = "GALA evaluation artifacts", url = "https://github.com/EvanTian233/GALA-for-RCA", summary = "Annotated incident reports, example outputs, a supplementary technical report, and third-party baseline frameworks. The core GALA implementation is not publicly released." },
 ]
+preprint_url = "https://arxiv.org/abs/2608.08968"
 +++
 
-The [arXiv version](https://arxiv.org/abs/2608.08968) describes the GALA+ framework.
+The preprint linked above describes the GALA+ framework.
 
 This record consolidates the GALA work and its updated GALA+ framework.
 The [earlier preprint](https://arxiv.org/abs/2508.12472) circulated under the title

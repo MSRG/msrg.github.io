@@ -150,6 +150,21 @@ def validate_record(kind: str, data: dict, slug: str | None = None, root: Path =
         errors.append("slug: must match the profile filename")
     if kind == "personal" and slug is not None and data.get("url", f"/~{slug}/") != f"/~{slug}/":
         errors.append(f"url: expected /~{slug}/")
+    if kind == "publications":
+        published, preprint = data.get("external_url"), data.get("preprint_url")
+        if not any(isinstance(url, str) and url.strip() for url in (published, preprint)):
+            errors.append("external_url / preprint_url: provide a published / official URL, a preprint URL, or both")
+        if isinstance(published, str) and published:
+            try:
+                parsed = urlsplit(published)
+                host = (parsed.hostname or "").lower()
+                if (host == "arxiv.org" or host.endswith(".arxiv.org") or
+                        host in {"doi.org", "dx.doi.org"} and parsed.path.lower().startswith("/10.48550/arxiv.")):
+                    errors.append("external_url: put arXiv links in Preprint URL; leave Published / official URL blank until available")
+            except ValueError:
+                pass  # The URL field validation above reports malformed URLs.
+        if isinstance(published, str) and published and published == preprint:
+            errors.append("preprint_url: use a distinct preprint link, not the published / official URL")
     return errors
 
 
